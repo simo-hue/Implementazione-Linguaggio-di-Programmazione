@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="implementazione brainfuck">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/brainfuck/src/brainfuck/brainfuck.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/src.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,7 +109,7 @@
       <updated>1746862912873</updated>
       <workItem from="1746862913898" duration="541000" />
       <workItem from="1746866207735" duration="8514000" />
-      <workItem from="1746875121586" duration="1771000" />
+      <workItem from="1746875121586" duration="2730000" />
     </task>
     <task id="LOCAL-00001" summary="File organizzati">
       <option name="closed" value="true" />
@@ -202,7 +199,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746877135295</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="implementazione brainfuck">
+      <option name="closed" value="true" />
+      <created>1746877854216</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1746877854216</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
