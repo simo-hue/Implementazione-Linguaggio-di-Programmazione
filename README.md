@@ -63,15 +63,16 @@ Il progetto include:
 ```bash
 antlr4 -visitor -no-listener NomeFile.g4
 javac NomeFile*.java
+```
 
 ### ▶️ Esecuzione
 ```bash
 grun NomeFile main -gui
-
+```
 Oppure, per vedere i token:
 ```bash
 grun NomeFile main -tokens
-
+```
 ## 🧩 Risorse utili
 
 📘 ANTLR4 - Documentazione ufficiale - https://www.antlr.org
