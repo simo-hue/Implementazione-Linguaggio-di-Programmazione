@@ -4,20 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="liste e liste ricorsive">
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/hello world.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Primo.g4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Quarto.g4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Quinto.g4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Secondo.g4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Terzo.g4" afterDir="false" />
+    <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="Fine prima esercitazione">
+      <change afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExp.g4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/hello world/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/hello world/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/hello world/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/hello world/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/hello world/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/hello world/hello world.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/hello world.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/hello world/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/hello world/src/Test.g4" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/Test.g4" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +89,7 @@
       <option name="presentableId" value="Default" />
       <updated>1746862912873</updated>
       <workItem from="1746862913898" duration="541000" />
-      <workItem from="1746866207735" duration="4106000" />
+      <workItem from="1746866207735" duration="5116000" />
     </task>
     <task id="LOCAL-00001" summary="File organizzati">
       <option name="closed" value="true" />
@@ -126,7 +123,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746867610454</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fine prima esercitazione">
+      <option name="closed" value="true" />
+      <created>1746870497364</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1746870497364</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -138,6 +143,7 @@
     <MESSAGE value="Naturali e sequenze numeriche" />
     <MESSAGE value="Aggiunta delle palindrome" />
     <MESSAGE value="liste e liste ricorsive" />
-    <option name="LAST_COMMIT_MESSAGE" value="liste e liste ricorsive" />
+    <MESSAGE value="Fine prima esercitazione" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fine prima esercitazione" />
   </component>
 </project>
