@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="update README.md">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/antlr4-runtime-4.8.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/hello world.iml" beforeDir="false" afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/untitled.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExp.g4" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExp.g4" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,9 +45,10 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/simo/Desktop/CODING/JAVA/UNI/Laboratorio-Linguaggi-",
+    "last_opened_file_path": "/Users/simo/Desktop/CODING/JAVA/UNI/Laboratorio-Linguaggi-/QUARTO ESEMPIO/untitled/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -48,12 +58,17 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="src" />
+      <recent name="simo" />
+      <recent name="" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/QUARTO ESEMPIO/untitled/src" />
       <recent name="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src" />
+      <recent name="$PROJECT_DIR$/QUARTO ESEMPIO" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src" />
-      <recent name="$PROJECT_DIR$/SECONDO ESEMPIO" />
-      <recent name="$PROJECT_DIR$/SECONDO ESEMPIO/lab 02/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete" />
@@ -62,8 +77,10 @@
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="azul-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="Laboratorio-Linguaggi-" />
+      <option name="PROGRAM_PARAMETERS" value="prog" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -83,7 +100,8 @@
       <option name="presentableId" value="Default" />
       <updated>1746862912873</updated>
       <workItem from="1746862913898" duration="541000" />
-      <workItem from="1746866207735" duration="7035000" />
+      <workItem from="1746866207735" duration="8514000" />
+      <workItem from="1746875121586" duration="890000" />
     </task>
     <task id="LOCAL-00001" summary="File organizzati">
       <option name="closed" value="true" />
@@ -157,7 +175,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746873181566</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="update README.md">
+      <option name="closed" value="true" />
+      <created>1746873253413</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1746873253413</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

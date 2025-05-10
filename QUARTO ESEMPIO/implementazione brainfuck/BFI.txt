@@ -1,0 +1,75 @@
+import java.util.Scanner;
+
+public class BrainfuckInterpreter extends BrainfuckBaseVisitor<Byte> {
+
+    private static final Scanner console = new Scanner(System.in);
+    private static int ptr;
+    private static int len = 666666;
+    private static byte tape[] = new byte[len];
+
+    @Override
+    public Byte visitMain(BrainfuckParser.MainContext ctx) {
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Byte visitGt(BrainfuckParser.GtContext ctx) {
+        if (ptr == len - 1)
+            ptr = 0;
+
+        else
+            ptr ++;
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Byte visitLt(BrainfuckParser.LtContext ctx) {
+        if (ptr == 0)
+            ptr = len - 1;
+
+        else
+            ptr --;
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Byte visitPlus(BrainfuckParser.PlusContext ctx) {
+        tape[ptr] ++;
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Byte visitMinus(BrainfuckParser.MinusContext ctx) {
+        tape[ptr] --;
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Byte visitLoop(BrainfuckParser.LoopContext ctx) {
+        if (tape[ptr] == 0)
+            return visit(ctx.com(1));
+
+        visit(ctx.com(0));
+
+        return visit(ctx);
+    }
+
+    @Override
+    public Byte visitDot(BrainfuckParser.DotContext ctx) {
+        System.out.print((char)(tape[ptr]));
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Byte visitComma(BrainfuckParser.CommaContext ctx) {
+        System.out.print(":><: ");
+        tape[ptr] = (byte)(console.next().charAt(0));
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Byte visitNil(BrainfuckParser.NilContext ctx) {
+        return 0;
+    }
+}
+

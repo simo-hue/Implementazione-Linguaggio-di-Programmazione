@@ -1,0 +1,279 @@
+private void initData()
+    {
+        try (BufferedReader br = new BufferedReader(new FileReader("initial_data_config")))
+        {
+            String line;
+            while ((line = br.readLine()) != null)
+            {
+                if (line.contains("data_pointer="))
+                {
+                    dataPointer = Integer.parseInt(line.split("=")[1]);
+                    continue;
+                }
+                data.add(Integer.valueOf(line));
+            }
+        } catch (IOException e) { e.printStackTrace(); }
+
+        // se il file di configurazione non contiene elementi per la lista aggiungi un elemento iniziale
+        if (data.size() == 0)
+            data.add(0);
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class BrainFuck extends BrainFuckBaseVisitor<Byte> {
+    /**
+     * The tape
+     */
+    private List<Byte> tape = new ArrayList<>();
+    /**
+     * The pointer - tape index
+     */
+    private int currentIndex = 0;
+
+    @Override
+    public Byte visitMain(BrainFuckParser.MainContext ctx) {
+        tape.add((byte) 0);
+        return visit(ctx.lang());
+    }
+
+    @Override
+    public Byte visitIncrementDataPointer(BrainFuckParser.IncrementDataPointerContext ctx) {
+        /*
+         "Extend" the tape if the index exceeds the current length.
+         This is useful to ensure an arbitrarily long tape while keeping
+         its implementation with a finite length.
+         */
+        if (++currentIndex >= tape.size())
+            tape.add((byte) 0);
+
+        visit(ctx.lang());
+        return (byte) currentIndex;
+    }
+
+    @Override
+    public Byte visitDecrementDataPointer(BrainFuckParser.DecrementDataPointerContext ctx) {
+        if (--currentIndex < 0)
+            throw new IndexOutOfBoundsException();
+
+        visit(ctx.lang());
+        return (byte) currentIndex;
+    }
+
+    /**
+     * Handles the update of a single byte. It is used to increment or decrement
+     * a single byte by a single unit, thus making the increment and decrement
+     * functions simple and with as little repeated code as possible.
+     * @param increment True if +1, false if -1
+     * @return The new value, incremented or decremented
+     */
+    private Byte changeByte(boolean increment) {
+        byte delta = (byte) (increment ? 1 : -1);
+        byte newValue = (byte) (tape.get(currentIndex) + delta);
+        tape.set(currentIndex, newValue);
+
+        return newValue;
+    }
+
+    @Override
+    public Byte visitIncrementByte(BrainFuckParser.IncrementByteContext ctx) {
+        byte newValue = changeByte(true);
+        visit(ctx.lang());
+        return newValue;
+    }
+
+    @Override
+    public Byte visitDecrementByte(BrainFuckParser.DecrementByteContext ctx) {
+        byte newValue = changeByte(false);
+        visit(ctx.lang());
+        return newValue;
+    }
+
+    @Override
+    public Byte visitOutputByte(BrainFuckParser.OutputByteContext ctx) {
+        byte currentByte = tape.get(currentIndex);
+        System.out.printf("%c", currentByte);
+
+        visit(ctx.lang());
+        return currentByte;
+    }
+
+    @Override
+    public Byte visitInputByte(BrainFuckParser.InputByteContext ctx) {
+        /*
+        Instantiate a new Scanner every time an input has to be read.
+        This ensures the Scanner is always correctly closed.
+        For faster implementations, its creation and closing
+        may be handled outside this class.
+         */
+        try (Scanner keyboard = new Scanner(System.in)) {
+            byte newByte = keyboard.nextByte();
+            tape.set(currentIndex, newByte);
+
+            visit(ctx.lang());
+            return newByte;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Byte visitLoop(BrainFuckParser.LoopContext ctx) {
+        // Jump straight to next command
+        if (tape.get(currentIndex) == 0)
+            return visit(ctx.lang(1));
+
+        // Loop
+        while (tape.get(currentIndex) != 0)
+            visit(ctx.lang(0));
+
+        // Go to next command
+        visit(ctx.lang(1));
+        return null;
+    }
+
+    @Override
+    public Byte visitNop(BrainFuckParser.NopContext ctx) {
+        return null;
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Conf {
+
+    private final Map<Integer, Integer> v = new HashMap<>();
+
+    private int dataPointer;
+
+    public Conf() {
+        dataPointer = 0;
+    }
+
+    public void right() {
+        dataPointer++;
+    }
+
+    public void left() {
+        dataPointer--;
+    }
+
+    public void inc() {
+        int old = v.getOrDefault(dataPointer, 0);
+        v.put(dataPointer, old + 1);
+    }
+
+    public void dec() {
+        int old = v.getOrDefault(dataPointer, 0);
+        v.put(dataPointer, old - 1);
+    }
+
+    public int get() {
+        return v.getOrDefault(dataPointer, 0);
+    }
+
+    public void update(int x) {
+        v.put(dataPointer, x);
+    }
+
+    @Override
+    public String toString() {
+        return "dataPointer = " + dataPointer + "\n\n" + "v = " + v.toString();
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import java.util.Scanner;
+
+public class BrainfuckInterpreter extends BrainfuckBaseVisitor<Conf> {
+
+    private static final Scanner console = new Scanner(System.in);
+
+    private final Conf conf;
+
+    public BrainfuckInterpreter(Conf conf) {
+        this.conf = conf;
+    }
+
+    @Override
+    public Conf visitMain(BrainfuckParser.MainContext ctx) {
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitLt(BrainfuckParser.LtContext ctx) {
+        conf.left();
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitGt(BrainfuckParser.GtContext ctx) {
+        conf.right();
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitPlus(BrainfuckParser.PlusContext ctx) {
+        conf.inc();
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitMinus(BrainfuckParser.MinusContext ctx) {
+        conf.dec();
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitLoop(BrainfuckParser.LoopContext ctx) {
+        if (conf.get() == 0)
+            return visit(ctx.com(1));
+
+        visit(ctx.com(0));
+
+        return visit(ctx);
+    }
+
+    @Override
+    public Conf visitDot(BrainfuckParser.DotContext ctx) {
+        System.out.println(conf.get());
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitComma(BrainfuckParser.CommaContext ctx) {
+        System.out.print(":> ");
+        int x = console.nextInt();
+        conf.update(x);
+
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitNil(BrainfuckParser.NilContext ctx) {
+        return conf;
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ BrainfuckInterpreter interpreter = new BrainfuckInterpreter(new Conf());
+ Conf conf = interpreter.visit(tree);
+
+ System.out.println("---- FINAL STATE ------------------------------");
+ System.out.println(conf);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
