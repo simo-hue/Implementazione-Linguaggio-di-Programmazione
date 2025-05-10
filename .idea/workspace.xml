@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="update README.md">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/antlr4-runtime-4.8.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/src/Main.java" afterDir="false" />
+    <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="implementazione brainfuck">
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/brainfuck/src/brainfuck/brainfuck.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/src.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/hello world.iml" beforeDir="false" afterPath="$PROJECT_DIR$/QUARTO ESEMPIO/implementazione brainfuck/untitled.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExp.g4" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExp.g4" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,12 +42,17 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "21",
     "last_opened_file_path": "/Users/simo/Desktop/CODING/JAVA/UNI/Laboratorio-Linguaggi-/QUARTO ESEMPIO/untitled/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "/Users/simo/Desktop/CODING/JAVA/UNI/Laboratorio-Linguaggi-/QUARTO ESEMPIO/implementazione brainfuck/brainfuck/src/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -75,11 +74,22 @@
       <recent name="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main (1)">
+    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="brainfuck" />
+      <option name="PROGRAM_PARAMETERS" value="sub" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="azul-21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="brainfuck" />
       <option name="PROGRAM_PARAMETERS" value="prog" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -87,6 +97,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -101,7 +112,7 @@
       <updated>1746862912873</updated>
       <workItem from="1746862913898" duration="541000" />
       <workItem from="1746866207735" duration="8514000" />
-      <workItem from="1746875121586" duration="890000" />
+      <workItem from="1746875121586" duration="1771000" />
     </task>
     <task id="LOCAL-00001" summary="File organizzati">
       <option name="closed" value="true" />
@@ -183,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746873253413</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="implementazione brainfuck">
+      <option name="closed" value="true" />
+      <created>1746877135295</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1746877135295</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,6 +219,7 @@
     <MESSAGE value="prima creazione dei recognizer" />
     <MESSAGE value="Fine lezione 2 e README.md" />
     <MESSAGE value="update README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="update README.md" />
+    <MESSAGE value="implementazione brainfuck" />
+    <option name="LAST_COMMIT_MESSAGE" value="implementazione brainfuck" />
   </component>
 </project>
