@@ -75,10 +75,11 @@ grun NomeFile main -tokens
 ```
 ## 🧩 Risorse utili
 
-📘 ANTLR4 - Documentazione ufficiale - https://www.antlr.org
-📚 Guida ANTLR su GitHub - https://github.com/antlr/antlr4/blob/master/doc/index.md
-📖 ANTLR4 - Guida completa - https://tomassetti.me/antlr-mega-tutorial/
-📖 ANTLR4 - Guida pratica - https://pragprog.com/titles/tmantlr/antlr-4/
+- 📘 [ANTLR4 - Documentazione ufficiale](https://www.antlr.org)
+- 📚 [Guida ANTLR su GitHub](https://github.com/antlr/antlr4/blob/master/doc/index.md)
+- 📖 [ANTLR4 - Guida completa (tomassetti.me)](https://tomassetti.me/antlr-mega-tutorial/)
+- 📖 [ANTLR4 - Guida pratica (The Pragmatic Programmer)](https://pragprog.com/titles/tmantlr/antlr-4/)
+
 
 ## 🧑‍💻 Autore
 Simone Mattioli
