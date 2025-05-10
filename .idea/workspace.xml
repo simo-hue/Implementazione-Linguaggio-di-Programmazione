@@ -4,11 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="Aggiunta delle palindrome">
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/lab 02/src/List.g4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/lab 02/src/RecList.g4" afterDir="false" />
+    <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="liste e liste ricorsive">
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/hello world.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Primo.g4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Quarto.g4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Quinto.g4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Secondo.g4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src/Terzo.g4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SECONDO ESEMPIO/lab 02/src/Palidrome.g4" beforeDir="false" afterPath="$PROJECT_DIR$/SECONDO ESEMPIO/lab 02/src/Palidrome.g4" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,12 +44,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/simo/Desktop/CODING/JAVA/UNI/Laboratorio-Linguaggi-/SECONDO ESEMPIO/lab 02/src",
+    "last_opened_file_path": "/Users/simo/Desktop/CODING/JAVA/UNI/Laboratorio-Linguaggi-/SECONDO ESEMPIO/hw 02/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -50,8 +60,13 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src" />
+      <recent name="$PROJECT_DIR$/SECONDO ESEMPIO" />
       <recent name="$PROJECT_DIR$/SECONDO ESEMPIO/lab 02/src" />
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/" />
     </key>
   </component>
   <component name="RunManager">
@@ -77,7 +92,7 @@
       <option name="presentableId" value="Default" />
       <updated>1746862912873</updated>
       <workItem from="1746862913898" duration="541000" />
-      <workItem from="1746866207735" duration="1349000" />
+      <workItem from="1746866207735" duration="4106000" />
     </task>
     <task id="LOCAL-00001" summary="File organizzati">
       <option name="closed" value="true" />
@@ -103,7 +118,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746866967565</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="liste e liste ricorsive">
+      <option name="closed" value="true" />
+      <created>1746867610454</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1746867610454</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,6 +137,7 @@
     <MESSAGE value="File organizzati" />
     <MESSAGE value="Naturali e sequenze numeriche" />
     <MESSAGE value="Aggiunta delle palindrome" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aggiunta delle palindrome" />
+    <MESSAGE value="liste e liste ricorsive" />
+    <option name="LAST_COMMIT_MESSAGE" value="liste e liste ricorsive" />
   </component>
 </project>
