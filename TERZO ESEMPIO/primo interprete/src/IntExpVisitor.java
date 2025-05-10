@@ -1,4 +1,4 @@
-// Generated from /Users/simo/Desktop/CODING/JAVA/UNI/Laboratorio-Linguaggi-/TERZO ESEMPIO/primo interprete/src/IntExp.g4 by ANTLR 4.13.2
+// Generated from /home/samuele/IdeaProjects/intexp/src/IntExp.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**

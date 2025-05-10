@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="prima parte lezione 2" />
+    <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="prima creazione dei recognizer">
+      <change afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/antlr4-runtime-4.8-1.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Laboratorio-Linguaggi-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Laboratorio-Linguaggi-.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExp.g4" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/IntExp.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExp.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExp.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExpBaseVisitor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExpLexer.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExpLexer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExpLexer.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExpParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExpVisitor.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,25 +47,27 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/simo/Desktop/CODING/JAVA/UNI/Laboratorio-Linguaggi-/SECONDO ESEMPIO/hw 02/src",
+    "last_opened_file_path": "/Users/simo/Desktop/CODING/JAVA/UNI/Laboratorio-Linguaggi-",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src" />
       <recent name="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/src" />
       <recent name="$PROJECT_DIR$/SECONDO ESEMPIO" />
       <recent name="$PROJECT_DIR$/SECONDO ESEMPIO/lab 02/src" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete" />
       <recent name="$PROJECT_DIR$/SECONDO ESEMPIO/hw 02/" />
     </key>
   </component>
@@ -78,7 +94,7 @@
       <option name="presentableId" value="Default" />
       <updated>1746862912873</updated>
       <workItem from="1746862913898" duration="541000" />
-      <workItem from="1746866207735" duration="5734000" />
+      <workItem from="1746866207735" duration="6823000" />
     </task>
     <task id="LOCAL-00001" summary="File organizzati">
       <option name="closed" value="true" />
@@ -128,7 +144,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746871378603</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="prima creazione dei recognizer">
+      <option name="closed" value="true" />
+      <created>1746872024777</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1746872024777</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,6 +166,7 @@
     <MESSAGE value="liste e liste ricorsive" />
     <MESSAGE value="Fine prima esercitazione" />
     <MESSAGE value="prima parte lezione 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="prima parte lezione 2" />
+    <MESSAGE value="prima creazione dei recognizer" />
+    <option name="LAST_COMMIT_MESSAGE" value="prima creazione dei recognizer" />
   </component>
 </project>

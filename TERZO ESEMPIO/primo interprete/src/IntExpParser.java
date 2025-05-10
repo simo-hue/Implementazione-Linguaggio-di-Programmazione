@@ -1,4 +1,4 @@
-// Generated from /Users/simo/Desktop/CODING/JAVA/UNI/Laboratorio-Linguaggi-/TERZO ESEMPIO/primo interprete/src/IntExp.g4 by ANTLR 4.13.2
+// Generated from /home/samuele/IdeaProjects/intexp/src/IntExp.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue", "this-escape"})
+@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class IntExpParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.13.2", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -88,7 +88,6 @@ public class IntExpParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
-	@SuppressWarnings("CheckReturnValue")
 	public static class MainContext extends ParserRuleContext {
 		public ExpContext exp() {
 			return getRuleContext(ExpContext.class,0);
@@ -128,7 +127,6 @@ public class IntExpParser extends Parser {
 		return _localctx;
 	}
 
-	@SuppressWarnings("CheckReturnValue")
 	public static class ExpContext extends ParserRuleContext {
 		public ExpContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -140,7 +138,6 @@ public class IntExpParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	@SuppressWarnings("CheckReturnValue")
 	public static class NatContext extends ExpContext {
 		public TerminalNode NAT() { return getToken(IntExpParser.NAT, 0); }
 		public NatContext(ExpContext ctx) { copyFrom(ctx); }
@@ -150,7 +147,6 @@ public class IntExpParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	@SuppressWarnings("CheckReturnValue")
 	public static class MulContext extends ExpContext {
 		public TerminalNode LPAR() { return getToken(IntExpParser.LPAR, 0); }
 		public List<ExpContext> exp() {
@@ -168,7 +164,6 @@ public class IntExpParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	@SuppressWarnings("CheckReturnValue")
 	public static class PlusContext extends ExpContext {
 		public TerminalNode LPAR() { return getToken(IntExpParser.LPAR, 0); }
 		public List<ExpContext> exp() {
@@ -248,22 +243,13 @@ public class IntExpParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0006\u0017\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
-		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001\u0015\b\u0001"+
-		"\u0001\u0001\u0000\u0000\u0002\u0000\u0002\u0000\u0000\u0016\u0000\u0004"+
-		"\u0001\u0000\u0000\u0000\u0002\u0014\u0001\u0000\u0000\u0000\u0004\u0005"+
-		"\u0003\u0002\u0001\u0000\u0005\u0006\u0005\u0000\u0000\u0001\u0006\u0001"+
-		"\u0001\u0000\u0000\u0000\u0007\u0015\u0005\u0005\u0000\u0000\b\t\u0005"+
-		"\u0001\u0000\u0000\t\n\u0003\u0002\u0001\u0000\n\u000b\u0005\u0004\u0000"+
-		"\u0000\u000b\f\u0003\u0002\u0001\u0000\f\r\u0005\u0002\u0000\u0000\r\u0015"+
-		"\u0001\u0000\u0000\u0000\u000e\u000f\u0005\u0001\u0000\u0000\u000f\u0010"+
-		"\u0003\u0002\u0001\u0000\u0010\u0011\u0005\u0003\u0000\u0000\u0011\u0012"+
-		"\u0003\u0002\u0001\u0000\u0012\u0013\u0005\u0002\u0000\u0000\u0013\u0015"+
-		"\u0001\u0000\u0000\u0000\u0014\u0007\u0001\u0000\u0000\u0000\u0014\b\u0001"+
-		"\u0000\u0000\u0000\u0014\u000e\u0001\u0000\u0000\u0000\u0015\u0003\u0001"+
-		"\u0000\u0000\u0000\u0001\u0014";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\b\31\4\2\t\2\4\3"+
+		"\t\3\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5"+
+		"\3\27\n\3\3\3\2\2\4\2\4\2\2\2\30\2\6\3\2\2\2\4\26\3\2\2\2\6\7\5\4\3\2"+
+		"\7\b\7\2\2\3\b\3\3\2\2\2\t\27\7\7\2\2\n\13\7\3\2\2\13\f\5\4\3\2\f\r\7"+
+		"\6\2\2\r\16\5\4\3\2\16\17\7\4\2\2\17\27\3\2\2\2\20\21\7\3\2\2\21\22\5"+
+		"\4\3\2\22\23\7\5\2\2\23\24\5\4\3\2\24\25\7\4\2\2\25\27\3\2\2\2\26\t\3"+
+		"\2\2\2\26\n\3\2\2\2\26\20\3\2\2\2\27\5\3\2\2\2\3\26";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
