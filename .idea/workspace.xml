@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="implementazione IMP">
-      <change afterPath="$PROJECT_DIR$/QUINTO ESEMPIO/imp/src/antlr4-runtime-4.8.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QUINTO ESEMPIO/imp/antlr4-runtime-4.9.jar" beforeDir="false" afterPath="$PROJECT_DIR$/QUINTO ESEMPIO/imp/antlr4-runtime-4.8.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/IntExpParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/src/IntExpParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/src.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/src.iml" afterDir="false" />
-    </list>
+    <list default="true" id="2d47eaaa-95ff-46f5-83a2-dfcacfdf261b" name="Changes" comment="Creazione dell'elaborato" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -132,7 +126,7 @@
       <workItem from="1746866207735" duration="8514000" />
       <workItem from="1746875121586" duration="4057000" />
       <workItem from="1746950324039" duration="66000" />
-      <workItem from="1747052255470" duration="36000" />
+      <workItem from="1747052255470" duration="120000" />
     </task>
     <task id="LOCAL-00001" summary="File organizzati">
       <option name="closed" value="true" />
@@ -238,7 +232,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746883073506</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Creazione dell'elaborato">
+      <option name="closed" value="true" />
+      <created>1747052306547</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1747052306547</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,6 +259,7 @@
     <MESSAGE value="update README.md" />
     <MESSAGE value="implementazione brainfuck" />
     <MESSAGE value="implementazione IMP" />
-    <option name="LAST_COMMIT_MESSAGE" value="implementazione IMP" />
+    <MESSAGE value="Creazione dell'elaborato" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creazione dell'elaborato" />
   </component>
 </project>
