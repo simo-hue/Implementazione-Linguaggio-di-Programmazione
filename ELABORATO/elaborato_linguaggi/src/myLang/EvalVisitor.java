@@ -111,29 +111,42 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
      */
     @Override
     public Object visitAssignStmt(GrammaticaParser.AssignStmtContext ctx) {
-        // Raccogli tutte le espressioni:
-        // se ce ne sono 2, il primo è l’indice, il secondo è il valore
-        List<GrammaticaParser.ExprContext> exprs = (List<GrammaticaParser.ExprContext>) ctx.expr();
+        List<GrammaticaParser.ExprContext> exprs = ctx.expr();
         String id = ctx.ID().getText();
+
         if (exprs.size() == 2) {
-            // array assignment: x[ index ] = value
+            // array assignment: x[index] = value
             int index = (int) toNumber( visit(exprs.get(0)) );
             Object value = visit(exprs.get(1));
-            // recupera o crea l’array dinamico
-            @SuppressWarnings("unchecked")
-            List<Object> array = (List<Object>) memory.getOrDefault(id, new ArrayList<>());
-            // allunga la lista se serve
-            while (array.size() <= index) array.add(0);
+
+            // Recupera l'oggetto in memoria
+            Object stored = memory.get(id);
+            List<Object> array;
+            if (stored instanceof List<?>) {
+                // è già un array
+                @SuppressWarnings("unchecked")
+                List<Object> tmp = (List<Object>) stored;
+                array = tmp;
+            } else {
+                // non era una lista: ne creo una nuova
+                array = new ArrayList<>();
+            }
+
+            // Allungo la lista se serve
+            while (array.size() <= index) {
+                array.add(0); // default 0
+            }
             array.set(index, value);
+
+            // Salvo la lista in memoria (sovrascrive eventuale vecchio scalar)
             memory.put(id, array);
         } else {
-            // variabile semplice: x = value
+            // simple assignment: x = expr
             Object value = visit(exprs.get(0));
             memory.put(id, value);
         }
         return null;
     }
-
 
 
     /**
@@ -180,25 +193,6 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         memory.put(id, value);                  // memorizza
         return null;
     }
-
-    /**
-     * assignStmt: ID '=' expr ';'
-     * Aggiorna la variabile esistente (o la crea se manca).
-     */
-    /**
-     * Vecchio ASSIGN
-     * @param ctx the parse tree
-     * @return
-
-    @Override
-    public Object visitAssignStmt(GrammaticaParser.AssignStmtContext ctx) {
-        String id = ctx.ID().getText();       // nome variabile
-        Object value = visit(ctx.expr());     // valuta il lato destro
-        memory.put(id, value);                // aggiorna la memoria
-        return null;                          // uno statement non restituisce valore
-    }
-     **/
-
 
     /** PrintStmt: 'print' '(' expr ')' ';' */
     @Override
