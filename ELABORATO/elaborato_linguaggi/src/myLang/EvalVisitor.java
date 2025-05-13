@@ -16,6 +16,7 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
 
     // Generatore Random per ND ( non determinismo )
     private final Random rnd = new Random();
+
     @Override
     public Object visitWhileStmt(GrammaticaParser.WhileStmtContext ctx) {
         // Valuta la condizione
@@ -70,7 +71,9 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return null;
     }
 
-    /** forInit: 'var' ID '=' expr | ID '=' expr */
+    /**
+     * forInit: 'var' ID '=' expr | ID '=' expr
+     */
     @Override
     public Object visitForInit(GrammaticaParser.ForInitContext ctx) {
         String id = ctx.ID().getText();
@@ -79,7 +82,9 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return null;
     }
 
-    /** forUpdate: ID '=' expr */
+    /**
+     * forUpdate: ID '=' expr
+     */
     @Override
     public Object visitForUpdate(GrammaticaParser.ForUpdateContext ctx) {
         String id = ctx.ID().getText();
@@ -100,7 +105,7 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         }
         @SuppressWarnings("unchecked")
         List<Object> array = (List<Object>) arrObj;
-        int index = (int) toNumber( visit(ctx.expr()) );
+        int index = (int) toNumber(visit(ctx.expr()));
         if (index < 0 || index >= array.size()) {
             return 0;  // o lancia un errore, come preferisci
         }
@@ -118,7 +123,7 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
 
         if (exprs.size() == 2) {
             // array assignment: x[index] = value
-            int index = (int) toNumber( visit(exprs.get(0)) );
+            int index = (int) toNumber(visit(exprs.get(0)));
             Object value = visit(exprs.get(1));
 
             // Recupera l'oggetto in memoria
@@ -181,13 +186,15 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     @Override
     public Object visitConcatExpr(GrammaticaParser.ConcatExprContext ctx) {
         // Valuta i due operandi
-        Object left  = visit(ctx.expr(0));
+        Object left = visit(ctx.expr(0));
         Object right = visit(ctx.expr(1));
         // Converte in stringa e unisce
         return left.toString() + right.toString();
     }
 
-    /** VarDecl: 'var' ID '=' expr ';' */
+    /**
+     * VarDecl: 'var' ID '=' expr ';'
+     */
     @Override
     public Object visitVarDecl(GrammaticaParser.VarDeclContext ctx) {
         String id = ctx.ID().getText();         // nome variabile
@@ -196,7 +203,9 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return null;
     }
 
-    /** PrintStmt: 'print' '(' expr ')' ';' */
+    /**
+     * PrintStmt: 'print' '(' expr ')' ';'
+     */
     @Override
     public Object visitPrintStmt(GrammaticaParser.PrintStmtContext ctx) {
         Object value = visit(ctx.expr());       // valuta espressione
@@ -205,7 +214,10 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     }
 
     // ← Mancava completamente la gestione degli statement di tipo exprStmt.
-    /** ExprStmt: expr ';' */
+
+    /**
+     * ExprStmt: expr ';'
+     */
     @Override
     public Object visitExprStmt(GrammaticaParser.ExprStmtContext ctx) {
         // Semplicemente valuta l’espressione,
@@ -213,7 +225,9 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return visit(ctx.expr());
     }
 
-    /** AddExpr: expr '+' expr */
+    /**
+     * AddExpr: expr '+' expr
+     */
     @Override
     public Object visitAddExpr(GrammaticaParser.AddExprContext ctx) {
         Object l = visit(ctx.expr(0));
@@ -226,7 +240,9 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return toNumber(l) + toNumber(r);
     }
 
-    /** SubExpr: expr '-' expr */
+    /**
+     * SubExpr: expr '-' expr
+     */
     @Override
     public Object visitSubExpr(GrammaticaParser.SubExprContext ctx) {
         Object l = visit(ctx.expr(0));
@@ -237,7 +253,9 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return toNumber(l) - toNumber(r);
     }
 
-    /** MulExpr: expr '*' expr */
+    /**
+     * MulExpr: expr '*' expr
+     */
     @Override
     public Object visitMulExpr(GrammaticaParser.MulExprContext ctx) {
         Object l = visit(ctx.expr(0));
@@ -248,7 +266,9 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return toNumber(l) * toNumber(r);
     }
 
-    /** ModExpr: expr '%' expr */
+    /**
+     * ModExpr: expr '%' expr
+     */
     @Override
     public Object visitModExpr(GrammaticaParser.ModExprContext ctx) {
         Object l = visit(ctx.expr(0));
@@ -259,7 +279,9 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return toNumber(l) % toNumber(r);
     }
 
-    /** DivExpr: expr '/' expr */
+    /**
+     * DivExpr: expr '/' expr
+     */
     @Override
     public Object visitDivExpr(GrammaticaParser.DivExprContext ctx) {
         Object l = visit(ctx.expr(0));
@@ -269,7 +291,10 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         }
         return toNumber(l) / toNumber(r);
     }
-    /** PowExpr: expr '^' expr */
+
+    /**
+     * PowExpr: expr '^' expr
+     */
     @Override
     public Object visitPowExpr(GrammaticaParser.PowExprContext ctx) {
         return Math.pow(
@@ -278,31 +303,41 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         );
     }
 
-    /** UnaryMinus: '-' expr */
+    /**
+     * UnaryMinus: '-' expr
+     */
     @Override
     public Object visitUnaryMinus(GrammaticaParser.UnaryMinusContext ctx) {
-        return - toNumber(visit(ctx.expr()));
+        return -toNumber(visit(ctx.expr()));
     }
 
-    /** ParensExpr: '(' expr ')' */
+    /**
+     * ParensExpr: '(' expr ')'
+     */
     @Override
     public Object visitParensExpr(GrammaticaParser.ParensExprContext ctx) {
         return visit(ctx.expr());
     }
 
-    /** IntExpr: INT */
+    /**
+     * IntExpr: INT
+     */
     @Override
     public Object visitIntExpr(GrammaticaParser.IntExprContext ctx) {
         return Integer.parseInt(ctx.INT().getText());
     }
 
-    /** FloatExpr: FLOAT */
+    /**
+     * FloatExpr: FLOAT
+     */
     @Override
     public Object visitFloatExpr(GrammaticaParser.FloatExprContext ctx) {
         return Double.parseDouble(ctx.FLOAT().getText());
     }
 
-    /** StringExpr: STRING */
+    /**
+     * StringExpr: STRING
+     */
     @Override
     public Object visitStringExpr(GrammaticaParser.StringExprContext ctx) {
         // togli le virgolette iniziali/finali
@@ -310,7 +345,9 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return text.substring(1, text.length() - 1);
     }
 
-    /** IdExpr: ID */
+    /**
+     * IdExpr: ID
+     */
     @Override
     public Object visitIdExpr(GrammaticaParser.IdExprContext ctx) {
         String id = ctx.ID().getText();
@@ -318,7 +355,9 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return memory.getOrDefault(id, 0);
     }
 
-    /** InputExpr: 'input' '(' ')' */
+    /**
+     * InputExpr: 'input' '(' ')'
+     */
     @Override
     public Object visitInputExpr(GrammaticaParser.InputExprContext ctx) {
         // esempio: usa Scanner per leggere da console
@@ -326,17 +365,21 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return new java.util.Scanner(System.in).nextDouble();
     }
 
-    /** StrExpr: 'str' '(' expr ')' */
+    /**
+     * StrExpr: 'str' '(' expr ')'
+     */
     @Override
     public Object visitStrExpr(GrammaticaParser.StrExprContext ctx) {
         Object val = visit(ctx.expr());
         return val.toString();
     }
 
-    /** Helper: assicura un risultato numerico */
+    /**
+     * Helper: assicura un risultato numerico
+     */
     private double toNumber(Object obj) {
-        if (obj instanceof Integer) return ((Integer)obj).doubleValue();
-        if (obj instanceof Double)  return (Double)obj;
+        if (obj instanceof Integer) return ((Integer) obj).doubleValue();
+        if (obj instanceof Double) return (Double) obj;
         throw new RuntimeException("Non è un numero: " + obj);
     }
 
@@ -391,22 +434,20 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
 
     /**
      * nonDetStmt: block 'ND' '[' statement ']'
-     * Esegue in loop infinito una scelta casuale tra i due rami:
-     *  - visit(ctx.block())    // primo ramo
-     *  - visit(ctx.statement())// secondo ramo (dentro [...])
+     * Esegue una sola scelta casuale tra i due rami:
+     *  - visit(ctx.block())     // primo ramo
+     *  - visit(ctx.statement()) // secondo ramo (dentro [...])
      */
     @Override
     public Object visitNonDetStmt(GrammaticaParser.NonDetStmtContext ctx) {
-        while (true) {
-            if (rnd.nextBoolean()) {
-                // branch 1: esegue il blocco { ... }
-                visit(ctx.block());
-            } else {
-                // branch 2: esegue lo statement dentro [ ... ]
-                visit(ctx.statement());
-            }
+        if (rnd.nextBoolean()) {
+            // branch 1: esegue il blocco { ... }
+            visit(ctx.block());
+        } else {
+            // branch 2: esegue lo statement dentro [ ... ]
+            visit(ctx.statement());
         }
-        // (non torna mai; se volessi un break dovresti gestirlo via eccezione o simile)
+        // Terminata la scelta, non ripete più nulla
+        return null;
     }
-
 }
