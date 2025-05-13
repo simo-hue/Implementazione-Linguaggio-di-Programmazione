@@ -1,0 +1,39 @@
+**Relazione Tecnica – Interprete MyLang**
+
+Da subito abbiamo deciso di adottare ANTLR4 (v4.13.2) per generare lexer e parser: questo ci ha permesso di concentrarci sulla logica di interpretazione senza scrivere a mano l’analisi lessicale e sintattica. Abbiamo scelto il Visitor-pattern piuttosto che i listener, perché ci serviva un controllo puntuale sul valore restituito da ogni sottalbero, e il visitor ci garantisce un metodo `visitXxx` per ciascuna produzione.
+
+### Gestione dei Tipi
+
+Abbiamo modellato le variabili in Java come `Object`, con una mappa `Map<String,Object> memory`. Ogni `visitIntExpr` restituisce un `Integer`, ogni `visitFloatExpr` un `Double` e `visitStringExpr` una `String` (con le virgolette rimosse). Per le operazioni aritmetiche abbiamo creato un helper `toNumber(Object)` che converte `Integer` e `Double` in `double`. In questo modo, nelle aritmetiche miste possiamo passare a `double` solo quando serve, mantenendo risultati interi puri se entrambi gli operandi sono `Integer`.
+
+### Espressioni e Operatori
+
+Le regole ANTLR sono state scritte in ordine di precedenza decrescente, da `powExpr` a `addExpr` e `subExpr`. In `EvalVisitor` ogni operazione binaria (`visitAddExpr`, `visitMulExpr`, ecc.) controlla i tipi: se entrambi `Integer`, calcola come intero; altrimenti invoca `toNumber` sui due valori e opera in `double`. Il modulo `%` e la potenza `Math.pow` sono gestiti analogamente.
+
+### Assegnazioni e Dichiarazioni
+
+Per le variabili abbiamo due produizioni:
+
+* `varDecl` per la prima definizione (`var x = …;`)
+* `assignStmt` per successive riassegnazioni (`x = …;`).
+
+Nel visitor `visitVarDecl` e `visitAssignStmt` leggono `ctx.ID().getText()`, valutano il lato destro e aggiornano la mappa `memory`.
+
+### Controlli di Flusso
+
+Abbiamo inserito `whileStmt` e `ifStmt` come produzione separate:
+
+* **While**: `while (cond) block`; nel visitor cicliamo valutando la condizione (`toNumber(visit(ctx.expr())) != 0`) e visitando ripetutamente i child di `block`.
+* **If-else**: `if (cond) block (else block)?`; nel visitor testiamo il valore numerico e selezioniamo `ctx.block(0)` o `ctx.block(1)`.
+
+### Relazioni e Stringhe
+
+Gli operatori `<, >, <=, >=, ==, !=` sono stati aggiunti in grammatica e mappati in visitor a metodi `visitLtExpr`, `visitEqExpr`, ecc. che restituiscono `1` o `0`. La concatenazione `++` è stata gestita come `concatExpr`: valuta entrambi i rami, li converte in `String` e li unisce.
+
+### Input/Output
+
+`input()` legge da console con `Scanner.nextDouble()`, `print(expr)` invoca `System.out.println`. La funzione `str(expr)` invoca semplicemente `toString()` sull’`Object` restituito.
+
+---
+
+Con queste basi il motore interpreta correttamente variabili, espressioni numeriche e stringhe, assegnazioni, flusso di controllo `while` e `if-else`, operatori relazionali e concatenazione. Il prossimo passo sarà aggiungere il costrutto `for`, estendere non-determinismo, array e funzioni utente.
