@@ -1,13 +1,1 @@
-// Test Array con mappa
-x[2] = 10;
-x[0] = 5;
-
-print(x[0]);   // 5
-print(x[1]);   // 0
-print(x[2]);   // 10
-
-var y = input();      // es. digita 7
-y[3] = y * 2;
-
-print("y = " ++ str(y));
-print("y[3] = " ++ str(y[3]));
+{ print(42); } ND [ print(67); ]

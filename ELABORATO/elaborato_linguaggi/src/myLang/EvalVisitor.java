@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Random;
 /**
  * EvalVisitor: visita l’albero sintattico e ne valuta
  * i nodi, memorizzando le variabili in una mappa.
@@ -14,6 +14,8 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     // Mappa per variabili: nome → valore
     private final Map<String, Object> memory = new HashMap<>();
 
+    // Generatore Random per ND ( non determinismo )
+    private final Random rnd = new Random();
     @Override
     public Object visitWhileStmt(GrammaticaParser.WhileStmtContext ctx) {
         // Valuta la condizione
@@ -331,8 +333,6 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return val.toString();
     }
 
-
-
     /** Helper: assicura un risultato numerico */
     private double toNumber(Object obj) {
         if (obj instanceof Integer) return ((Integer)obj).doubleValue();
@@ -387,6 +387,26 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
             return !l.toString().equals(r.toString()) ? 1 : 0;
         }
         return toNumber(l) != toNumber(r) ? 1 : 0;
+    }
+
+    /**
+     * nonDetStmt: block 'ND' '[' statement ']'
+     * Esegue in loop infinito una scelta casuale tra i due rami:
+     *  - visit(ctx.block())    // primo ramo
+     *  - visit(ctx.statement())// secondo ramo (dentro [...])
+     */
+    @Override
+    public Object visitNonDetStmt(GrammaticaParser.NonDetStmtContext ctx) {
+        while (true) {
+            if (rnd.nextBoolean()) {
+                // branch 1: esegue il blocco { ... }
+                visit(ctx.block());
+            } else {
+                // branch 2: esegue lo statement dentro [ ... ]
+                visit(ctx.statement());
+            }
+        }
+        // (non torna mai; se volessi un break dovresti gestirlo via eccezione o simile)
     }
 
 }

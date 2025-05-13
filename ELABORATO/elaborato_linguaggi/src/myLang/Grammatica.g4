@@ -62,20 +62,17 @@ forStmt
     ;
 
 // forInit: var x = expr   oppure   x = expr
-forInit
-    : 'var' ID '=' expr
-    | ID '=' expr
-    ;
+forInit: 'var' ID '=' expr | ID '=' expr ;
 
 // forUpdate: solo l’assegnazione  x = expr  (senza ';')
-forUpdate
-    : ID '=' expr
-    ;
+forUpdate : ID '=' expr ;
 
 // blocco di zero o più statement
-block
-    : '{' statement* '}'
-    ;
+block : '{' statement* '}' ;
+
+// nonDeterministic statement: scegli a caso fra block1 e stmt2
+nonDetStmt: block 'ND' '[' statement ']' ;  // { … } ND [ … ];
+
 // --------------------------------------------------
 
 // ESPRESSIONI

@@ -83,6 +83,12 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBlock(GrammaticaParser.BlockContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#nonDetStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNonDetStmt(GrammaticaParser.NonDetStmtContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code strExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
