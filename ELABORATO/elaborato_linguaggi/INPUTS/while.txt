@@ -1,0 +1,6 @@
+var x = input();
+if (x > 3) {
+  print(str(x) ++ " è > 3");
+} else {
+  print("minore o uguale a 3");
+}

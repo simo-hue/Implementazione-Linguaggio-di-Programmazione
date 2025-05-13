@@ -88,6 +88,36 @@ public interface GrammaticaListener extends ParseTreeListener {
 	 */
 	void exitWhileStmt(GrammaticaParser.WhileStmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GrammaticaParser#forStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterForStmt(GrammaticaParser.ForStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammaticaParser#forStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitForStmt(GrammaticaParser.ForStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammaticaParser#forInit}.
+	 * @param ctx the parse tree
+	 */
+	void enterForInit(GrammaticaParser.ForInitContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammaticaParser#forInit}.
+	 * @param ctx the parse tree
+	 */
+	void exitForInit(GrammaticaParser.ForInitContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammaticaParser#forUpdate}.
+	 * @param ctx the parse tree
+	 */
+	void enterForUpdate(GrammaticaParser.ForUpdateContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammaticaParser#forUpdate}.
+	 * @param ctx the parse tree
+	 */
+	void exitForUpdate(GrammaticaParser.ForUpdateContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GrammaticaParser#block}.
 	 * @param ctx the parse tree
 	 */

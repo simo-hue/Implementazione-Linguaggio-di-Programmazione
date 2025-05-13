@@ -1,11 +1,7 @@
 package myLang;
 
-// (mancava l’import del parser generato)
-import myLang.GrammaticaParser;
-// (mancava l’import della base visitor)
-import myLang.GrammaticaBaseVisitor;
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +28,63 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         }
         return null;  // i cicli non restituiscono un valore
     }
+
+    /**
+     * forStmt: 'for' '(' forInit? ';' expr? ';' expr? ')' block
+     */
+    @Override
+    public Object visitForStmt(GrammaticaParser.ForStmtContext ctx) {
+        // 1) INIT (var x=... oppure x=...)
+        if (ctx.forInit() != null) {
+            visit(ctx.forInit());
+        }
+
+        // 2) Prepara il corpo del ciclo
+        List<GrammaticaParser.StatementContext> body = ctx.block().statement();
+
+        // 3) Loop principale
+        while (true) {
+            // 3a) condizione: ctx.expr() restituisce ExprContext o null
+            boolean condTrue = true;
+            GrammaticaParser.ExprContext condCtx = ctx.expr();
+            if (condCtx != null) {
+                double cond = toNumber(visit(condCtx));
+                condTrue = (cond != 0);
+            }
+            if (!condTrue) break;
+
+            // 3b) esegui il corpo
+            for (var st : body) {
+                visit(st);
+            }
+
+            // 3c) update: visita forUpdate se presente
+            if (ctx.forUpdate() != null) {
+                visit(ctx.forUpdate());
+            }
+        }
+
+        return null;
+    }
+
+    /** forInit: 'var' ID '=' expr | ID '=' expr */
+    @Override
+    public Object visitForInit(GrammaticaParser.ForInitContext ctx) {
+        String id = ctx.ID().getText();
+        Object value = visit(ctx.expr());
+        memory.put(id, value);
+        return null;
+    }
+
+    /** forUpdate: ID '=' expr */
+    @Override
+    public Object visitForUpdate(GrammaticaParser.ForUpdateContext ctx) {
+        String id = ctx.ID().getText();
+        Object value = visit(ctx.expr());
+        memory.put(id, value);
+        return null;
+    }
+
 
     /**
      * ifStmt: 'if' '(' expr ')' block ( 'else' block )?
@@ -226,7 +279,7 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return val.toString();
     }
 
-    // ... qui potresti aggiungere visit per ND-block, while, for, if, fun, sly{...}arnold, ecc.
+
 
     /** Helper: assicura un risultato numerico */
     private double toNumber(Object obj) {

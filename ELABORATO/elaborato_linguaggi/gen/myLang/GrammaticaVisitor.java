@@ -59,6 +59,24 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitWhileStmt(GrammaticaParser.WhileStmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#forStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForStmt(GrammaticaParser.ForStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#forInit}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForInit(GrammaticaParser.ForInitContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#forUpdate}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForUpdate(GrammaticaParser.ForUpdateContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link GrammaticaParser#block}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

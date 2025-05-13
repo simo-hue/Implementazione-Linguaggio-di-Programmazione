@@ -14,6 +14,7 @@ statement
     | exprStmt          // expr;
     | whileStmt         // while (expr) { ... }
     | ifStmt            // if (expr) { ... } else { ... }
+    | forStmt         // for (init; cond; update) { ... }
     ;
 
 // Istruzione condizionale if-else
@@ -41,6 +42,30 @@ exprStmt
 // while
 whileStmt
     : 'while' '(' expr ')' block
+    ;
+
+// Ciclo for: for ( init ; cond ; update ) block
+forStmt
+    : 'for'
+      '('
+         forInit?     // inizializzazione: var x=... oppure x=...
+         ';'
+         expr?        // condizione: un'espressione booleana
+         ';'
+         forUpdate?   // update: assegnazione  x=expr
+      ')'
+      block
+    ;
+
+// forInit: var x = expr   oppure   x = expr
+forInit
+    : 'var' ID '=' expr
+    | ID '=' expr
+    ;
+
+// forUpdate: solo l’assegnazione  x = expr  (senza ';')
+forUpdate
+    : ID '=' expr
     ;
 
 // blocco di zero o più statement
