@@ -15,6 +15,7 @@ statement
     | whileStmt         // while (expr) { ... }
     | ifStmt            // if (expr) { ... } else { ... }
     | forStmt           // for (init; cond; update) { ... }
+    | nonDetStmt       // non determinismo
     ;
 
 // Istruzione condizionale if-else
