@@ -216,6 +216,13 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDivExpr(GrammaticaParser.DivExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code arrayAccess}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayAccess(GrammaticaParser.ArrayAccessContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code powExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree

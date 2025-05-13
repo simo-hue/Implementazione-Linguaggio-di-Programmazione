@@ -1,5 +1,6 @@
 package myLang;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,55 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return null;
     }
 
+    /**
+     * arrayAccess: ID '[' expr ']'    // x[ i ]
+     */
+    @Override
+    public Object visitArrayAccess(GrammaticaParser.ArrayAccessContext ctx) {
+        String id = ctx.ID().getText();
+        Object arrObj = memory.get(id);
+        if (!(arrObj instanceof List<?>)) {
+            throw new RuntimeException("Variabile '" + id + "' non è un array");
+        }
+        @SuppressWarnings("unchecked")
+        List<Object> array = (List<Object>) arrObj;
+        int index = (int) toNumber( visit(ctx.expr()) );
+        if (index < 0 || index >= array.size()) {
+            return 0;  // o lancia un errore, come preferisci
+        }
+        return array.get(index);
+    }
+
+    /**
+     * assignStmt: ( ID | ID '[' expr ']' ) '=' expr ';'
+     * Gestisce sia x = v che x[i] = v
+     */
+    @Override
+    public Object visitAssignStmt(GrammaticaParser.AssignStmtContext ctx) {
+        // Raccogli tutte le espressioni:
+        // se ce ne sono 2, il primo è l’indice, il secondo è il valore
+        List<GrammaticaParser.ExprContext> exprs = (List<GrammaticaParser.ExprContext>) ctx.expr();
+        String id = ctx.ID().getText();
+        if (exprs.size() == 2) {
+            // array assignment: x[ index ] = value
+            int index = (int) toNumber( visit(exprs.get(0)) );
+            Object value = visit(exprs.get(1));
+            // recupera o crea l’array dinamico
+            @SuppressWarnings("unchecked")
+            List<Object> array = (List<Object>) memory.getOrDefault(id, new ArrayList<>());
+            // allunga la lista se serve
+            while (array.size() <= index) array.add(0);
+            array.set(index, value);
+            memory.put(id, array);
+        } else {
+            // variabile semplice: x = value
+            Object value = visit(exprs.get(0));
+            memory.put(id, value);
+        }
+        return null;
+    }
+
+
 
     /**
      * ifStmt: 'if' '(' expr ')' block ( 'else' block )?
@@ -135,6 +185,11 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
      * assignStmt: ID '=' expr ';'
      * Aggiorna la variabile esistente (o la crea se manca).
      */
+    /**
+     * Vecchio ASSIGN
+     * @param ctx the parse tree
+     * @return
+
     @Override
     public Object visitAssignStmt(GrammaticaParser.AssignStmtContext ctx) {
         String id = ctx.ID().getText();       // nome variabile
@@ -142,6 +197,9 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         memory.put(id, value);                // aggiorna la memoria
         return null;                          // uno statement non restituisce valore
     }
+     **/
+
+
     /** PrintStmt: 'print' '(' expr ')' ';' */
     @Override
     public Object visitPrintStmt(GrammaticaParser.PrintStmtContext ctx) {

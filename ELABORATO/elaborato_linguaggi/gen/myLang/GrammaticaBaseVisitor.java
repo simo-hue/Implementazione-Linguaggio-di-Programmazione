@@ -235,6 +235,13 @@ public class GrammaticaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitArrayAccess(GrammaticaParser.ArrayAccessContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitPowExpr(GrammaticaParser.PowExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

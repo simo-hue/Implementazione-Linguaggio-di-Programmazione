@@ -14,7 +14,7 @@ statement
     | exprStmt          // expr;
     | whileStmt         // while (expr) { ... }
     | ifStmt            // if (expr) { ... } else { ... }
-    | forStmt         // for (init; cond; update) { ... }
+    | forStmt           // for (init; cond; update) { ... }
     ;
 
 // Istruzione condizionale if-else
@@ -26,10 +26,13 @@ ifStmt: 'if' '(' expr ')' block        // blocco "then"
 varDecl
     : 'var' ID '=' expr ';'
     ;
-// Assegnazione “normale”: x = expr;
+
+// Assegnazione “normale”: x = expr; + array[index]
 assignStmt
     : ID '=' expr ';'
+    | ID '[' expr ']'  '=' expr ';'
     ;
+
 // print
 printStmt
     : 'print' '(' expr ')' ';'
@@ -91,6 +94,7 @@ expr
     | expr '!=' expr    # neExpr
     | '-' expr            # unaryMinus
     | '(' expr ')'        # parensExpr
+    | ID '[' expr ']'     # arrayAccess   // lettura x[expr]
     | 'input' '(' ')'     # inputExpr
     | 'str' '(' expr ')'  # strExpr
     | ID                  # idExpr

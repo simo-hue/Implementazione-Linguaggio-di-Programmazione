@@ -30,8 +30,11 @@ public class Main {
             CharStream input = CharStreams.fromFileName(inputFile);
 
             // 3) costruisci lexer e parser
+            // lexer: legge il file
             GrammaticaLexer lexer   = new GrammaticaLexer(input);
+            // per la sequenza di token
             CommonTokenStream tokens = new CommonTokenStream(lexer);
+            // parser: costruisce l’albero sintattico
             GrammaticaParser parser = new GrammaticaParser(tokens);
 
             // 4) avvia il parsing
@@ -39,7 +42,9 @@ public class Main {
 
             // 5) interpreta l’albero sintattico
             EvalVisitor visitor = new EvalVisitor();
-            visitor.visit(tree);   // NON fare println su questo valore
+
+            // Faccio partire la visita dell'albero
+            visitor.visit(tree);
 
         } catch (IOException e) {
             // ora stampi lo stack per capire il vero errore
