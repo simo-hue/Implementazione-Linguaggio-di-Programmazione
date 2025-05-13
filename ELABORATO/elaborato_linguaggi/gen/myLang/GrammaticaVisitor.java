@@ -66,6 +66,13 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStrExpr(GrammaticaParser.StrExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code geExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGeExpr(GrammaticaParser.GeExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code intExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
@@ -80,12 +87,26 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitModExpr(GrammaticaParser.ModExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code gtExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGtExpr(GrammaticaParser.GtExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code inputExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitInputExpr(GrammaticaParser.InputExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code neExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNeExpr(GrammaticaParser.NeExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code parensExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
@@ -115,12 +136,33 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFloatExpr(GrammaticaParser.FloatExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ltExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLtExpr(GrammaticaParser.LtExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code eqExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqExpr(GrammaticaParser.EqExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code addExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAddExpr(GrammaticaParser.AddExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code leExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLeExpr(GrammaticaParser.LeExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code unaryMinus}
 	 * labeled alternative in {@link GrammaticaParser#expr}.

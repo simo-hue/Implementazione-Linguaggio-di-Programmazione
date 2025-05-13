@@ -19,7 +19,8 @@ public class GrammaticaParser extends Parser {
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
-		ID=18, FLOAT=19, INT=20, STRING=21, WS=22, COMMENT=23;
+		GE=18, LE=19, EQ=20, NE=21, GT=22, LT=23, ID=24, FLOAT=25, INT=26, STRING=27, 
+		WS=28, COMMENT=29;
 	public static final int
 		RULE_program = 0, RULE_statement = 1, RULE_varDecl = 2, RULE_assignStmt = 3, 
 		RULE_printStmt = 4, RULE_exprStmt = 5, RULE_whileStmt = 6, RULE_block = 7, 
@@ -35,15 +36,16 @@ public class GrammaticaParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'var'", "'='", "';'", "'print'", "'('", "')'", "'while'", "'{'", 
-			"'}'", "'^'", "'*'", "'/'", "'%'", "'+'", "'-'", "'input'", "'str'"
+			"'}'", "'^'", "'*'", "'/'", "'%'", "'+'", "'-'", "'input'", "'str'", 
+			"'>='", "'<='", "'=='", "'!='", "'>'", "'<'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, "ID", "FLOAT", "INT", "STRING", "WS", 
-			"COMMENT"
+			null, null, null, null, null, null, "GE", "LE", "EQ", "NE", "GT", "LT", 
+			"ID", "FLOAT", "INT", "STRING", "WS", "COMMENT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -135,7 +137,7 @@ public class GrammaticaParser extends Parser {
 			setState(21);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 4161714L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 251887794L) != 0)) {
 				{
 				{
 				setState(18);
@@ -553,7 +555,7 @@ public class GrammaticaParser extends Parser {
 			setState(63);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 4161714L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 251887794L) != 0)) {
 				{
 				{
 				setState(60);
@@ -612,6 +614,30 @@ public class GrammaticaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class GeExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode GE() { return getToken(GrammaticaParser.GE, 0); }
+		public GeExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).enterGeExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).exitGeExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GrammaticaVisitor ) return ((GrammaticaVisitor<? extends T>)visitor).visitGeExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class IntExprContext extends ExprContext {
 		public TerminalNode INT() { return getToken(GrammaticaParser.INT, 0); }
 		public IntExprContext(ExprContext ctx) { copyFrom(ctx); }
@@ -653,6 +679,30 @@ public class GrammaticaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class GtExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode GT() { return getToken(GrammaticaParser.GT, 0); }
+		public GtExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).enterGtExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).exitGtExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GrammaticaVisitor ) return ((GrammaticaVisitor<? extends T>)visitor).visitGtExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class InputExprContext extends ExprContext {
 		public InputExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
@@ -666,6 +716,30 @@ public class GrammaticaParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof GrammaticaVisitor ) return ((GrammaticaVisitor<? extends T>)visitor).visitInputExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class NeExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode NE() { return getToken(GrammaticaParser.NE, 0); }
+		public NeExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).enterNeExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).exitNeExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GrammaticaVisitor ) return ((GrammaticaVisitor<? extends T>)visitor).visitNeExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -749,6 +823,54 @@ public class GrammaticaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class LtExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode LT() { return getToken(GrammaticaParser.LT, 0); }
+		public LtExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).enterLtExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).exitLtExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GrammaticaVisitor ) return ((GrammaticaVisitor<? extends T>)visitor).visitLtExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class EqExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode EQ() { return getToken(GrammaticaParser.EQ, 0); }
+		public EqExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).enterEqExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).exitEqExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GrammaticaVisitor ) return ((GrammaticaVisitor<? extends T>)visitor).visitEqExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class AddExprContext extends ExprContext {
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
@@ -768,6 +890,30 @@ public class GrammaticaParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof GrammaticaVisitor ) return ((GrammaticaVisitor<? extends T>)visitor).visitAddExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class LeExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode LE() { return getToken(GrammaticaParser.LE, 0); }
+		public LeExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).enterLeExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaListener ) ((GrammaticaListener)listener).exitLeExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GrammaticaVisitor ) return ((GrammaticaVisitor<? extends T>)visitor).visitLeExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -990,7 +1136,7 @@ public class GrammaticaParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(109);
+			setState(127);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -998,7 +1144,7 @@ public class GrammaticaParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(107);
+					setState(125);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 					case 1:
@@ -1006,11 +1152,11 @@ public class GrammaticaParser extends Parser {
 						_localctx = new PowExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(89);
-						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
+						if (!(precpred(_ctx, 20))) throw new FailedPredicateException(this, "precpred(_ctx, 20)");
 						setState(90);
 						match(T__9);
 						setState(91);
-						expr(15);
+						expr(21);
 						}
 						break;
 					case 2:
@@ -1018,11 +1164,11 @@ public class GrammaticaParser extends Parser {
 						_localctx = new MulExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(92);
-						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
+						if (!(precpred(_ctx, 19))) throw new FailedPredicateException(this, "precpred(_ctx, 19)");
 						setState(93);
 						match(T__10);
 						setState(94);
-						expr(14);
+						expr(20);
 						}
 						break;
 					case 3:
@@ -1030,11 +1176,11 @@ public class GrammaticaParser extends Parser {
 						_localctx = new DivExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(95);
-						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
+						if (!(precpred(_ctx, 18))) throw new FailedPredicateException(this, "precpred(_ctx, 18)");
 						setState(96);
 						match(T__11);
 						setState(97);
-						expr(13);
+						expr(19);
 						}
 						break;
 					case 4:
@@ -1042,11 +1188,11 @@ public class GrammaticaParser extends Parser {
 						_localctx = new ModExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(98);
-						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
+						if (!(precpred(_ctx, 17))) throw new FailedPredicateException(this, "precpred(_ctx, 17)");
 						setState(99);
 						match(T__12);
 						setState(100);
-						expr(12);
+						expr(18);
 						}
 						break;
 					case 5:
@@ -1054,11 +1200,11 @@ public class GrammaticaParser extends Parser {
 						_localctx = new AddExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(101);
-						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
+						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
 						setState(102);
 						match(T__13);
 						setState(103);
-						expr(11);
+						expr(17);
 						}
 						break;
 					case 6:
@@ -1066,17 +1212,89 @@ public class GrammaticaParser extends Parser {
 						_localctx = new SubExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(104);
-						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
+						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
 						setState(105);
 						match(T__14);
 						setState(106);
+						expr(16);
+						}
+						break;
+					case 7:
+						{
+						_localctx = new LtExprContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(107);
+						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
+						setState(108);
+						match(LT);
+						setState(109);
+						expr(15);
+						}
+						break;
+					case 8:
+						{
+						_localctx = new GtExprContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(110);
+						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
+						setState(111);
+						match(GT);
+						setState(112);
+						expr(14);
+						}
+						break;
+					case 9:
+						{
+						_localctx = new LeExprContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(113);
+						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
+						setState(114);
+						match(LE);
+						setState(115);
+						expr(13);
+						}
+						break;
+					case 10:
+						{
+						_localctx = new GeExprContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(116);
+						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
+						setState(117);
+						match(GE);
+						setState(118);
+						expr(12);
+						}
+						break;
+					case 11:
+						{
+						_localctx = new EqExprContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(119);
+						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
+						setState(120);
+						match(EQ);
+						setState(121);
+						expr(11);
+						}
+						break;
+					case 12:
+						{
+						_localctx = new NeExprContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(122);
+						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
+						setState(123);
+						match(NE);
+						setState(124);
 						expr(10);
 						}
 						break;
 					}
 					} 
 				}
-				setState(111);
+				setState(129);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			}
@@ -1103,86 +1321,109 @@ public class GrammaticaParser extends Parser {
 	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 14);
+			return precpred(_ctx, 20);
 		case 1:
-			return precpred(_ctx, 13);
+			return precpred(_ctx, 19);
 		case 2:
-			return precpred(_ctx, 12);
+			return precpred(_ctx, 18);
 		case 3:
-			return precpred(_ctx, 11);
+			return precpred(_ctx, 17);
 		case 4:
-			return precpred(_ctx, 10);
+			return precpred(_ctx, 16);
 		case 5:
+			return precpred(_ctx, 15);
+		case 6:
+			return precpred(_ctx, 14);
+		case 7:
+			return precpred(_ctx, 13);
+		case 8:
+			return precpred(_ctx, 12);
+		case 9:
+			return precpred(_ctx, 11);
+		case 10:
+			return precpred(_ctx, 10);
+		case 11:
 			return precpred(_ctx, 9);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0017q\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
-		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
-		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
-		"\b\u0007\b\u0001\u0000\u0005\u0000\u0014\b\u0000\n\u0000\f\u0000\u0017"+
-		"\t\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0003\u0001 \b\u0001\u0001\u0002\u0001\u0002\u0001"+
-		"\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0003\u0001\u0003\u0001"+
-		"\u0003\u0001\u0003\u0001\u0003\u0001\u0004\u0001\u0004\u0001\u0004\u0001"+
-		"\u0004\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005\u0001\u0005\u0001"+
-		"\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001"+
-		"\u0007\u0001\u0007\u0005\u0007>\b\u0007\n\u0007\f\u0007A\t\u0007\u0001"+
-		"\u0007\u0001\u0007\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
+		"\u0004\u0001\u001d\u0083\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
+		"\u0002\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004"+
+		"\u0002\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007"+
+		"\u0002\b\u0007\b\u0001\u0000\u0005\u0000\u0014\b\u0000\n\u0000\f\u0000"+
+		"\u0017\t\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0003\u0001 \b\u0001\u0001\u0002\u0001\u0002"+
+		"\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0003\u0001\u0003"+
+		"\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0004\u0001\u0004\u0001\u0004"+
+		"\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005\u0001\u0005"+
+		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
+		"\u0001\u0007\u0001\u0007\u0005\u0007>\b\u0007\n\u0007\f\u0007A\t\u0007"+
+		"\u0001\u0007\u0001\u0007\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
 		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
-		"\b\u0001\b\u0001\b\u0001\b\u0003\bX\b\b\u0001\b\u0001\b\u0001\b\u0001"+
+		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0003\bX\b\b\u0001\b\u0001\b\u0001"+
 		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
-		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0005\bl\b\b\n\b\f\bo\t\b\u0001"+
-		"\b\u0000\u0001\u0010\t\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0000"+
-		"\u0000z\u0000\u0015\u0001\u0000\u0000\u0000\u0002\u001f\u0001\u0000\u0000"+
-		"\u0000\u0004!\u0001\u0000\u0000\u0000\u0006\'\u0001\u0000\u0000\u0000"+
-		"\b,\u0001\u0000\u0000\u0000\n2\u0001\u0000\u0000\u0000\f5\u0001\u0000"+
-		"\u0000\u0000\u000e;\u0001\u0000\u0000\u0000\u0010W\u0001\u0000\u0000\u0000"+
-		"\u0012\u0014\u0003\u0002\u0001\u0000\u0013\u0012\u0001\u0000\u0000\u0000"+
-		"\u0014\u0017\u0001\u0000\u0000\u0000\u0015\u0013\u0001\u0000\u0000\u0000"+
-		"\u0015\u0016\u0001\u0000\u0000\u0000\u0016\u0018\u0001\u0000\u0000\u0000"+
-		"\u0017\u0015\u0001\u0000\u0000\u0000\u0018\u0019\u0005\u0000\u0000\u0001"+
-		"\u0019\u0001\u0001\u0000\u0000\u0000\u001a \u0003\u0004\u0002\u0000\u001b"+
-		" \u0003\u0006\u0003\u0000\u001c \u0003\b\u0004\u0000\u001d \u0003\n\u0005"+
-		"\u0000\u001e \u0003\f\u0006\u0000\u001f\u001a\u0001\u0000\u0000\u0000"+
-		"\u001f\u001b\u0001\u0000\u0000\u0000\u001f\u001c\u0001\u0000\u0000\u0000"+
-		"\u001f\u001d\u0001\u0000\u0000\u0000\u001f\u001e\u0001\u0000\u0000\u0000"+
-		" \u0003\u0001\u0000\u0000\u0000!\"\u0005\u0001\u0000\u0000\"#\u0005\u0012"+
-		"\u0000\u0000#$\u0005\u0002\u0000\u0000$%\u0003\u0010\b\u0000%&\u0005\u0003"+
-		"\u0000\u0000&\u0005\u0001\u0000\u0000\u0000\'(\u0005\u0012\u0000\u0000"+
-		"()\u0005\u0002\u0000\u0000)*\u0003\u0010\b\u0000*+\u0005\u0003\u0000\u0000"+
-		"+\u0007\u0001\u0000\u0000\u0000,-\u0005\u0004\u0000\u0000-.\u0005\u0005"+
-		"\u0000\u0000./\u0003\u0010\b\u0000/0\u0005\u0006\u0000\u000001\u0005\u0003"+
-		"\u0000\u00001\t\u0001\u0000\u0000\u000023\u0003\u0010\b\u000034\u0005"+
-		"\u0003\u0000\u00004\u000b\u0001\u0000\u0000\u000056\u0005\u0007\u0000"+
-		"\u000067\u0005\u0005\u0000\u000078\u0003\u0010\b\u000089\u0005\u0006\u0000"+
-		"\u00009:\u0003\u000e\u0007\u0000:\r\u0001\u0000\u0000\u0000;?\u0005\b"+
-		"\u0000\u0000<>\u0003\u0002\u0001\u0000=<\u0001\u0000\u0000\u0000>A\u0001"+
-		"\u0000\u0000\u0000?=\u0001\u0000\u0000\u0000?@\u0001\u0000\u0000\u0000"+
-		"@B\u0001\u0000\u0000\u0000A?\u0001\u0000\u0000\u0000BC\u0005\t\u0000\u0000"+
-		"C\u000f\u0001\u0000\u0000\u0000DE\u0006\b\uffff\uffff\u0000EF\u0005\u000f"+
-		"\u0000\u0000FX\u0003\u0010\b\bGH\u0005\u0005\u0000\u0000HI\u0003\u0010"+
-		"\b\u0000IJ\u0005\u0006\u0000\u0000JX\u0001\u0000\u0000\u0000KL\u0005\u0010"+
-		"\u0000\u0000LM\u0005\u0005\u0000\u0000MX\u0005\u0006\u0000\u0000NO\u0005"+
-		"\u0011\u0000\u0000OP\u0005\u0005\u0000\u0000PQ\u0003\u0010\b\u0000QR\u0005"+
-		"\u0006\u0000\u0000RX\u0001\u0000\u0000\u0000SX\u0005\u0012\u0000\u0000"+
-		"TX\u0005\u0013\u0000\u0000UX\u0005\u0014\u0000\u0000VX\u0005\u0015\u0000"+
-		"\u0000WD\u0001\u0000\u0000\u0000WG\u0001\u0000\u0000\u0000WK\u0001\u0000"+
-		"\u0000\u0000WN\u0001\u0000\u0000\u0000WS\u0001\u0000\u0000\u0000WT\u0001"+
-		"\u0000\u0000\u0000WU\u0001\u0000\u0000\u0000WV\u0001\u0000\u0000\u0000"+
-		"Xm\u0001\u0000\u0000\u0000YZ\n\u000e\u0000\u0000Z[\u0005\n\u0000\u0000"+
-		"[l\u0003\u0010\b\u000f\\]\n\r\u0000\u0000]^\u0005\u000b\u0000\u0000^l"+
-		"\u0003\u0010\b\u000e_`\n\f\u0000\u0000`a\u0005\f\u0000\u0000al\u0003\u0010"+
-		"\b\rbc\n\u000b\u0000\u0000cd\u0005\r\u0000\u0000dl\u0003\u0010\b\fef\n"+
-		"\n\u0000\u0000fg\u0005\u000e\u0000\u0000gl\u0003\u0010\b\u000bhi\n\t\u0000"+
-		"\u0000ij\u0005\u000f\u0000\u0000jl\u0003\u0010\b\nkY\u0001\u0000\u0000"+
-		"\u0000k\\\u0001\u0000\u0000\u0000k_\u0001\u0000\u0000\u0000kb\u0001\u0000"+
-		"\u0000\u0000ke\u0001\u0000\u0000\u0000kh\u0001\u0000\u0000\u0000lo\u0001"+
-		"\u0000\u0000\u0000mk\u0001\u0000\u0000\u0000mn\u0001\u0000\u0000\u0000"+
-		"n\u0011\u0001\u0000\u0000\u0000om\u0001\u0000\u0000\u0000\u0006\u0015"+
-		"\u001f?Wkm";
+		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
+		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
+		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0005\b~\b\b\n\b\f"+
+		"\b\u0081\t\b\u0001\b\u0000\u0001\u0010\t\u0000\u0002\u0004\u0006\b\n\f"+
+		"\u000e\u0010\u0000\u0000\u0092\u0000\u0015\u0001\u0000\u0000\u0000\u0002"+
+		"\u001f\u0001\u0000\u0000\u0000\u0004!\u0001\u0000\u0000\u0000\u0006\'"+
+		"\u0001\u0000\u0000\u0000\b,\u0001\u0000\u0000\u0000\n2\u0001\u0000\u0000"+
+		"\u0000\f5\u0001\u0000\u0000\u0000\u000e;\u0001\u0000\u0000\u0000\u0010"+
+		"W\u0001\u0000\u0000\u0000\u0012\u0014\u0003\u0002\u0001\u0000\u0013\u0012"+
+		"\u0001\u0000\u0000\u0000\u0014\u0017\u0001\u0000\u0000\u0000\u0015\u0013"+
+		"\u0001\u0000\u0000\u0000\u0015\u0016\u0001\u0000\u0000\u0000\u0016\u0018"+
+		"\u0001\u0000\u0000\u0000\u0017\u0015\u0001\u0000\u0000\u0000\u0018\u0019"+
+		"\u0005\u0000\u0000\u0001\u0019\u0001\u0001\u0000\u0000\u0000\u001a \u0003"+
+		"\u0004\u0002\u0000\u001b \u0003\u0006\u0003\u0000\u001c \u0003\b\u0004"+
+		"\u0000\u001d \u0003\n\u0005\u0000\u001e \u0003\f\u0006\u0000\u001f\u001a"+
+		"\u0001\u0000\u0000\u0000\u001f\u001b\u0001\u0000\u0000\u0000\u001f\u001c"+
+		"\u0001\u0000\u0000\u0000\u001f\u001d\u0001\u0000\u0000\u0000\u001f\u001e"+
+		"\u0001\u0000\u0000\u0000 \u0003\u0001\u0000\u0000\u0000!\"\u0005\u0001"+
+		"\u0000\u0000\"#\u0005\u0018\u0000\u0000#$\u0005\u0002\u0000\u0000$%\u0003"+
+		"\u0010\b\u0000%&\u0005\u0003\u0000\u0000&\u0005\u0001\u0000\u0000\u0000"+
+		"\'(\u0005\u0018\u0000\u0000()\u0005\u0002\u0000\u0000)*\u0003\u0010\b"+
+		"\u0000*+\u0005\u0003\u0000\u0000+\u0007\u0001\u0000\u0000\u0000,-\u0005"+
+		"\u0004\u0000\u0000-.\u0005\u0005\u0000\u0000./\u0003\u0010\b\u0000/0\u0005"+
+		"\u0006\u0000\u000001\u0005\u0003\u0000\u00001\t\u0001\u0000\u0000\u0000"+
+		"23\u0003\u0010\b\u000034\u0005\u0003\u0000\u00004\u000b\u0001\u0000\u0000"+
+		"\u000056\u0005\u0007\u0000\u000067\u0005\u0005\u0000\u000078\u0003\u0010"+
+		"\b\u000089\u0005\u0006\u0000\u00009:\u0003\u000e\u0007\u0000:\r\u0001"+
+		"\u0000\u0000\u0000;?\u0005\b\u0000\u0000<>\u0003\u0002\u0001\u0000=<\u0001"+
+		"\u0000\u0000\u0000>A\u0001\u0000\u0000\u0000?=\u0001\u0000\u0000\u0000"+
+		"?@\u0001\u0000\u0000\u0000@B\u0001\u0000\u0000\u0000A?\u0001\u0000\u0000"+
+		"\u0000BC\u0005\t\u0000\u0000C\u000f\u0001\u0000\u0000\u0000DE\u0006\b"+
+		"\uffff\uffff\u0000EF\u0005\u000f\u0000\u0000FX\u0003\u0010\b\bGH\u0005"+
+		"\u0005\u0000\u0000HI\u0003\u0010\b\u0000IJ\u0005\u0006\u0000\u0000JX\u0001"+
+		"\u0000\u0000\u0000KL\u0005\u0010\u0000\u0000LM\u0005\u0005\u0000\u0000"+
+		"MX\u0005\u0006\u0000\u0000NO\u0005\u0011\u0000\u0000OP\u0005\u0005\u0000"+
+		"\u0000PQ\u0003\u0010\b\u0000QR\u0005\u0006\u0000\u0000RX\u0001\u0000\u0000"+
+		"\u0000SX\u0005\u0018\u0000\u0000TX\u0005\u0019\u0000\u0000UX\u0005\u001a"+
+		"\u0000\u0000VX\u0005\u001b\u0000\u0000WD\u0001\u0000\u0000\u0000WG\u0001"+
+		"\u0000\u0000\u0000WK\u0001\u0000\u0000\u0000WN\u0001\u0000\u0000\u0000"+
+		"WS\u0001\u0000\u0000\u0000WT\u0001\u0000\u0000\u0000WU\u0001\u0000\u0000"+
+		"\u0000WV\u0001\u0000\u0000\u0000X\u007f\u0001\u0000\u0000\u0000YZ\n\u0014"+
+		"\u0000\u0000Z[\u0005\n\u0000\u0000[~\u0003\u0010\b\u0015\\]\n\u0013\u0000"+
+		"\u0000]^\u0005\u000b\u0000\u0000^~\u0003\u0010\b\u0014_`\n\u0012\u0000"+
+		"\u0000`a\u0005\f\u0000\u0000a~\u0003\u0010\b\u0013bc\n\u0011\u0000\u0000"+
+		"cd\u0005\r\u0000\u0000d~\u0003\u0010\b\u0012ef\n\u0010\u0000\u0000fg\u0005"+
+		"\u000e\u0000\u0000g~\u0003\u0010\b\u0011hi\n\u000f\u0000\u0000ij\u0005"+
+		"\u000f\u0000\u0000j~\u0003\u0010\b\u0010kl\n\u000e\u0000\u0000lm\u0005"+
+		"\u0017\u0000\u0000m~\u0003\u0010\b\u000fno\n\r\u0000\u0000op\u0005\u0016"+
+		"\u0000\u0000p~\u0003\u0010\b\u000eqr\n\f\u0000\u0000rs\u0005\u0013\u0000"+
+		"\u0000s~\u0003\u0010\b\rtu\n\u000b\u0000\u0000uv\u0005\u0012\u0000\u0000"+
+		"v~\u0003\u0010\b\fwx\n\n\u0000\u0000xy\u0005\u0014\u0000\u0000y~\u0003"+
+		"\u0010\b\u000bz{\n\t\u0000\u0000{|\u0005\u0015\u0000\u0000|~\u0003\u0010"+
+		"\b\n}Y\u0001\u0000\u0000\u0000}\\\u0001\u0000\u0000\u0000}_\u0001\u0000"+
+		"\u0000\u0000}b\u0001\u0000\u0000\u0000}e\u0001\u0000\u0000\u0000}h\u0001"+
+		"\u0000\u0000\u0000}k\u0001\u0000\u0000\u0000}n\u0001\u0000\u0000\u0000"+
+		"}q\u0001\u0000\u0000\u0000}t\u0001\u0000\u0000\u0000}w\u0001\u0000\u0000"+
+		"\u0000}z\u0001\u0000\u0000\u0000~\u0081\u0001\u0000\u0000\u0000\u007f"+
+		"}\u0001\u0000\u0000\u0000\u007f\u0080\u0001\u0000\u0000\u0000\u0080\u0011"+
+		"\u0001\u0000\u0000\u0000\u0081\u007f\u0001\u0000\u0000\u0000\u0006\u0015"+
+		"\u001f?W}\u007f";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

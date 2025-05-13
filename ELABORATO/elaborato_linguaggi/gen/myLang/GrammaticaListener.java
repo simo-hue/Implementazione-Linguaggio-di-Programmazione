@@ -100,6 +100,18 @@ public interface GrammaticaListener extends ParseTreeListener {
 	 */
 	void exitStrExpr(GrammaticaParser.StrExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code geExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterGeExpr(GrammaticaParser.GeExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code geExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitGeExpr(GrammaticaParser.GeExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code intExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
@@ -124,6 +136,18 @@ public interface GrammaticaListener extends ParseTreeListener {
 	 */
 	void exitModExpr(GrammaticaParser.ModExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code gtExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterGtExpr(GrammaticaParser.GtExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code gtExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitGtExpr(GrammaticaParser.GtExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code inputExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
@@ -135,6 +159,18 @@ public interface GrammaticaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInputExpr(GrammaticaParser.InputExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code neExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeExpr(GrammaticaParser.NeExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code neExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeExpr(GrammaticaParser.NeExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code parensExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
@@ -184,6 +220,30 @@ public interface GrammaticaListener extends ParseTreeListener {
 	 */
 	void exitFloatExpr(GrammaticaParser.FloatExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ltExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLtExpr(GrammaticaParser.LtExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ltExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLtExpr(GrammaticaParser.LtExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code eqExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqExpr(GrammaticaParser.EqExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code eqExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqExpr(GrammaticaParser.EqExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code addExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
@@ -195,6 +255,18 @@ public interface GrammaticaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAddExpr(GrammaticaParser.AddExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code leExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeExpr(GrammaticaParser.LeExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code leExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeExpr(GrammaticaParser.LeExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code unaryMinus}
 	 * labeled alternative in {@link GrammaticaParser#expr}.

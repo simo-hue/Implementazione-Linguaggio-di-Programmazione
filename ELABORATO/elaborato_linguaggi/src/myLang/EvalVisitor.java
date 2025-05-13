@@ -198,4 +198,54 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         if (obj instanceof Double)  return (Double)obj;
         throw new RuntimeException("Non è un numero: " + obj);
     }
+
+    @Override
+    public Object visitLtExpr(GrammaticaParser.LtExprContext ctx) {
+        double l = toNumber(visit(ctx.expr(0)));
+        double r = toNumber(visit(ctx.expr(1)));
+        return l < r ? 1 : 0;
+    }
+
+    @Override
+    public Object visitGtExpr(GrammaticaParser.GtExprContext ctx) {
+        double l = toNumber(visit(ctx.expr(0)));
+        double r = toNumber(visit(ctx.expr(1)));
+        return l > r ? 1 : 0;
+    }
+
+    @Override
+    public Object visitLeExpr(GrammaticaParser.LeExprContext ctx) {
+        double l = toNumber(visit(ctx.expr(0)));
+        double r = toNumber(visit(ctx.expr(1)));
+        return l <= r ? 1 : 0;
+    }
+
+    @Override
+    public Object visitGeExpr(GrammaticaParser.GeExprContext ctx) {
+        double l = toNumber(visit(ctx.expr(0)));
+        double r = toNumber(visit(ctx.expr(1)));
+        return l >= r ? 1 : 0;
+    }
+
+    @Override
+    public Object visitEqExpr(GrammaticaParser.EqExprContext ctx) {
+        Object l = visit(ctx.expr(0));
+        Object r = visit(ctx.expr(1));
+        // confronto stringhe o numeri
+        if (l instanceof String || r instanceof String) {
+            return l.toString().equals(r.toString()) ? 1 : 0;
+        }
+        return toNumber(l) == toNumber(r) ? 1 : 0;
+    }
+
+    @Override
+    public Object visitNeExpr(GrammaticaParser.NeExprContext ctx) {
+        Object l = visit(ctx.expr(0));
+        Object r = visit(ctx.expr(1));
+        if (l instanceof String || r instanceof String) {
+            return !l.toString().equals(r.toString()) ? 1 : 0;
+        }
+        return toNumber(l) != toNumber(r) ? 1 : 0;
+    }
+
 }

@@ -51,6 +51,12 @@ expr
     | expr '%' expr       # modExpr
     | expr '+' expr       # addExpr
     | expr '-' expr       # subExpr
+    | expr '<' expr     # ltExpr
+    | expr '>' expr     # gtExpr
+    | expr '<=' expr    # leExpr
+    | expr '>=' expr    # geExpr
+    | expr '==' expr    # eqExpr
+    | expr '!=' expr    # neExpr
     | '-' expr            # unaryMinus
     | '(' expr ')'        # parensExpr
     | 'input' '(' ')'     # inputExpr
@@ -64,6 +70,12 @@ expr
 //////////////////////////////////////////////////////
 // LEXER RULES
 //////////////////////////////////////////////////////
+GE      : '>=' ;
+LE      : '<=' ;
+EQ      : '==' ;
+NE      : '!=' ;
+GT      : '>' ;
+LT      : '<' ;
 ID      : [a-zA-Z_][a-zA-Z0-9_]* ;
 FLOAT   : [0-9]+ '.' [0-9]+ ;
 INT     : [0-9]+ ;
