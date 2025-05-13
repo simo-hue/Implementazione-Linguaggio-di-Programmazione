@@ -89,6 +89,18 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNonDetStmt(GrammaticaParser.NonDetStmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#funDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunDecl(GrammaticaParser.FunDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#retStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRetStmt(GrammaticaParser.RetStmtContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code strExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
@@ -228,6 +240,13 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitArrayAccess(GrammaticaParser.ArrayAccessContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code callExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCallExpr(GrammaticaParser.CallExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code powExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.

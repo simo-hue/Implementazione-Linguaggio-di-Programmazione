@@ -17,6 +17,11 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     // Generatore Random per ND ( non determinismo )
     private final Random rnd = new Random();
 
+    // eccezione interna per gestire il return
+    private static class ReturnValue extends RuntimeException {
+        final Object value;
+        ReturnValue(Object v) { super(null, null, false, false); value = v; }
+    }
     @Override
     public Object visitWhileStmt(GrammaticaParser.WhileStmtContext ctx) {
         // Valuta la condizione
@@ -450,4 +455,14 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         // Terminata la scelta, non ripete più nulla
         return null;
     }
+
+    @Override
+    public Object visitFunDecl(GrammaticaParser.FunDeclContext ctx) {
+        String name = ctx.ID().getText();
+        functions.put(name, ctx);
+        return null;  // non esegue subito il corpo
+    }
+
+
+
 }

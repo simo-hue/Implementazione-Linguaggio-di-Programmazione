@@ -16,6 +16,8 @@ statement
     | ifStmt            // if (expr) { ... } else { ... }
     | forStmt           // for (init; cond; update) { ... }
     | nonDetStmt       // non determinismo
+    | funDecl       // dichiarazione di funzione
+    | retStmt       // return in funzione
     ;
 
 // Istruzione condizionale if-else
@@ -73,11 +75,17 @@ block : '{' statement* '}' ;
 // nonDeterministic statement: scegli a caso fra block1 e stmt2
 nonDetStmt: block 'ND' '[' statement ']' ;  // { … } ND [ … ];
 
+// Dichiarazione funzione senza parametri
+funDecl : 'fun' ID '(' ')' block ;
+
+// Return di una funzione
+retStmt : 'ret' expr ';' ;
+
 // --------------------------------------------------
 
 // ESPRESSIONI
-expr
-    : expr '++' expr      # concatExpr
+expr : ID '(' ')'           # callExpr     // invocazione funzione
+    | expr '++' expr       # concatExpr
     | expr '^' expr       # powExpr
     | expr '*' expr       # mulExpr
     | expr '/' expr       # divExpr
