@@ -13,6 +13,12 @@ statement
     | printStmt         // print(expr);
     | exprStmt          // expr;
     | whileStmt         // while (expr) { ... }
+    | ifStmt            // if (expr) { ... } else { ... }
+    ;
+
+// Istruzione condizionale if-else
+ifStmt: 'if' '(' expr ')' block        // blocco "then"
+      ( 'else' block )?             // opzionale blocco "else"
     ;
 
 // dichiarazione variabile
@@ -32,7 +38,7 @@ exprStmt
     : expr ';'
     ;
 
-// ------------- NUOVE REGOLE PER WHILE -------------
+// while
 whileStmt
     : 'while' '(' expr ')' block
     ;
@@ -45,7 +51,8 @@ block
 
 // ESPRESSIONI
 expr
-    : expr '^' expr       # powExpr
+    : expr '++' expr      # concatExpr
+    | expr '^' expr       # powExpr
     | expr '*' expr       # mulExpr
     | expr '/' expr       # divExpr
     | expr '%' expr       # modExpr

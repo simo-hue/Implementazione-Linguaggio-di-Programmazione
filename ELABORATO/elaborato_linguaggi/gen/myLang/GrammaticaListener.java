@@ -28,6 +28,16 @@ public interface GrammaticaListener extends ParseTreeListener {
 	 */
 	void exitStatement(GrammaticaParser.StatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GrammaticaParser#ifStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfStmt(GrammaticaParser.IfStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammaticaParser#ifStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfStmt(GrammaticaParser.IfStmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GrammaticaParser#varDecl}.
 	 * @param ctx the parse tree
 	 */
@@ -195,6 +205,18 @@ public interface GrammaticaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSubExpr(GrammaticaParser.SubExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code concatExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterConcatExpr(GrammaticaParser.ConcatExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code concatExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitConcatExpr(GrammaticaParser.ConcatExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code stringExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.

@@ -23,6 +23,12 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(GrammaticaParser.StatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#ifStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStmt(GrammaticaParser.IfStmtContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link GrammaticaParser#varDecl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -121,6 +127,13 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitSubExpr(GrammaticaParser.SubExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code concatExpr}
+	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConcatExpr(GrammaticaParser.ConcatExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code stringExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.

@@ -1,5 +1,6 @@
-var i = 3;
-while (i > 0) {
-  print(i);
-  i = i - 1;
+var x = 5;
+if (x > 3) {
+  print(str(x) ++ " è > 3");
+} else {
+  print("minore o uguale a 3");
 }

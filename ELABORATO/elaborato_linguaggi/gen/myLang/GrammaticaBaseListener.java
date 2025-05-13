@@ -41,6 +41,18 @@ public class GrammaticaBaseListener implements GrammaticaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterIfStmt(GrammaticaParser.IfStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIfStmt(GrammaticaParser.IfStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVarDecl(GrammaticaParser.VarDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -216,6 +228,18 @@ public class GrammaticaBaseListener implements GrammaticaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSubExpr(GrammaticaParser.SubExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConcatExpr(GrammaticaParser.ConcatExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConcatExpr(GrammaticaParser.ConcatExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

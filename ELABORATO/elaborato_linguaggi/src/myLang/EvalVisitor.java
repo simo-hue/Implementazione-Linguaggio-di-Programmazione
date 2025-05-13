@@ -33,6 +33,42 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return null;  // i cicli non restituiscono un valore
     }
 
+    /**
+     * ifStmt: 'if' '(' expr ')' block ( 'else' block )?
+     */
+    @Override
+    public Object visitIfStmt(GrammaticaParser.IfStmtContext ctx) {
+        // 1) valuta la condizione
+        double cond = toNumber(visit(ctx.expr()));
+        if (cond != 0) {
+            // vero: esegui il primo block
+            for (GrammaticaParser.StatementContext st : ctx.block(0).statement()) {
+                visit(st);
+            }
+        } else if (ctx.block().size() > 1) {
+            // falso ed esiste un blocco "else": esegui il secondo
+            for (GrammaticaParser.StatementContext st : ctx.block(1).statement()) {
+                visit(st);
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * concatExpr: expr '++' expr
+     * Esegue la concatenazione di due valori:
+     * converte entrambi in stringa e li unisce.
+     */
+    @Override
+    public Object visitConcatExpr(GrammaticaParser.ConcatExprContext ctx) {
+        // Valuta i due operandi
+        Object left  = visit(ctx.expr(0));
+        Object right = visit(ctx.expr(1));
+        // Converte in stringa e unisce
+        return left.toString() + right.toString();
+    }
+
     /** VarDecl: 'var' ID '=' expr ';' */
     @Override
     public Object visitVarDecl(GrammaticaParser.VarDeclContext ctx) {
