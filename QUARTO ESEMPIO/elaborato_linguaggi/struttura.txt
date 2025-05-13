@@ -1,8 +1,48 @@
 elaborato_linguaggi
 ├── antlr4-runtime-4.8-1.jar
 ├── elaborato_linguaggi.iml
-├── gen
+├── out
+│   └── production
+│       └── elaborato_linguaggi
+│           └── myLang
+│               ├── EvalVisitor.class
+│               ├── Grammatica.g4
+│               ├── Grammatica.interp
+│               ├── Grammatica.tokens
+│               ├── GrammaticaBaseListener.class
+│               ├── GrammaticaBaseVisitor.class
+│               ├── GrammaticaLexer.class
+│               ├── GrammaticaLexer.interp
+│               ├── GrammaticaLexer.tokens
+│               ├── GrammaticaListener.class
+│               ├── GrammaticaParser$AddExprContext.class
+│               ├── GrammaticaParser$DivExprContext.class
+│               ├── GrammaticaParser$ExprContext.class
+│               ├── GrammaticaParser$ExprStmtContext.class
+│               ├── GrammaticaParser$FloatExprContext.class
+│               ├── GrammaticaParser$IdExprContext.class
+│               ├── GrammaticaParser$InputExprContext.class
+│               ├── GrammaticaParser$IntExprContext.class
+│               ├── GrammaticaParser$ModExprContext.class
+│               ├── GrammaticaParser$MulExprContext.class
+│               ├── GrammaticaParser$ParensExprContext.class
+│               ├── GrammaticaParser$PowExprContext.class
+│               ├── GrammaticaParser$PrintStmtContext.class
+│               ├── GrammaticaParser$ProgramContext.class
+│               ├── GrammaticaParser$StatementContext.class
+│               ├── GrammaticaParser$StrExprContext.class
+│               ├── GrammaticaParser$StringExprContext.class
+│               ├── GrammaticaParser$SubExprContext.class
+│               ├── GrammaticaParser$UnaryMinusContext.class
+│               ├── GrammaticaParser$VarDeclContext.class
+│               ├── GrammaticaParser.class
+│               ├── GrammaticaVisitor.class
+│               ├── Main.class
+│               └── input.txt
+├── src
 │   └── myLang
+│       ├── EvalVisitor.java
+│       ├── Grammatica.g4
 │       ├── Grammatica.interp
 │       ├── Grammatica.tokens
 │       ├── GrammaticaBaseListener.java
@@ -12,18 +52,9 @@ elaborato_linguaggi
 │       ├── GrammaticaLexer.tokens
 │       ├── GrammaticaListener.java
 │       ├── GrammaticaParser.java
-│       └── GrammaticaVisitor.java
-├── out
-│   └── production
-│       └── elaborato_linguaggi
-│           └── myLang
-│               ├── Grammatica.g4
-│               └── input.txt
-├── src
-│   └── myLang
-│       ├── Grammatica.g4
+│       ├── GrammaticaVisitor.java
 │       ├── Main.java
 │       └── input.txt
 └── struttura.txt
 
-9 directories, 18 files
+7 directories, 51 files
