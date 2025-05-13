@@ -53,6 +53,18 @@ public class GrammaticaBaseListener implements GrammaticaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAssignStmt(GrammaticaParser.AssignStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssignStmt(GrammaticaParser.AssignStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPrintStmt(GrammaticaParser.PrintStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -42,6 +42,17 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return null;
     }
 
+    /**
+     * assignStmt: ID '=' expr ';'
+     * Aggiorna la variabile esistente (o la crea se manca).
+     */
+    @Override
+    public Object visitAssignStmt(GrammaticaParser.AssignStmtContext ctx) {
+        String id = ctx.ID().getText();       // nome variabile
+        Object value = visit(ctx.expr());     // valuta il lato destro
+        memory.put(id, value);                // aggiorna la memoria
+        return null;                          // uno statement non restituisce valore
+    }
     /** PrintStmt: 'print' '(' expr ')' ';' */
     @Override
     public Object visitPrintStmt(GrammaticaParser.PrintStmtContext ctx) {

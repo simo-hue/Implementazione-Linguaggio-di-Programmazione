@@ -29,6 +29,12 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVarDecl(GrammaticaParser.VarDeclContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#assignStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignStmt(GrammaticaParser.AssignStmtContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link GrammaticaParser#printStmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

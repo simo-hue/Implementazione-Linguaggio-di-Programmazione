@@ -38,6 +38,16 @@ public interface GrammaticaListener extends ParseTreeListener {
 	 */
 	void exitVarDecl(GrammaticaParser.VarDeclContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GrammaticaParser#assignStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignStmt(GrammaticaParser.AssignStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammaticaParser#assignStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignStmt(GrammaticaParser.AssignStmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GrammaticaParser#printStmt}.
 	 * @param ctx the parse tree
 	 */

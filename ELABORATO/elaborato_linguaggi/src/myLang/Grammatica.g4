@@ -9,6 +9,7 @@ program
 // STATEMENT
 statement
     : varDecl           // var x = expr;
+    | assignStmt        // x = expr;
     | printStmt         // print(expr);
     | exprStmt          // expr;
     | whileStmt         // while (expr) { ... }
@@ -17,6 +18,10 @@ statement
 // dichiarazione variabile
 varDecl
     : 'var' ID '=' expr ';'
+    ;
+// Assegnazione “normale”: x = expr;
+assignStmt
+    : ID '=' expr ';'
     ;
 // print
 printStmt
