@@ -1,0 +1,35 @@
+elaborato_linguaggi/
+├── elaborato_linguaggi.iml
+├── gen
+│   └── myLang
+│       ├── Grammatica.interp
+│       ├── Grammatica.tokens
+│       ├── GrammaticaBaseListener.java
+│       ├── GrammaticaBaseVisitor.java
+│       ├── GrammaticaLexer.interp
+│       ├── GrammaticaLexer.java
+│       ├── GrammaticaLexer.tokens
+│       ├── GrammaticaListener.java
+│       ├── GrammaticaParser.java
+│       └── GrammaticaVisitor.java
+├── input.txt
+├── lib
+│   └── antlr4-runtime-4.13.2.jar
+├── src
+│   └── myLang
+│       ├── EvalVisitor.java
+│       ├── Grammatica.g4
+│       ├── Grammatica.interp
+│       ├── Grammatica.tokens
+│       ├── GrammaticaBaseListener.java
+│       ├── GrammaticaBaseVisitor.java
+│       ├── GrammaticaLexer.interp
+│       ├── GrammaticaLexer.java
+│       ├── GrammaticaLexer.tokens
+│       ├── GrammaticaListener.java
+│       ├── GrammaticaParser.java
+│       ├── GrammaticaVisitor.java
+│       └── Main.java
+└── struttura.txt
+
+6 directories, 27 files

@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/QUARTO ESEMPIO/untitled/brainfuck/src/brainfuck/brainfuck.iml" filepath="$PROJECT_DIR$/QUARTO ESEMPIO/untitled/brainfuck/src/brainfuck/brainfuck.iml" />
       <module fileurl="file://$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/src.iml" filepath="$PROJECT_DIR$/TERZO ESEMPIO/primo interprete/src/src.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/ELABORATO/ELABORATO.iml" filepath="$PROJECT_DIR$/ELABORATO/ELABORATO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Laboratorio-Linguaggi-/PRIMO ESEMPIO/PRIMO ESEMPIO.iml" filepath="$PROJECT_DIR$/Laboratorio-Linguaggi-/PRIMO ESEMPIO/PRIMO ESEMPIO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Laboratorio-Linguaggi-/QUARTO ESEMPIO/QUARTO ESEMPIO.iml" filepath="$PROJECT_DIR$/Laboratorio-Linguaggi-/QUARTO ESEMPIO/QUARTO ESEMPIO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Laboratorio-Linguaggi-/QUINTO ESEMPIO/QUINTO ESEMPIO.iml" filepath="$PROJECT_DIR$/Laboratorio-Linguaggi-/QUINTO ESEMPIO/QUINTO ESEMPIO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Laboratorio-Linguaggi-/TERZO ESEMPIO/TERZO ESEMPIO.iml" filepath="$PROJECT_DIR$/Laboratorio-Linguaggi-/TERZO ESEMPIO/TERZO ESEMPIO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/UNI.iml" filepath="$PROJECT_DIR$/.idea/UNI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Laboratorio-Linguaggi-/SECONDO ESEMPIO/hw 02/hw 02.iml" filepath="$PROJECT_DIR$/Laboratorio-Linguaggi-/SECONDO ESEMPIO/hw 02/hw 02.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Laboratorio-Linguaggi-/SECONDO ESEMPIO/lab 02/lab 02.iml" filepath="$PROJECT_DIR$/Laboratorio-Linguaggi-/SECONDO ESEMPIO/lab 02/lab 02.iml" />
+>>>>>>> 57c8a67 (Initial import at root level)
     </modules>
   </component>
 </project>
