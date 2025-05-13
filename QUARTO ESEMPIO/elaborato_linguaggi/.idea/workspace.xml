@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3696dd6e-12ff-4f4d-b908-49530ffce9e7" name="Changes" comment="Struttura ufficiale">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/antlr4-runtime-4.8-1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elaborato_linguaggi.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/EvalVisitor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/Grammatica.g4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/Grammatica.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/Grammatica.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/GrammaticaBaseListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/GrammaticaBaseVisitor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/GrammaticaLexer.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/GrammaticaLexer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/GrammaticaLexer.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/GrammaticaListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/GrammaticaParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/GrammaticaVisitor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/myLang/input.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/struttura.txt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IlluminatedCloudWorkspaceSettings">
+    <option name="projectWorkspaceSettings">
+      <ProjectWorkspaceSettings>
+        <option name="anonymousApexSettings">
+          <AnonymousApexSettings>
+            <option name="savedDocuments">
+              <list>
+                <AnonymousApexSavedDocument>
+                  <option name="name" value="Anonymous Apex 1" />
+                </AnonymousApexSavedDocument>
+              </list>
+            </option>
+          </AnonymousApexSettings>
+        </option>
+      </ProjectWorkspaceSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2wzlhdSJNSKR81mFasTYf2zxwKw" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/simo/Desktop/CODING/JAVA/UNI/Laboratorio-Linguaggi-/QUARTO ESEMPIO/elaborato_linguaggi/src/myLang",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/myLang" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/myLang" />
+      <recent name="$PROJECT_DIR$/src/" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="myLang.Main" />
+      <module name="elaborato_linguaggi" />
+      <option name="PROGRAM_PARAMETERS" value="input.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3696dd6e-12ff-4f4d-b908-49530ffce9e7" name="Changes" comment="" />
+      <created>1747052403629</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1747052403629</updated>
+      <workItem from="1747052406063" duration="233000" />
+      <workItem from="1747120578585" duration="2217000" />
+    </task>
+    <task id="LOCAL-00001" summary="Init dell'elaborato">
+      <option name="closed" value="true" />
+      <created>1747052495472</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1747052495472</updated>
+    </task>
+    <task id="LOCAL-00002" summary="importo jar">
+      <option name="closed" value="true" />
+      <created>1747052629701</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1747052629701</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Inizio progetto">
+      <option name="closed" value="true" />
+      <created>1747120954044</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747120954044</updated>
+    </task>
+    <task id="LOCAL-00004" summary="generazione antlr4">
+      <option name="closed" value="true" />
+      <created>1747121291193</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1747121291193</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Struttura ufficiale">
+      <option name="closed" value="true" />
+      <created>1747122266951</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1747122266951</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Init dell'elaborato" />
+    <MESSAGE value="importo jar" />
+    <MESSAGE value="Inizio progetto" />
+    <MESSAGE value="generazione antlr4" />
+    <MESSAGE value="Struttura ufficiale" />
+    <option name="LAST_COMMIT_MESSAGE" value="Struttura ufficiale" />
+  </component>
+</project>
