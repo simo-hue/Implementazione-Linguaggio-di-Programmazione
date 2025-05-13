@@ -10,14 +10,7 @@ Abbiamo modellato le variabili in Java come `Object`, con una mappa `Map<String,
 
 Le regole ANTLR sono state scritte in ordine di precedenza decrescente, da `powExpr` a `addExpr` e `subExpr`. In `EvalVisitor` ogni operazione binaria (`visitAddExpr`, `visitMulExpr`, ecc.) controlla i tipi: se entrambi `Integer`, calcola come intero; altrimenti invoca `toNumber` sui due valori e opera in `double`. Il modulo `%` e la potenza `Math.pow` sono gestiti analogamente.
 
-### Assegnazioni e Dichiarazioni
 
-Per le variabili abbiamo due produizioni:
-
-* `varDecl` per la prima definizione (`var x = …;`)
-* `assignStmt` per successive riassegnazioni (`x = …;`).
-
-Nel visitor `visitVarDecl` e `visitAssignStmt` leggono `ctx.ID().getText()`, valutano il lato destro e aggiornano la mappa `memory`.
 
 ### Controlli di Flusso
 

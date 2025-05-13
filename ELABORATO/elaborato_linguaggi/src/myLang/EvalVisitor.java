@@ -12,7 +12,7 @@ import java.util.Random;
 public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
 
     // Mappa per variabili: nome → valore
-    private final Map<String, Object> memory = new HashMap<>();
+    private Map<String, Object> memory = new HashMap<>();
 
     // Generatore Random per ND ( non determinismo )
     private final Random rnd = new Random();
@@ -459,10 +459,42 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     @Override
     public Object visitFunDecl(GrammaticaParser.FunDeclContext ctx) {
         String name = ctx.ID().getText();
-        functions.put(name, ctx);
-        return null;  // non esegue subito il corpo
+        FunctionRegistry.register(name, ctx);
+        return null; // non esegue subito il corpo
     }
 
+    @Override
+    public Object visitRetStmt(GrammaticaParser.RetStmtContext ctx) {
+        Object v = visit(ctx.expr());
+        throw new ReturnValue(v);
+    }
+
+    @Override
+    public Object visitCallExpr(GrammaticaParser.CallExprContext ctx) {
+        String name = ctx.ID().getText();
+        // Recupera la dichiarazione dalla registry
+        GrammaticaParser.FunDeclContext fctx = FunctionRegistry.lookup(name);
+        if (fctx == null) {
+            throw new RuntimeException("Funzione non definita: " + name);
+        }
+
+        // Salva l'ambiente corrente e creane uno nuovo (scope locale)
+        Map<String,Object> oldMemory = memory;
+        memory = new HashMap<>();
+
+        Object result = null;
+        try {
+            // Esegui il body della funzione (visit del suo block)
+            visit(fctx.block());
+        } catch (ReturnValue rv) {
+            // Cattura il valore di return
+            result = rv.value;
+        }
+
+        // Ripristina l'ambiente chiamante
+        memory = oldMemory;
+        return result;
+    }
 
 
 }
