@@ -27,13 +27,14 @@ ifStmt: 'if' '(' expr ')' block        // blocco "then"
     ;
 
 // dichiarazione variabile
-varDecl: 'var' ID '=' expr ';' ;
+varDecl: 'var' ID '=' expr ';'? ;
 
 // Assegnazione “normale”: x = expr; + array[index]
 assignStmt: ID '=' expr ';' | ID '[' expr ']'  '=' expr ';' ;
 
 // print
-printStmt: 'print' '(' expr ')' ';' ;
+printStmt: 'print' '(' expr ')' ';'? ;
+
 // espressione standalone
 exprStmt: expr ';' ;
 
@@ -63,7 +64,7 @@ forUpdate : ID '=' expr ;
 block : '{' statement* '}' ;
 
 // nonDeterministic statement: scegli a caso fra block1 e stmt2
-nonDetStmt: block 'ND' '[' statement ']' ;  // { … } ND [ … ];
+nonDetStmt : block 'ND' '[' statement ']' ';'? ;
 
 // Dichiarazione funzione senza parametri
 funDecl : 'fun' ID '(' ')' block ;
@@ -114,7 +115,12 @@ LT      : '<' ;
 ID      : [a-zA-Z_][a-zA-Z0-9_]* ;
 FLOAT   : [0-9]+ '.' [0-9]+ ;
 INT     : [0-9]+ ;
-STRING  : '"' ( ~["\\] | '\\' . )* '"' ;
+STRING
+  // alternativa 1: virgolette ASCII
+  : '"' ( ~["\\\r\n] | '\\' . )* '"'
+  // alternativa 2: virgolette curve
+  | '“' ( ~[“\\\r\n] | '\\' . )* '”'
+  ;
 WS      : [ \t\r\n]+ -> skip ;
 COMMENT : '//' ~[\r\n]* -> skip ;
 

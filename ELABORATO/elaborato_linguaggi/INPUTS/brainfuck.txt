@@ -1,0 +1,6 @@
+// Esempio Hello World in Brainfuck
+print("Prima Brainfuck!    ");
+
+sly{++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.
+}arnold;
+print("      Dopo Brainfuck!");

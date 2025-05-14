@@ -18,24 +18,9 @@ public class BrainfuckInterpreter {
      * @param out output per '.' (System.out)
      */
     public static void run(String code, InputStream in, OutputStream out) throws IOException {
-        byte[] mem = new byte[30000];   // 30k celle
+        byte[] mem = new byte[30000];
         int ptr = 0;
 
-        // Pre‐elabora i salti [→] e ]→[
-        Map<Integer,Integer> jumps = new HashMap<>();
-        Stack<Integer> stack = new Stack<>();
-        for (int i = 0; i < code.length(); i++) {
-            char c = code.charAt(i);
-            if (c == '[') {
-                stack.push(i);
-            } else if (c == ']') {
-                int open = stack.pop();
-                jumps.put(open, i);
-                jumps.put(i, open);
-            }
-        }
-
-        // Esecuzione linea‐per‐linea
         for (int pc = 0; pc < code.length(); pc++) {
             char c = code.charAt(pc);
             switch (c) {
@@ -45,14 +30,35 @@ public class BrainfuckInterpreter {
                 case '-': mem[ptr]--; break;
                 case '.': out.write(mem[ptr]); out.flush(); break;
                 case ',': mem[ptr] = (byte) in.read(); break;
+
                 case '[':
-                    if (mem[ptr] == 0) pc = jumps.get(pc);
+                    if (mem[ptr] == 0) {
+                        // salto in avanti finché non trovo la parentesi corrispondente
+                        int depth = 1;
+                        while (depth > 0) {
+                            pc++;
+                            if (pc >= code.length()) break;
+                            if (code.charAt(pc) == '[') depth++;
+                            else if (code.charAt(pc) == ']') depth--;
+                        }
+                    }
                     break;
+
                 case ']':
-                    if (mem[ptr] != 0) pc = jumps.get(pc);
+                    if (mem[ptr] != 0) {
+                        // salto indietro finché non trovo la parentesi corrispondente
+                        int depth = 1;
+                        while (depth > 0) {
+                            pc--;
+                            if (pc < 0) break;
+                            if (code.charAt(pc) == ']') depth++;
+                            else if (code.charAt(pc) == '[') depth--;
+                        }
+                    }
                     break;
+
                 default:
-                    // ignora qualsiasi altro carattere
+                    // ignora tutto il resto
             }
         }
     }

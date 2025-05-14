@@ -1,5 +1,3 @@
-// Esempio Hello World in Brainfuck
-sly{
-  ++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.
-}arnold;
-print("Dopo Brainfuck!");
+{ print(“Buy more, more books!”) } ND [ { var books = input();
+print(“Buy ” ++ str(books ^ 4) ++ “ books” ++ “!! ;)”) } ND
+[ print(“Buy 42 books!”) ]]
