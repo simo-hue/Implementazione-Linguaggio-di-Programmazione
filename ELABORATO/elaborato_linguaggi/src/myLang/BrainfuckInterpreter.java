@@ -1,65 +1,71 @@
-package myLang;
+import java.util.Scanner;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+public class BrainfuckInterpreter extends BrainfuckBaseVisitor<Conf> {
 
-/**
- * Semplice interprete Brainfuck su array di byte.
- */
-public class BrainfuckInterpreter {
-    /**
-     * Esegue il codice Brainfuck.
-     * @param code la stringa di comandi BF (+-<>[],.)
-     * @param in input da ',' (System.in)
-     * @param out output per '.' (System.out)
-     */
-    public static void run(String code, InputStream in, OutputStream out) throws IOException {
-        byte[] mem = new byte[30000];
-        int ptr = 0;
+    private static final Scanner console = new Scanner(System.in);
 
-        for (int pc = 0; pc < code.length(); pc++) {
-            char c = code.charAt(pc);
-            switch (c) {
-                case '>': ptr++; break;
-                case '<': ptr--; break;
-                case '+': mem[ptr]++; break;
-                case '-': mem[ptr]--; break;
-                case '.': out.write(mem[ptr]); out.flush(); break;
-                case ',': mem[ptr] = (byte) in.read(); break;
+    private final Conf conf;
 
-                case '[':
-                    if (mem[ptr] == 0) {
-                        // salto in avanti finché non trovo la parentesi corrispondente
-                        int depth = 1;
-                        while (depth > 0) {
-                            pc++;
-                            if (pc >= code.length()) break;
-                            if (code.charAt(pc) == '[') depth++;
-                            else if (code.charAt(pc) == ']') depth--;
-                        }
-                    }
-                    break;
+    public BrainfuckInterpreter(Conf conf) {
+        this.conf = conf;
+    }
 
-                case ']':
-                    if (mem[ptr] != 0) {
-                        // salto indietro finché non trovo la parentesi corrispondente
-                        int depth = 1;
-                        while (depth > 0) {
-                            pc--;
-                            if (pc < 0) break;
-                            if (code.charAt(pc) == ']') depth++;
-                            else if (code.charAt(pc) == '[') depth--;
-                        }
-                    }
-                    break;
+    @Override
+    public Conf visitMain(BrainfuckParser.MainContext ctx) {
+        return visit(ctx.com());
+    }
 
-                default:
-                    // ignora tutto il resto
-            }
-        }
+    @Override
+    public Conf visitLt(BrainfuckParser.LtContext ctx) {
+        conf.left();
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitGt(BrainfuckParser.GtContext ctx) {
+        conf.right();
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitPlus(BrainfuckParser.PlusContext ctx) {
+        conf.inc();
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitMinus(BrainfuckParser.MinusContext ctx) {
+        conf.dec();
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitLoop(BrainfuckParser.LoopContext ctx) {
+        if (conf.get() == 0)
+            return visit(ctx.com(1));
+
+        visit(ctx.com(0));
+
+        return visit(ctx);
+    }
+
+    @Override
+    public Conf visitDot(BrainfuckParser.DotContext ctx) {
+        System.out.println(conf.get());
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitComma(BrainfuckParser.CommaContext ctx) {
+        System.out.print(":> ");
+        int x = console.nextInt();
+        conf.update(x);
+
+        return visit(ctx.com());
+    }
+
+    @Override
+    public Conf visitNil(BrainfuckParser.NilContext ctx) {
+        return conf;
     }
 }

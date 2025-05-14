@@ -107,6 +107,61 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSlyStmt(GrammaticaParser.SlyStmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#bfProgram}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBfProgram(GrammaticaParser.BfProgramContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BfLt}
+	 * labeled alternative in {@link GrammaticaParser#bfCommand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBfLt(GrammaticaParser.BfLtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BfGt}
+	 * labeled alternative in {@link GrammaticaParser#bfCommand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBfGt(GrammaticaParser.BfGtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BfPlus}
+	 * labeled alternative in {@link GrammaticaParser#bfCommand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBfPlus(GrammaticaParser.BfPlusContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BfMinus}
+	 * labeled alternative in {@link GrammaticaParser#bfCommand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBfMinus(GrammaticaParser.BfMinusContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BfDot}
+	 * labeled alternative in {@link GrammaticaParser#bfCommand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBfDot(GrammaticaParser.BfDotContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BfComma}
+	 * labeled alternative in {@link GrammaticaParser#bfCommand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBfComma(GrammaticaParser.BfCommaContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BfLoop}
+	 * labeled alternative in {@link GrammaticaParser#bfCommand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBfLoop(GrammaticaParser.BfLoopContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code strExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree

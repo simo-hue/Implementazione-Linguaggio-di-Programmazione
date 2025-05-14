@@ -531,12 +531,10 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
 
     @Override
     public Object visitSlyStmt(GrammaticaParser.SlyStmtContext ctx) {
-        // Prendo l'intero testo del token SLYSTMT
-        String text = ctx.SLYSTMT().getText();
-        // Estraggo il codice tra '{' e '}'
-        int start = text.indexOf('{') + 1;
-        int end   = text.lastIndexOf('}');
-        String bfCode = text.substring(start, end);
+        // 1) ricostruisci il codice BF (senza spazi, perché WS è skip)
+        String bfCode = ctx.bfProgram().getText();
+
+        // 2) chiama l'interprete "tradizionale"
         try {
             BrainfuckInterpreter.run(bfCode, System.in, System.out);
         } catch (IOException e) {

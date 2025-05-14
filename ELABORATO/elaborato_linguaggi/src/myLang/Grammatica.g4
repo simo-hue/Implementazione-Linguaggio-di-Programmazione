@@ -70,7 +70,25 @@ funDecl : 'fun' ID '(' ')' block ;
 // Return di una funzione
 retStmt : 'ret' expr ';' ;
 
-slyStmt : SLYSTMT ;    // usa il token unico
+// Brainfuck: un programma Brainfuck parsato
+
+// Invoca un programma Brainfuck “parsato”
+slyStmt
+  : 'sly' '{' bfProgram '}' 'arnold' ';'?   // il ';' dopo arnold è ora opzionale
+  ;
+
+bfProgram  : bfCommand* EOF? ;
+
+// nuovo
+bfCommand
+    : LT                         # BfLt
+    | GT                         # BfGt
+    | PLUS                       # BfPlus
+    | MINUS                      # BfMinus
+    | DOT                        # BfDot
+    | COMMA                      # BfComma
+    | LBRAK bfCommand* RBRAK     # BfLoop
+    ;
 
 // --------------------------------------------------
 
@@ -109,18 +127,36 @@ EQ      : '==' ;
 NE      : '!=' ;
 GT      : '>' ;
 LT      : '<' ;
+PLUS     : '+' ;
+MINUS    : '-' ;
+MUL      : '*' ;
+DIV      : '/' ;
+MOD      : '%' ;
+POW      : '^' ;
+AND      : '&&' ;
+OR       : '||' ;
+NOT      : '!' ;
+ASSIGN  : '=' ;
+SEMICOLON: ';' ;
+COLON   : ':' ;
+LPAREN  : '(' ;
+RPAREN  : ')' ;
+LCURLY  : '{' ;
+RCURLY  : '}' ;
 ID      : [a-zA-Z_][a-zA-Z0-9_]* ;
 FLOAT   : [0-9]+ '.' [0-9]+ ;
 INT     : [0-9]+ ;
+DOT       : '.' ;
+COMMA     : ',' ;
+LBRAK     : '[' ;
+RBRAK     : ']' ;
 STRING
   // alternativa 1: virgolette ASCII
   : '"' ( ~["\\\r\n] | '\\' . )* '"'
   // alternativa 2: virgolette curve
   | '“' ( ~[“\\\r\n] | '\\' . )* '”'
   ;
-SLYSTMT
-  : 'sly' '{' ( . )*? '}' 'arnold' ';'?
-  ;
+
 WS      : [ \t\r\n]+ -> skip ;
 COMMENT : '//' ~[\r\n]* -> skip ;
 
