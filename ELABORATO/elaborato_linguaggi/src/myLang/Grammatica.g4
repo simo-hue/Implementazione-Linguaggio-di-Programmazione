@@ -2,9 +2,7 @@
 grammar Grammatica;
 
 // ENTRY POINT
-program
-    : statement* EOF
-    ;
+program : statement* EOF; // Un programma è una lista di statement
 
 // STATEMENT
 statement
@@ -30,13 +28,13 @@ ifStmt: 'if' '(' expr ')' block        // blocco "then"
 varDecl: 'var' ID '=' expr ';'? ;
 
 // Assegnazione “normale”: x = expr; + array[index]
-assignStmt: ID '=' expr ';' | ID '[' expr ']'  '=' expr ';' ;
+assignStmt: ID '=' expr ';' | ID '[' expr ']'  '=' expr ';'? ;
 
 // print
 printStmt: 'print' '(' expr ')' ';'? ;
 
 // espressione standalone
-exprStmt: expr ';' ;
+exprStmt: expr ';'? ;
 
 // while
 whileStmt: 'while' '(' expr ')' block ;
