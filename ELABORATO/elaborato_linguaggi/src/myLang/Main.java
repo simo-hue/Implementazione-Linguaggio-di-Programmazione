@@ -25,7 +25,8 @@ public class Main {
         }
 
         String inputFile = args[0];
-        System.out.println("Lettura del file di input: " + inputFile);
+        //System.out.println("Lettura del file di input: " + inputFile);
+        System.out.println("\n\n");
 
         try {
             // 2) carica il file
@@ -60,5 +61,6 @@ public class Main {
             e.printStackTrace();
             System.exit(2);
         }
+     System.out.println("\n\n");
     }
 }
