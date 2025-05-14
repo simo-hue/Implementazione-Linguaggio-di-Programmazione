@@ -71,6 +71,7 @@ funDecl : 'fun' ID '(' ')' block ;
 retStmt : 'ret' expr ';' ;
 
 slyStmt : SLYSTMT ;    // usa il token unico
+
 // --------------------------------------------------
 
 // ESPRESSIONI
@@ -102,8 +103,6 @@ expr : ID '(' ')'           # callExpr     // invocazione funzione
 //////////////////////////////////////////////////////
 // LEXER RULES
 //////////////////////////////////////////////////////
-// Riconosce in un solo token tutta la sintassi sly{…}arnold;
-SLYSTMT : 'sly' '{' (~[}])* '}' 'arnold' ';';
 GE      : '>=' ;
 LE      : '<=' ;
 EQ      : '==' ;
@@ -118,6 +117,9 @@ STRING
   : '"' ( ~["\\\r\n] | '\\' . )* '"'
   // alternativa 2: virgolette curve
   | '“' ( ~[“\\\r\n] | '\\' . )* '”'
+  ;
+SLYSTMT
+  : 'sly' '{' ( . )*? '}' 'arnold' ';'?
   ;
 WS      : [ \t\r\n]+ -> skip ;
 COMMENT : '//' ~[\r\n]* -> skip ;

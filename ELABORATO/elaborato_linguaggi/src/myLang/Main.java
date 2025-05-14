@@ -4,8 +4,10 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Punto di ingresso dell’interprete.
@@ -27,7 +29,13 @@ public class Main {
 
         try {
             // 2) carica il file
-            CharStream input = CharStreams.fromFileName(inputFile);
+            // Read and normalize entire file to replace curly quotes and en-dashes
+            String raw = Files.readString(Paths.get(inputFile), StandardCharsets.UTF_8);
+            String norm = raw
+                .replace('\u2013', '-')   // en-dash → hyphen
+                .replace('“', '\"')       // left curly quote → ASCII quote
+                .replace('”', '\"');      // right curly quote → ASCII quote
+            CharStream input = CharStreams.fromString(norm);
 
             // 3) costruisci lexer e parser
             // lexer: legge il file
