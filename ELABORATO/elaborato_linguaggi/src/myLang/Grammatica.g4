@@ -25,7 +25,7 @@ ifStmt: 'if' '(' expr ')' block        // blocco "then"
     ;
 
 // dichiarazione variabile
-varDecl: 'var' ID '=' expr ';'? ;
+varDecl : 'var' ID ('[' expr ']')? '=' expr ';' ;
 
 // Assegnazione “normale”: x = expr; + array[index]
 assignStmt: ID '=' expr ';' | ID '[' expr ']'  '=' expr ';'? ;

@@ -203,9 +203,25 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
      */
     @Override
     public Object visitVarDecl(GrammaticaParser.VarDeclContext ctx) {
-        String id = ctx.ID().getText();         // nome variabile
-        Object value = visit(ctx.expr());       // valutazione espressione
-        memory.put(id, value);                  // memorizza
+        String id = ctx.ID().getText();
+        // ctx.expr() restituisce 1 solo per scalar, 2 per array
+        List<GrammaticaParser.ExprContext> exprs = (List<GrammaticaParser.ExprContext>) ctx.expr();
+        if (ctx.getChildCount() == 5) {
+            // var x = expr ;
+            // childCount: ['var', ID, '=', expr, ';']
+            Object value = visit(exprs.get(0));
+            memory.put(id, value);
+        } else {
+            // var x [ idx ] = expr ;
+            // childCount: ['var', ID, '[', expr, ']', '=', expr, ';']
+            int idx = (int) toNumber(visit(exprs.get(0)));
+            Object v  = visit(exprs.get(1));
+            // costruisci o estendi l'array
+            List<Object> arr = new ArrayList<>();
+            while (arr.size() <= idx) arr.add(0);
+            arr.set(idx, v);
+            memory.put(id, arr);
+        }
         return null;
     }
 
