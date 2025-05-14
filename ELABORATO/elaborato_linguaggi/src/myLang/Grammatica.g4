@@ -18,6 +18,7 @@ statement
     | nonDetStmt       // non determinismo
     | funDecl       // dichiarazione di funzione
     | retStmt       // return in funzione
+    | slyStmt       // statement "sly" per brainfuck
     ;
 
 // Istruzione condizionale if-else
@@ -26,29 +27,18 @@ ifStmt: 'if' '(' expr ')' block        // blocco "then"
     ;
 
 // dichiarazione variabile
-varDecl
-    : 'var' ID '=' expr ';'
-    ;
+varDecl: 'var' ID '=' expr ';' ;
 
 // Assegnazione “normale”: x = expr; + array[index]
-assignStmt
-    : ID '=' expr ';'
-    | ID '[' expr ']'  '=' expr ';'
-    ;
+assignStmt: ID '=' expr ';' | ID '[' expr ']'  '=' expr ';' ;
 
 // print
-printStmt
-    : 'print' '(' expr ')' ';'
-    ;
+printStmt: 'print' '(' expr ')' ';' ;
 // espressione standalone
-exprStmt
-    : expr ';'
-    ;
+exprStmt: expr ';' ;
 
 // while
-whileStmt
-    : 'while' '(' expr ')' block
-    ;
+whileStmt: 'while' '(' expr ')' block ;
 
 // Ciclo for: for ( init ; cond ; update ) block
 forStmt
@@ -81,6 +71,7 @@ funDecl : 'fun' ID '(' ')' block ;
 // Return di una funzione
 retStmt : 'ret' expr ';' ;
 
+slyStmt : SLYSTMT ;    // usa il token unico
 // --------------------------------------------------
 
 // ESPRESSIONI
@@ -112,6 +103,8 @@ expr : ID '(' ')'           # callExpr     // invocazione funzione
 //////////////////////////////////////////////////////
 // LEXER RULES
 //////////////////////////////////////////////////////
+// Riconosce in un solo token tutta la sintassi sly{…}arnold;
+SLYSTMT : 'sly' '{' (~[}])* '}' 'arnold' ';';
 GE      : '>=' ;
 LE      : '<=' ;
 EQ      : '==' ;
@@ -124,3 +117,4 @@ INT     : [0-9]+ ;
 STRING  : '"' ( ~["\\] | '\\' . )* '"' ;
 WS      : [ \t\r\n]+ -> skip ;
 COMMENT : '//' ~[\r\n]* -> skip ;
+

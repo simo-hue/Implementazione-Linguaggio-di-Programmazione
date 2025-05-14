@@ -1,5 +1,6 @@
 package myLang;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -496,5 +497,19 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return result;
     }
 
-
+    @Override
+    public Object visitSlyStmt(GrammaticaParser.SlyStmtContext ctx) {
+        // Prendo l'intero testo del token SLYSTMT
+        String text = ctx.SLYSTMT().getText();
+        // Estraggo il codice tra '{' e '}'
+        int start = text.indexOf('{') + 1;
+        int end   = text.lastIndexOf('}');
+        String bfCode = text.substring(start, end);
+        try {
+            BrainfuckInterpreter.run(bfCode, System.in, System.out);
+        } catch (IOException e) {
+            throw new RuntimeException("Errore durante esecuzione Brainfuck", e);
+        }
+        return null;
+    }
 }

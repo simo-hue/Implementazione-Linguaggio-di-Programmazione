@@ -101,6 +101,12 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRetStmt(GrammaticaParser.RetStmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#slyStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSlyStmt(GrammaticaParser.SlyStmtContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code strExpr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree

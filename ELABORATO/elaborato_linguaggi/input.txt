@@ -1,17 +1,5 @@
-// Definisco la funzione books() come nei demo
-fun books() {
-  print("How many books do you read in a year??");
-  var books = input();
-  while (10 > input()) {
-    books = input();
-  }
-  ret books;
-}
-
-// Chiedo all’utente dove andare
-print("Library → 1, Bookshop → 2.");
-var choice = input();
-
-// Invoco la funzione e stampo il risultato
-var bOOks = books();
-print("Choice: " ++ str(choice) ++ ", Books: " ++ str(bOOks));
+// Esempio Hello World in Brainfuck
+sly{
+  ++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.
+}arnold;
+print("Dopo Brainfuck!");
