@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 /**
  * EvalVisitor: visita l’albero sintattico e ne valuta
  * i nodi, memorizzando le variabili in una mappa.
@@ -18,9 +19,14 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     // Generatore Random per ND ( non determinismo )
     private final Random rnd = new Random();
 
-    // eccezione interna per gestire il return
+
+    /**
+     * ReturnValue è un’eccezione interna usata solo per
+     * interrompere immediatamente l’esecuzione del corpo di una funzione
+     * non appena incontriamo una retStmt, e trasportare il valore di ritorno.
+     */
     private static class ReturnValue extends RuntimeException {
-        final Object value;
+        final Object value; // valore passato al RETURN
         ReturnValue(Object v) { super(null, null, false, false); value = v; }
     }
     @Override
@@ -29,11 +35,11 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         Object condVal = visit(ctx.expr());
         // Continua a ciclare finché la condizione è "true" (non-zero)
         while (toNumber(condVal) != 0) {
-            // Visita tutti gli statement all'interno del blocco
+            // Visita tutti gli statement all'interno del blocco per eseguirli
             for (GrammaticaParser.StatementContext st : ctx.block().statement()) {
                 visit(st);
             }
-            // Rivaluta la condizione ad ogni iterazione
+            // Rivaluta la condizione ad ogni iterazione prima del controllo
             condVal = visit(ctx.expr());
         }
         return null;  // i cicli non restituiscono un valore
@@ -54,7 +60,7 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
 
         // 3) Loop principale
         while (true) {
-            // 3a) condizione: ctx.expr() restituisce ExprContext o null
+            // condizione: ctx.expr() restituisce ExprContext o null
             boolean condTrue = true;
             GrammaticaParser.ExprContext condCtx = ctx.expr();
             if (condCtx != null) {
@@ -63,12 +69,12 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
             }
             if (!condTrue) break;
 
-            // 3b) esegui il corpo
+            // esegui il corpo
             for (var st : body) {
                 visit(st);
             }
 
-            // 3c) update: visita forUpdate se presente
+            // update: visita forUpdate se presente
             if (ctx.forUpdate() != null) {
                 visit(ctx.forUpdate());
             }
@@ -194,6 +200,7 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         // Valuta i due operandi
         Object left = visit(ctx.expr(0));
         Object right = visit(ctx.expr(1));
+
         // Converte in stringa e unisce
         return left.toString() + right.toString();
     }
@@ -235,15 +242,12 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         return null;
     }
 
-    // ← Mancava completamente la gestione degli statement di tipo exprStmt.
-
     /**
      * ExprStmt: expr ';'
      */
     @Override
     public Object visitExprStmt(GrammaticaParser.ExprStmtContext ctx) {
-        // Semplicemente valuta l’espressione,
-        // ma non la stampa (non è un printStmt)
+        // Semplicemente valuta l’espressione
         return visit(ctx.expr());
     }
 
@@ -254,6 +258,7 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     public Object visitAddExpr(GrammaticaParser.AddExprContext ctx) {
         Object l = visit(ctx.expr(0));
         Object r = visit(ctx.expr(1));
+
         // se entrambi Integer, restituisci Integer
         if (l instanceof Integer && r instanceof Integer) {
             return (Integer) l + (Integer) r;
@@ -269,9 +274,12 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     public Object visitSubExpr(GrammaticaParser.SubExprContext ctx) {
         Object l = visit(ctx.expr(0));
         Object r = visit(ctx.expr(1));
+
+        // se entrambi Integer, restituisci Integer
         if (l instanceof Integer && r instanceof Integer) {
             return (Integer) l - (Integer) r;
         }
+        // altrimenti fai operazione in double
         return toNumber(l) - toNumber(r);
     }
 
@@ -282,9 +290,11 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     public Object visitMulExpr(GrammaticaParser.MulExprContext ctx) {
         Object l = visit(ctx.expr(0));
         Object r = visit(ctx.expr(1));
+        // se entrambi Integer, restituisci Integer
         if (l instanceof Integer && r instanceof Integer) {
             return (Integer) l * (Integer) r;
         }
+        // altrimenti fai operazione in double
         return toNumber(l) * toNumber(r);
     }
 
@@ -295,9 +305,12 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     public Object visitModExpr(GrammaticaParser.ModExprContext ctx) {
         Object l = visit(ctx.expr(0));
         Object r = visit(ctx.expr(1));
+
+        // se entrambi Integer, restituisci Integer
         if (l instanceof Integer && r instanceof Integer) {
             return (Integer) l % (Integer) r;
         }
+        // altrimenti fai operazione in double
         return toNumber(l) % toNumber(r);
     }
 
@@ -308,9 +321,12 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     public Object visitDivExpr(GrammaticaParser.DivExprContext ctx) {
         Object l = visit(ctx.expr(0));
         Object r = visit(ctx.expr(1));
+
+        // se entrambi Integer, restituisci Integer
         if (l instanceof Integer && r instanceof Integer) {
             return (Integer) l / (Integer) r;
         }
+        // altrimenti fai operazione in double
         return toNumber(l) / toNumber(r);
     }
 
@@ -382,7 +398,6 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
      */
     @Override
     public Object visitInputExpr(GrammaticaParser.InputExprContext ctx) {
-        // esempio: usa Scanner per leggere da console
         System.out.print("> ");
         return new java.util.Scanner(System.in).nextDouble();
     }
@@ -469,7 +484,6 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
             // branch 2: esegue lo statement dentro [ ... ]
             visit(ctx.statement());
         }
-        // Terminata la scelta, non ripete più nulla
         return null;
     }
 
@@ -497,6 +511,8 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
 
         // Salva l'ambiente corrente e creane uno nuovo (scope locale)
         Map<String,Object> oldMemory = memory;
+
+        // Quello NUOVO
         memory = new HashMap<>();
 
         Object result = null;
