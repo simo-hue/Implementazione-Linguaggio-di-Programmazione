@@ -1,17 +1,20 @@
 package myLang;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import myLang.GrammaticaParserBaseVisitor;
+import myLang.GrammaticaParser;
 import java.util.Random;
+import myLang.Conf;
+import myLang.BrainfuckInterpreter;
 
 /**
  * EvalVisitor: visita l’albero sintattico e ne valuta
  * i nodi, memorizzando le variabili in una mappa.
  */
-public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
+public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
     // Mappa per variabili: nome → valore
     private Map<String, Object> memory = new HashMap<>();
@@ -333,12 +336,24 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
     /**
      * PowExpr: expr '^' expr
      */
+    /**
+     * PowExpr: expr '^' expr
+     */
     @Override
     public Object visitPowExpr(GrammaticaParser.PowExprContext ctx) {
-        return Math.pow(
-                toNumber(visit(ctx.expr(0))),
-                toNumber(visit(ctx.expr(1)))
-        );
+        // Valuta i due operandi
+        Object lObj = visit(ctx.expr(0));
+        Object rObj = visit(ctx.expr(1));
+        double l = toNumber(lObj);
+        double r = toNumber(rObj);
+        double result = Math.pow(l, r);
+
+        // Se entrambi erano Integer, riconverti a Integer
+        if (lObj instanceof Integer && rObj instanceof Integer) {
+            return (int) result;
+        }
+        // Altrimenti mantieni il Double
+        return result;
     }
 
     /**
@@ -531,15 +546,19 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
 
     @Override
     public Object visitSlyStmt(GrammaticaParser.SlyStmtContext ctx) {
-        // 1) ricostruisci il codice BF (senza spazi, perché WS è skip)
-        String bfCode = ctx.bfProgram().getText();
+        // Recupera il nodo bfProgram generato dal parser
+        GrammaticaParser.BfProgramContext bf = ctx.bfProgram();
 
-        // 2) chiama l'interprete "tradizionale"
-        try {
-            BrainfuckInterpreter.run(bfCode, System.in, System.out);
-        } catch (IOException e) {
-            throw new RuntimeException("Errore durante esecuzione Brainfuck", e);
-        }
+        // Inizializza la configurazione BF (array di byte)
+        Conf conf = new Conf();
+
+        // Costruisci il visitor‐interprete per Brainfuck
+        BrainfuckInterpreter bfInterp = new BrainfuckInterpreter(conf);
+
+        // Esegui il programma BF visitando il parse tree
+        bfInterp.visitBfProgram(bf);
+
+        // slyStmt non restituisce un valore nel linguaggio principale
         return null;
     }
 }

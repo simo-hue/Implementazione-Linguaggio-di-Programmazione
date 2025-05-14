@@ -1,0 +1,3 @@
+print("Inserisci un numero:");
+var x = input();
+print(x * 2);

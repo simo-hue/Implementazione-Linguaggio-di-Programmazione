@@ -1,0 +1,1 @@
+{ print(1); } ND [ print(2); ];

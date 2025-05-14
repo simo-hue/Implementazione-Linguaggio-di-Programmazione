@@ -1,4 +1,4 @@
-// Generated from /Users/simo/Desktop/CODING/JAVA/UNI/ELABORATO/elaborato_linguaggi/src/myLang/GrammaticaLexer.g4 by ANTLR 4.13.2
+// Generated from /Users/simo/Desktop/CODING/JAVA/UNI/ELABORATO/elaborato_linguaggi/src/myLang/GrammaticaParser.g4 by ANTLR 4.13.2
 package myLang;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -9,7 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
-public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
+public interface GrammaticaParserVisitor<T> extends ParseTreeVisitor<T> {
 	/**
 	 * Visit a parse tree produced by {@link GrammaticaParser#program}.
 	 * @param ctx the parse tree
@@ -23,11 +23,11 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(GrammaticaParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GrammaticaParser#ifStmt}.
+	 * Visit a parse tree produced by {@link GrammaticaParser#otherStmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIfStmt(GrammaticaParser.IfStmtContext ctx);
+	T visitOtherStmt(GrammaticaParser.OtherStmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GrammaticaParser#varDecl}.
 	 * @param ctx the parse tree
@@ -58,6 +58,12 @@ public interface GrammaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitWhileStmt(GrammaticaParser.WhileStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#ifStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStmt(GrammaticaParser.IfStmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GrammaticaParser#forStmt}.
 	 * @param ctx the parse tree
