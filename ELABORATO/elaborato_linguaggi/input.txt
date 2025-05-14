@@ -1,5 +1,48 @@
-// input.txt #9
-var arr[2] = 10;
-arr[0] = 5;
-print(arr[0]);
-print(arr[1]);
+fun books(){
+print(“How many books do you read in a year??”);
+var books = input();
+while( books < ( 42 + 42 – 42 + input() ) ){
+books = input();
+}
+ret books;
+}
+fun brainfuck(){
+sly{ >
++ +
++ +
+[ < + +
++ +
++ + + +
+> - ] >
++ + + + + + + +
+[ >
++ + + +
+< - ] >
+> + + > > > + >
+> > + <
+< < < < < < < <
+< [ - [ - > + <
+] > [ - < + > > > . < < ] > > >
+[ [
+- > + +
++ + + +
++ + [ > + + + +
+< - ] >
+. < < [ - > + <
+] + > [ - > + +
++ + + + + + + + < < + > ] > . [
+- ] > ]
+] + < < < [ - [
+- > + < ] + > [
+- < + > > > - [ - > + < ] + + >
+[ - < - > ] < <
+< ] < < < < ] + + + + + + + + +
++ . + + + . [ - ] < ] + + + + +
+}arnold
+}
+print(“Library → 1, Bookshop → 2.”);
+var books = input();
+var bOOks = books();
+print(“Choice: ” ++ str(books) ++ “, Books: “ ++ str(bOOks));
+print(“Brainfuck: “);
+brainfuck();

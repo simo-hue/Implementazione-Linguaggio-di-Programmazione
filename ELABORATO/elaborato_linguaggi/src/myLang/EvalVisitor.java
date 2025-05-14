@@ -113,7 +113,7 @@ public class EvalVisitor extends GrammaticaBaseVisitor<Object> {
         List<Object> array = (List<Object>) arrObj;
         int index = (int) toNumber(visit(ctx.expr()));
         if (index < 0 || index >= array.size()) {
-            return 0;  // o lancia un errore, come preferisci
+            throw new RuntimeException("Indice " + index + " fuori intervallo per array '" + id + "'");
         }
         return array.get(index);
     }
