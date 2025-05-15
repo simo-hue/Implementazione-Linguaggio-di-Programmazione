@@ -115,7 +115,47 @@ ELABORATO
 - **Ritorno delle funzioni** È lanciata in visitRetStmt, e intercettata in visitCallExpr, Così si evita di dover propagare manualmente lo stato “ritorno già effettuato” in tutti i visit
 - **Memoria** dove Ogni ambiente è una Map<String, Object>, Quando una funzione viene chiamata, si crea un nuovo memory, poi si ripristina quello precedente.
 
+### ➤ Normalizzazione INPUT dal Main
+
+Il file `Main.java` contiene una **fase di normalizzazione leggera dell’input**, focalizzata esclusivamente sulla **pulizia di alcuni caratteri Unicode errati o indesiderati** che potrebbero compromettere la fase di parsing.
+
 ---
+
+#### ⚙️ Dettaglio della normalizzazione effettiva
+
+Durante la lettura del file di input, vengono effettuate solo **tre sostituzioni**:
+
+```java
+String norm = raw
+    .replace('\u2013', '-')    // En-dash → trattino normale
+    .replace('“', '"')         // Virgolette curve sinistra → virgolette ASCII
+    .replace('”', '"');        // Virgolette curve destra → virgolette ASCII
+```
+
+Non vengono eseguite altre modifiche, come l'aggiunta automatica di `;` o la sistemazione di spaziature ( Gestite nella grammatica ).
+
+---
+
+#### 📌 Perché questa normalizzazione?
+
+- Alcuni editor di testo (come Word, Pages o note in PDF) **inseriscono automaticamente caratteri Unicode** al posto di simboli ASCII.
+- Le **virgolette curve** e i **trattini lunghi** (`–`) possono far fallire il parsing ANTLR, perché non corrispondono ai token previsti dalla grammatica.
+- La correzione anticipata di questi caratteri **assicura un parsing corretto** e previene errori difficili da individuare.
+
+---
+
+#### 🧪 Esempio
+
+| Input nel file originale     | Dopo normalizzazione         |
+|------------------------------|-------------------------------|
+| `print(“Hello”)`             | `print("Hello")`             |
+
+---
+
+#### ✅ Conclusione
+
+La normalizzazione implementata in `Main.java` è **minimale ma strategica**:  
+evita errori di parsing dovuti a caratteri tipografici errati **senza alterare la struttura sintattica** o i contenuti logici del programma.
 
 ### ➤ Parser & Lexer
 
@@ -180,6 +220,8 @@ Dove:
 Questo approccio permette di:
 - **Incorporare Brainfuck in qualsiasi punto del linguaggio** (tramite `slyStmt`).
 - **Isolare la logica di interpretazione** nella classe `BrainfuckInterpreter`, separata dal resto dell’interprete.
+
+---
 
 ---
 
