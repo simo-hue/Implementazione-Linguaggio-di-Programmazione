@@ -110,31 +110,17 @@ ELABORATO
 
 ## 🛠️ Scelte Implementative
 
-- **ANTLR4** per il parsing.
-- **Java** per l’esecuzione tramite visitor pattern.
-- Scope gestito con `Map<String, Object> memory`.
-- Tipizzazione dinamica.
-- Return con eccezioni.
-- `Conf` per nastro Brainfuck separato.
+- **ARRAY** come una List<Object> in memoria.
+- **Funzioni** Le funzioni non accettano parametri, ma supportano chiamata, scope locale e return tramite eccezione.
+- **Ritorno delle funzioni** È lanciata in visitRetStmt, e intercettata in visitCallExpr, Così si evita di dover propagare manualmente lo stato “ritorno già effettuato” in tutti i visit
+- **Memoria** dove Ogni ambiente è una Map<String, Object>, Quando una funzione viene chiamata, si crea un nuovo memory, poi si ripristina quello precedente.
 
 ---
-
-## 🧠 Brainfuck: Integrazione
-
-Il linguaggio supporta blocchi `sly{...}arnold;` per scrivere codice Brainfuck inline.
 
 ### ➤ Parser & Lexer
 
 - Modalità `BF` nel lexer.
 - Regole `bfProgram`, `bfCommand`, `bfLoop` nel parser.
-
-### ➤ Esecuzione
-
-```java
-Conf conf = new Conf();
-BrainfuckInterpreter bfInterp = new BrainfuckInterpreter(conf);
-bfInterp.visit(ctx.bfProgram());
-```
 
 ---
 
@@ -199,24 +185,13 @@ brainfuck();
 
 ---
 
-## 📁 File di Input
+## 📧 Dettagli sulle lezioni/corso
+🔎 → [vedi README_GENERALE.md](README_GENERALE.md)
 
-Usa `input.txt` o i file in `/INPUTS/`:
-- `array.txt`
-- `funzione.txt`
-- `brainfuck.txt`
-- `non determinismo.txt`
-- ecc.
+Simone Mattioli – VR486911
 
 ---
 
 ## 📄 Licenza
 
 Sviluppato a scopo didattico. Tutti i diritti riservati all’autore.
-
----
-
-## 📧 Dettagli sulle lezioni/corso
-🔎 → [vedi README_GENERALE.md](README_GENERALE.md)
-
-Simone Mattioli – VR486911
