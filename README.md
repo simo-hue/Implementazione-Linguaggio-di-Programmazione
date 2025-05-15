@@ -115,6 +115,8 @@ ELABORATO
 - **Ritorno delle funzioni** È lanciata in visitRetStmt, e intercettata in visitCallExpr, Così si evita di dover propagare manualmente lo stato “ritorno già effettuato” in tutti i visit
 - **Memoria** dove Ogni ambiente è una Map<String, Object>, Quando una funzione viene chiamata, si crea un nuovo memory, poi si ripristina quello precedente.
 
+---
+
 ### ➤ Normalizzazione INPUT dal Main
 
 Il file `Main.java` contiene una **fase di normalizzazione leggera dell’input**, focalizzata esclusivamente sulla **pulizia di alcuni caratteri Unicode errati o indesiderati** che potrebbero compromettere la fase di parsing.
@@ -156,6 +158,8 @@ Non vengono eseguite altre modifiche, come l'aggiunta automatica di `;` o la sis
 
 La normalizzazione implementata in `Main.java` è **minimale ma strategica**:  
 evita errori di parsing dovuti a caratteri tipografici errati **senza alterare la struttura sintattica** o i contenuti logici del programma.
+
+---
 
 ### ➤ Parser & Lexer
 
@@ -223,8 +227,6 @@ Questo approccio permette di:
 
 ---
 
----
-
 ## 🧪 Esempi Demo
 
 ```mylang
@@ -286,10 +288,14 @@ brainfuck();
 
 ---
 
+---
+
 ## 📧 Dettagli sulle lezioni/corso
 🔎 → [vedi README_GENERALE.md](README_GENERALE.md)
 
 Simone Mattioli – VR486911
+
+---
 
 ---
 
