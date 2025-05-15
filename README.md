@@ -1,87 +1,139 @@
-# Linguaggi - Laboratorio e Progetto Finale
-![Linguaggi - UniVR](https://img.shields.io/badge/Linguaggi-UniVR-blueviolet?style=for-the-badge&logo=bookstack&logoColor=white)
 
-Corso di Laurea Triennale in Informatica
-**Università di Verona**
-Anno Accademico 2024/2025
+# 🧠 MyLang – Linguaggio Interpretato + Brainfuck
 
----
-
-## 🧠 Descrizione
-
-Questa repository raccoglie il lavoro svolto nell'ambito del corso **Linguaggi** (laboratorio e progetto finale).
-Contiene tutte le esercitazioni pratiche con **ANTLR4**, e un **elaborato finale** sviluppato come progetto personale.
+**Progetto linguaggi di programmazione – A.A. 2024/2025**  
+Autore: Simone Mattioli – VR486911  
+Università degli Studi di Verona
 
 ---
 
-## 📚 Contenuto della repository
+## 📌 Descrizione
 
-### 🧪 Laboratori
+MyLang è un linguaggio interpretato progettato da zero, conforme ai 12 requisiti obbligatori del progetto d'esame.  
+È stato realizzato usando **ANTLR4** per la generazione del lexer/parser e **Java** per l'interprete.
 
-Contiene le esercitazioni settimanali sviluppate durante il corso, ciascuna focalizzata su un tema chiave:
+La particolarità di MyLang è il supporto integrato al linguaggio **Brainfuck**, eseguibile inline con la sintassi:
 
-| Cartella/File       | Descrizione |
-|---------------------|-------------|
-| `lab01/`            | Introduzione ad ANTLR4 e alle grammatiche regolari. |
-| `lab02/`            | Definizione di parser semplici e gestione del parsing. |
-| `lab03/`            | Costruzione di visitor e primi interpreti. |
-| `lab04/`            | Analisi del linguaggio Brainfuck: sintassi, semantica e simulazione. |
-| `lab05/`            | Gestione di ambiguità, precedenza e associatività nelle grammatiche. |
-| `hwXX/`             | Homework individuali o esercizi extra. |
-
-Tutti i file `.g4` sono compatibili con ANTLR4 e possono essere compilati ed eseguiti con Java.
-
----
-
-### 💻 Elaborato Finale
-
-Cartella: `elaborato/`
-
-Contiene il progetto finale personale. L'obiettivo è dimostrare la capacità di progettare un linguaggio formale completo.
-Il progetto include:
-
-- ✅ Definizione di una grammatica completa (lexer + parser)
-- ✅ Costruzione di un AST
-- ✅ Analisi semantica dove necessaria
-- ✅ Implementazione di un interprete o generatore di codice
-
-> 🛠️ **Descrizione progetto (esempio)**
-> Il progetto sviluppa un linguaggio chiamato `MiniLang`, progettato per esprimere semplici algoritmi numerici e strutture di controllo.
-> Include supporto per variabili, operatori aritmetici, condizioni e cicli, con un interprete Java basato sul visitor pattern.
-
----
-
-## ▶️ Compilazione e Esecuzione
-
-### ✅ Requisiti
-
-- Java JDK 8 o superiore
-- ANTLR4 (disponibile su https://www.antlr.org)
-
-### ⚙️ Compilazione
-
-```bash
-antlr4 -visitor -no-listener NomeFile.g4
-javac NomeFile*.java
+```mylang
+sly {
+    ++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.
+    <<+++++++++++++++.>.+++.------.--------.>+.>.
+} arnold;
 ```
 
-### ▶️ Esecuzione
-```bash
-grun NomeFile main -gui
+---
+
+## ✅ Specifiche richieste (soddisfatte)
+
+| #  | Requisito                                      | Supportato |
+|----|------------------------------------------------|------------|
+| 1  | Operazioni base `+ - * / % ^`                 | ✅         |
+| 2  | Non-determinismo `{...} ND [...] ND [...]`     | ✅         |
+| 3  | Ciclo `while` o `do-while`                    | ✅         |
+| 4  | Ciclo `for`                                   | ✅         |
+| 5  | `if`, `if-else`                               | ✅         |
+| 6  | `input()` e `print()`                         | ✅         |
+| 7  | Stringhe + `str()`                            | ✅         |
+| 8  | Float                                          | ✅         |
+| 9  | Liste / Array                                  | ✅         |
+| 10 | Variabili dinamiche                           | ✅         |
+| 11 | Funzioni senza parametri                      | ✅         |
+| 12 | `sly{ ... }arnold;` per codice Brainfuck      | ✅         |
+
+---
+
+## 🧱 Architettura del Progetto
+
 ```
-Oppure, per vedere i token:
-```bash
-grun NomeFile main -tokens
+elaborato_linguaggi/
+├── src/
+│   └── myLang/
+│       ├── GrammaticaLexer.g4
+│       ├── GrammaticaParser.g4
+│       ├── EvalVisitor.java
+│       ├── BrainfuckInterpreter.java
+│       ├── Conf.java
+│       ├── FunctionRegistry.java
+│       └── Main.java
+├── gen/
+├── INPUTS/
+└── lib/
 ```
-## 🧩 Risorse utili
 
-- 📘 [ANTLR4 - Documentazione ufficiale](https://www.antlr.org)
-- 📚 [Guida ANTLR su GitHub](https://github.com/antlr/antlr4/blob/master/doc/index.md)
-- 📖 [ANTLR4 - Guida completa (tomassetti.me)](https://tomassetti.me/antlr-mega-tutorial/)
-- 📖 [ANTLR4 - Guida pratica (The Pragmatic Programmer)](https://pragprog.com/titles/tmantlr/antlr-4/)
+---
+
+## 🛠️ Scelte Implementative
+
+- **ANTLR4** per il parsing.
+- **Java** per l’esecuzione tramite visitor pattern.
+- Scope gestito con `Map<String, Object> memory`.
+- Tipizzazione dinamica.
+- Return con eccezioni.
+- `Conf` per nastro Brainfuck separato.
+
+---
+
+## 🧠 Brainfuck: Integrazione
+
+Il linguaggio supporta blocchi `sly{...}arnold;` per scrivere codice Brainfuck inline.
+
+### ➤ Parser & Lexer
+
+- Modalità `BF` nel lexer.
+- Regole `bfProgram`, `bfCommand`, `bfLoop` nel parser.
+
+### ➤ Esecuzione
+
+```java
+Conf conf = new Conf();
+BrainfuckInterpreter bfInterp = new BrainfuckInterpreter(conf);
+bfInterp.visit(ctx.bfProgram());
+```
+
+---
+
+## 🧪 Esempi Demo
+
+```mylang
+fun books() {
+    var b = input();
+    while(b < 42 + input()) {
+        b = input();
+    }
+    ret b;
+}
+print("Books: " ++ str(books()));
+```
+
+```mylang
+sly {
+    ++++++++++[>+++++++>++++++++++>+++>+<<<<-]
+    >++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.
+} arnold;
+```
+
+---
 
 
-## 🧑‍💻 Autore
-Simone Mattioli
-Studente del corso di Informatica, Università di Verona
-Anno Accademico 2024/2025
+## 📁 File di Input
+
+Usa `input.txt` o i file in `/INPUTS/`:
+- `array.txt`
+- `funzione.txt`
+- `brainfuck.txt`
+- `non determinismo.txt`
+- ecc.
+
+---
+
+## 📄 Licenza
+
+Sviluppato a scopo didattico. Tutti i diritti riservati all’autore.
+
+---
+
+## 📧 Dettagli sulle lezioni/corso
+🔎 → [vedi README_GENERALE.md](README_GENERALE.md)
+
+
+Simone Mattioli – VR486911
