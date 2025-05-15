@@ -1,3 +1,1 @@
-var x = 100;
-var y = x + 23;
-print(y);
+print("hello World");

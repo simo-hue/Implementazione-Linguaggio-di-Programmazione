@@ -247,6 +247,8 @@ print(a[0]);
 5
 ```
 
+---
+
 ### 🔹 Blocco condizionale if else
 
 **Input:**
@@ -262,6 +264,10 @@ if ( 2 < 3 ) {
 ```text
 100
 ```
+
+---
+
+---
 
 ### 🔹 Blocco condizionale solo if
 
@@ -279,6 +285,8 @@ print(200);
 200
 ```
 
+---
+
 ### 🔹 Ciclo for
 
 **Input:**
@@ -294,6 +302,8 @@ for ( var j = 1; j <= 3; j = j + 1 ) {
 2
 3
 ```
+
+---
 
 ### 🔹 Ciclo while
 
@@ -315,6 +325,8 @@ while ( i < 5 ) {
 4
 ```
 
+---
+
 ### 🔹 Concatenazione stringhe
 
 **Input:**
@@ -328,6 +340,8 @@ print(s1 ++ " " ++ s2 ++ "!");
 ```text
 HelloWorld 30!
 ```
+
+---
 
 ### 🔹 Float
 
@@ -344,6 +358,8 @@ print(2 ^ 3.0);
 2.5
 8.0
 ```
+
+---
 
 ### 🔹 Funzione con return
 
@@ -363,6 +379,8 @@ print(sumTen());
 10
 ```
 
+---
+
 ### 🔹 Input e print
 
 **Input:**
@@ -379,6 +397,8 @@ print(x * 2);
 6
 ```
 
+---
+
 ### 🔹 Non Determinismo
 
 **Input:**
@@ -390,6 +410,8 @@ print(x * 2);
 ```text
 1 oppure 2
 ```
+
+---
 
 ### 🔹 operazioni aritmetiche di Base
 
@@ -412,6 +434,8 @@ print(2 ^ 5);
 1
 32
 ```
+
+---
 
 ### 🔹 scope ( lettura di variabile locale )
 
@@ -489,14 +513,10 @@ brainfuck();
 
 ---
 
----
-
 ## 📧 Dettagli sulle lezioni/corso
 🔎 → [vedi README_GENERALE.md](README_GENERALE.md)
 
 Simone Mattioli – VR486911
-
----
 
 ---
 

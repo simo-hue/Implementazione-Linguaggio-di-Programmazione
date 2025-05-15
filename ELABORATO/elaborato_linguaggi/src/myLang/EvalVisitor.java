@@ -67,7 +67,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
             boolean condTrue = true;
             GrammaticaParser.ExprContext condCtx = ctx.expr();
             if (condCtx != null) {
-                double cond = toNumber(visit(condCtx));
+                float cond = toNumber(visit(condCtx));
                 condTrue = (cond != 0);
             }
             if (!condTrue) break;
@@ -177,7 +177,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     @Override
     public Object visitIfStmt(GrammaticaParser.IfStmtContext ctx) {
         // 1) valuta la condizione
-        double cond = toNumber(visit(ctx.expr()));
+        float cond = toNumber(visit(ctx.expr()));
         if (cond != 0) {
             // vero: esegui il primo block
             for (GrammaticaParser.StatementContext st : ctx.block(0).statement()) {
@@ -266,7 +266,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         if (l instanceof Integer && r instanceof Integer) {
             return (Integer) l + (Integer) r;
         }
-        // altrimenti fai operazione in double
+        // altrimenti fai operazione in float
         return toNumber(l) + toNumber(r);
     }
 
@@ -282,7 +282,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         if (l instanceof Integer && r instanceof Integer) {
             return (Integer) l - (Integer) r;
         }
-        // altrimenti fai operazione in double
+        // altrimenti fai operazione in float
         return toNumber(l) - toNumber(r);
     }
 
@@ -297,7 +297,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         if (l instanceof Integer && r instanceof Integer) {
             return (Integer) l * (Integer) r;
         }
-        // altrimenti fai operazione in double
+        // altrimenti fai operazione in float
         return toNumber(l) * toNumber(r);
     }
 
@@ -313,7 +313,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         if (l instanceof Integer && r instanceof Integer) {
             return (Integer) l % (Integer) r;
         }
-        // altrimenti fai operazione in double
+        // altrimenti fai operazione in float
         return toNumber(l) % toNumber(r);
     }
 
@@ -329,7 +329,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         if (l instanceof Integer && r instanceof Integer) {
             return (Integer) l / (Integer) r;
         }
-        // altrimenti fai operazione in double
+        // altrimenti fai operazione in float
         return toNumber(l) / toNumber(r);
     }
 
@@ -344,15 +344,15 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         // Valuta i due operandi
         Object lObj = visit(ctx.expr(0));
         Object rObj = visit(ctx.expr(1));
-        double l = toNumber(lObj);
-        double r = toNumber(rObj);
-        double result = Math.pow(l, r);
+        float l = toNumber(lObj);
+        float r = toNumber(rObj);
+        float result = (float) Math.pow(l, r);
 
         // Se entrambi erano Integer, riconverti a Integer
         if (lObj instanceof Integer && rObj instanceof Integer) {
             return (int) result;
         }
-        // Altrimenti mantieni il Double
+        // Altrimenti mantieni il float
         return result;
     }
 
@@ -385,7 +385,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      */
     @Override
     public Object visitFloatExpr(GrammaticaParser.FloatExprContext ctx) {
-        return Double.parseDouble(ctx.FLOAT().getText());
+        return Float.parseFloat(ctx.FLOAT().getText());
     }
 
     /**
@@ -414,8 +414,19 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     @Override
     public Object visitInputExpr(GrammaticaParser.InputExprContext ctx) {
         System.out.print("> ");
-        return new java.util.Scanner(System.in).nextDouble();
+        String raw = new java.util.Scanner(System.in).nextLine().trim();
+
+        try {
+            if (raw.contains(".")) {           // ha parte decimale → float
+                return Float.parseFloat(raw);
+            } else {                           // altrimenti int
+                return Integer.parseInt(raw);
+            }
+        } catch (NumberFormatException ex) {
+            return raw;                        // non numerico → stringa
+        }
     }
+
 
     /**
      * StrExpr: 'str' '(' expr ')'
@@ -429,37 +440,38 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     /**
      * Helper: assicura un risultato numerico
      */
-    private double toNumber(Object obj) {
-        if (obj instanceof Integer) return ((Integer) obj).doubleValue();
-        if (obj instanceof Double) return (Double) obj;
+    private float toNumber(Object obj) {
+        if (obj instanceof Integer) return ((Integer) obj).floatValue();
+        if (obj instanceof Float)   return (Float) obj;
         throw new RuntimeException("Non è un numero: " + obj);
     }
 
+
     @Override
     public Object visitLtExpr(GrammaticaParser.LtExprContext ctx) {
-        double l = toNumber(visit(ctx.expr(0)));
-        double r = toNumber(visit(ctx.expr(1)));
+        float l = toNumber(visit(ctx.expr(0)));
+        float r = toNumber(visit(ctx.expr(1)));
         return l < r ? 1 : 0;
     }
 
     @Override
     public Object visitGtExpr(GrammaticaParser.GtExprContext ctx) {
-        double l = toNumber(visit(ctx.expr(0)));
-        double r = toNumber(visit(ctx.expr(1)));
+        float l = toNumber(visit(ctx.expr(0)));
+        float r = toNumber(visit(ctx.expr(1)));
         return l > r ? 1 : 0;
     }
 
     @Override
     public Object visitLeExpr(GrammaticaParser.LeExprContext ctx) {
-        double l = toNumber(visit(ctx.expr(0)));
-        double r = toNumber(visit(ctx.expr(1)));
+        float l = toNumber(visit(ctx.expr(0)));
+        float r = toNumber(visit(ctx.expr(1)));
         return l <= r ? 1 : 0;
     }
 
     @Override
     public Object visitGeExpr(GrammaticaParser.GeExprContext ctx) {
-        double l = toNumber(visit(ctx.expr(0)));
-        double r = toNumber(visit(ctx.expr(1)));
+        float l = toNumber(visit(ctx.expr(0)));
+        float r = toNumber(visit(ctx.expr(1)));
         return l >= r ? 1 : 0;
     }
 
