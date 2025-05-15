@@ -244,7 +244,7 @@ print(a[0]);
 **Output atteso:**
 ```text
 10
-10
+5
 ```
 
 ### 🔹 Blocco condizionale if else
@@ -260,7 +260,7 @@ if ( 2 < 3 ) {
 
 **Output atteso:**
 ```text
-vero
+100
 ```
 
 ### 🔹 Blocco condizionale solo if
@@ -275,7 +275,8 @@ print(200);
 
 **Output atteso:**
 ```text
-condizione vera
+100
+200
 ```
 
 ### 🔹 Ciclo for
@@ -289,11 +290,9 @@ for ( var j = 1; j <= 3; j = j + 1 ) {
 
 **Output atteso:**
 ```text
-0
 1
 2
 3
-4
 ```
 
 ### 🔹 Ciclo while
@@ -327,7 +326,7 @@ print(s1 ++ " " ++ s2 ++ "!");
 
 **Output atteso:**
 ```text
-HelloWorld42
+HelloWorld 30!
 ```
 
 ### 🔹 Float
@@ -341,9 +340,9 @@ print(2 ^ 3.0);
 
 **Output atteso:**
 ```text
-5.5
-2.75
-8.25
+3.14
+2.5
+8.0
 ```
 
 ### 🔹 Funzione con return
@@ -361,7 +360,7 @@ print(sumTen());
 
 **Output atteso:**
 ```text
-8
+10
 ```
 
 ### 🔹 Input e print
@@ -375,9 +374,9 @@ print(x * 2);
 
 **Output atteso:**
 ```text
-Inserisci un valore:
-42
-Hai inserito: 42
+> 3
+
+6
 ```
 
 ### 🔹 Non Determinismo
@@ -406,7 +405,14 @@ print(2 ^ 5);
 
 **Output atteso:**
 ```text
+5
+6
+30
+5
+1
+32
 ```
+
 ### 🔹 scope ( lettura di variabile locale )
 
 **Input:**
@@ -418,6 +424,7 @@ print(y);
 
 **Output atteso:**
 ```text
+123
 ```
 ---
 
