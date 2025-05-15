@@ -95,21 +95,60 @@ bfInterp.visit(ctx.bfProgram());
 ## 🧪 Esempi Demo
 
 ```mylang
-fun books() {
-    var b = input();
-    while(b < 42 + input()) {
-        b = input();
-    }
-    ret b;
-}
-print("Books: " ++ str(books()));
+{ print(“Buy more, more books!”) } ND [ { var books = input();
+print(“Buy ” ++ str(books ^ 4) ++ “ books” ++ “!! ;)”) } ND
+[ print(“Buy 42 books!”) ]]
 ```
 
 ```mylang
-sly {
-    ++++++++++[>+++++++>++++++++++>+++>+<<<<-]
-    >++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.
-} arnold;
+fun books(){
+print(“How many books do you read in a year??”);
+var books = input();
+while( books < ( 42 + 42 – 42 + input() ) ){
+books = input();
+}
+ret books;
+}
+fun brainfuck(){
+sly{ >
++ +
++ +
+[ < + +
++ +
++ + + +
+> - ] >
++ + + + + + + +
+[ >
++ + + +
+< - ] >
+> + + > > > + >
+> > + <
+< < < < < < < <
+< [ - [ - > + <
+] > [ - < + > > > . < < ] > > >
+[ [
+- > + +
++ + + +
++ + [ > + + + +
+< - ] >
+. < < [ - > + <
+] + > [ - > + +
++ + + + + + + + < < + > ] > . [
+- ] > ]
+] + < < < [ - [
+- > + < ] + > [
+- < + > > > - [ - > + < ] + + >
+[ - < - > ] < <
+< ] < < < < ] + + + + + + + + +
++ . + + + . [ - ] < ] + + + + +
+}arnold
+}
+print(“Library → 1, Bookshop → 2.”);
+var books = input();
+var bOOks = books();
+print(“Choice: ” ++ str(books) ++ “, Books: “ ++ str(bOOks));
+print(“Brainfuck: “);
+brainfuck();
 ```
 
 ---
