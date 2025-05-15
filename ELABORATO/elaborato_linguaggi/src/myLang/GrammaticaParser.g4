@@ -25,20 +25,20 @@ otherStmt
     ;
 
 varDecl
-    : VAR ID (LBRACK expr RBRACK)? ASSIGN expr SEMICOLON
+    : VAR ID (LBRACK expr RBRACK)? ASSIGN expr SEMICOLON?
     ;
 
 assignStmt
-    : ID ASSIGN expr SEMICOLON
-    | ID LBRACK expr RBRACK ASSIGN expr SEMICOLON
+    : ID ASSIGN expr SEMICOLON?
+    | ID LBRACK expr RBRACK ASSIGN expr SEMICOLON?
     ;
 
 printStmt
-    : PRINT LPAREN expr RPAREN SEMICOLON
+    : PRINT LPAREN expr RPAREN SEMICOLON?
     ;
 
 exprStmt
-    : expr SEMICOLON
+    : expr SEMICOLON?
     ;
 
 whileStmt
@@ -75,11 +75,11 @@ funDecl
     ;
 
 retStmt
-    : RET expr SEMICOLON
+    : RET expr SEMICOLON?
     ;
 
 slyStmt
-    : SLY_START bfProgram BF_RBRACE ARNOLD SEMICOLON
+    : SLY_START bfProgram BF_RBRACE ARNOLD SEMICOLON?
     ;
 
 bfProgram
