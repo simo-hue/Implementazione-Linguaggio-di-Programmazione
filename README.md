@@ -227,6 +227,200 @@ Questo approccio permette di:
 
 ---
 
+## 🧪 Test di Verifica – MyLang
+
+Questa sezione documenta i test eseguiti durante lo sviluppo del linguaggio MyLang.
+
+### 🔹 Array
+
+**Input:**
+```mylang
+var a[2] = 10;
+print(a[2]);
+a[0] = 5;
+print(a[0]);
+```
+
+**Output atteso:**
+```text
+10
+10
+```
+
+### 🔹 Blocco condizionale if else
+
+**Input:**
+```mylang
+if ( 2 < 3 ) {
+  print(100);
+} else {
+  print(200);
+}
+```
+
+**Output atteso:**
+```text
+vero
+```
+
+### 🔹 Blocco condizionale solo if
+
+**Input:**
+```mylang
+if ( 2 < 3 ) {
+  print(100);
+}
+print(200);
+```
+
+**Output atteso:**
+```text
+condizione vera
+```
+
+### 🔹 Ciclo for
+
+**Input:**
+```mylang
+for ( var j = 1; j <= 3; j = j + 1 ) {
+  print(j);
+}
+```
+
+**Output atteso:**
+```text
+0
+1
+2
+3
+4
+```
+
+### 🔹 Ciclo while
+
+**Input:**
+```mylang
+var i = 0;
+while ( i < 5 ) {
+  print(i);
+  i = i + 1;
+}
+```
+
+**Output atteso:**
+```text
+0
+1
+2
+3
+4
+```
+
+### 🔹 Concatenazione stringhe
+
+**Input:**
+```mylang
+var s1 = "Hello";
+var s2 = str(10 + 20);
+print(s1 ++ " " ++ s2 ++ "!");
+```
+
+**Output atteso:**
+```text
+HelloWorld42
+```
+
+### 🔹 Float
+
+**Input:**
+```mylang
+print(3.14);
+print(10.0 / 4.0);
+print(2 ^ 3.0);
+```
+
+**Output atteso:**
+```text
+5.5
+2.75
+8.25
+```
+
+### 🔹 Funzione con return
+
+**Input:**
+```mylang
+fun inc() {
+  ret 1 + 1;
+}
+fun sumTen() {
+  ret inc() + 8;
+}
+print(sumTen());
+```
+
+**Output atteso:**
+```text
+8
+```
+
+### 🔹 Input e print
+
+**Input:**
+```mylang
+print("Inserisci un numero:");
+var x = input();
+print(x * 2);
+```
+
+**Output atteso:**
+```text
+Inserisci un valore:
+42
+Hai inserito: 42
+```
+
+### 🔹 Non Determinismo
+
+**Input:**
+```mylang
+{ print(1); } ND [ print(2); ];
+```
+
+**Output atteso:**
+```text
+1 oppure 2
+```
+
+### 🔹 operazioni aritmetiche di Base
+
+**Input:**
+```mylang
+print(2 + 3);
+print(10 - 4);
+print(5 * 6);
+print(20 / 4);
+print(10 % 3);
+print(2 ^ 5);
+```
+
+**Output atteso:**
+```text
+```
+### 🔹 scope ( lettura di variabile locale )
+
+**Input:**
+```mylang
+var x = 100;
+var y = x + 23;
+print(y);
+```
+
+**Output atteso:**
+```text
+```
+---
+
 ## 🧪 Esempi Demo
 
 ```mylang
