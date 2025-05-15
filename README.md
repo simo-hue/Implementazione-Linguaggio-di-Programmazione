@@ -110,8 +110,8 @@ ELABORATO
 
 ## 🛠️ Scelte Implementative
 
-- **ARRAY** come una List<Object> in memoria.
-- **Funzioni** Le funzioni non accettano parametri, ma supportano chiamata, scope locale e return tramite eccezione.
+- **ARRAY** come una Lista di oggetti generici in memoria.
+- **Funzioni** non accettano parametri, ma supportano chiamata, scope locale e return tramite eccezione.
 - **Ritorno delle funzioni** È lanciata in visitRetStmt, e intercettata in visitCallExpr, Così si evita di dover propagare manualmente lo stato “ritorno già effettuato” in tutti i visit
 - **Memoria** dove Ogni ambiente è una Map<String, Object>, Quando una funzione viene chiamata, si crea un nuovo memory, poi si ripristina quello precedente.
 
@@ -119,8 +119,67 @@ ELABORATO
 
 ### ➤ Parser & Lexer
 
-- Modalità `BF` nel lexer.
-- Regole `bfProgram`, `bfCommand`, `bfLoop` nel parser.
+L'integrazione di Brainfuck in MyLang è stata ottenuta **separando le regole lessicali (lexer) da quelle sintattiche (parser)**, come richiesto da ANTLR per supportare le **modalità multiple di scansione dei token**.
+
+#### 🧾 Modalità `BF` nel Lexer
+
+- Quando il lexer incontra la sequenza `sly {`, viene attivata la **modalità `BF`** tramite la regola:
+  ```antlr
+  SLY_START : 'sly' '{' -> pushMode(BF);
+  ```
+
+- In modalità `BF`, vengono riconosciuti **solo gli 8 simboli validi** del linguaggio Brainfuck (`+`, `-`, `<`, `>`, `[`, `]`, `.`, `,`), con regole come:
+  ```antlr
+  mode BF;
+  BF_PLUS : '+';
+  BF_MINUS : '-';
+  ...
+  BF_RBRACE : '}' -> popMode;  // termina la modalità BF
+  ```
+
+- Qualsiasi altro carattere (spazi, newline, commenti) viene ignorato usando:
+  ```antlr
+  BF_OTHER : . -> skip;
+  ```
+
+---
+
+#### 🧠 Regole nel Parser
+
+Nel file `GrammaticaParser.g4`, il blocco Brainfuck viene riconosciuto con una **produzione specifica**:
+
+```antlr
+slyStmt : SLY_START bfProgram BF_RBRACE ARNOLD SEMICOLON ;
+```
+
+Dove:
+- `SLY_START` è il token `sly {` che attiva la modalità `BF`.
+- `bfProgram` rappresenta il corpo del codice Brainfuck.
+- `BF_RBRACE` chiude il blocco e ripristina il lexer alla modalità standard.
+
+##### 📘 Dettaglio: `bfProgram` e `bfCommand`
+
+- `bfProgram` è una lista di comandi Brainfuck:
+  ```antlr
+  bfProgram : bfCommand* ;
+  ```
+
+- `bfCommand` gestisce i singoli comandi e i loop annidati:
+  ```antlr
+  bfCommand
+      : BF_LT         # BfLt
+      | BF_GT         # BfGt
+      | BF_PLUS       # BfPlus
+      | BF_MINUS      # BfMinus
+      | BF_DOT        # BfDot
+      | BF_COMMA      # BfComma
+      | BF_LBRAK bfProgram BF_RBRAK  # BfLoop
+      ;
+  ```
+
+Questo approccio permette di:
+- **Incorporare Brainfuck in qualsiasi punto del linguaggio** (tramite `slyStmt`).
+- **Isolare la logica di interpretazione** nella classe `BrainfuckInterpreter`, separata dal resto dell’interprete.
 
 ---
 
