@@ -22,13 +22,13 @@ La particolarità di MyLang è il supporto integrato al linguaggio **Brainfuck**
 |-------------------------------------------------------------------------------------------------------|----|--------------------------------------------------|------------|
 | Operazioni gestite in `EvalVisitor.visitAddExpr`, `visitMulExpr`, ecc., con casting dinamico         | 1  | Operazioni base `+ - * / % ^`                   | ✅         |
 | Definito in `nonDetStmt` (parser) e gestito in `EvalVisitor.visitNonDetStmt()` con `Random`          | 2  | Non-determinismo `{...} ND [...] ND [...]`       | ✅         |
-| Regola `whileStmt` + `EvalVisitor.visitWhileStmt()` che valuta la condizione dinamicamente           | 3  | Ciclo `while` o `do-while`                      | ✅         |
+| Regola `whileStmt` + `EvalVisitor.visitWhileStmt()` che valuta la condizione dinamicamente           | 3  | Ciclo `while`                      | ✅         |
 | Regola `forStmt` + `visitForStmt()` con valutazione di init, condizione e update                     | 4  | Ciclo `for`                                     | ✅         |
 | Regola `ifStmt` + `EvalVisitor.visitIfStmt()` che gestisce blocchi condizionali                      | 5  | `if`, `if-else`                                 | ✅         |
 | `print()` e `input()` sono gestite direttamente come `BuiltinFunction` nel `FunctionRegistry`        | 6  | `input()` e `print()`                           | ✅         |
 | Concatenazione stringhe con `++`, `str()` implementato in `EvalVisitor.visitStrExpr()`               | 7  | Stringhe + `str()`                              | ✅         |
 | Supporto `FLOAT` in lexer + casting/aritmetica in `EvalVisitor`                                      | 8  | Float                                            | ✅         |
-| Array definiti tramite `ID [expr]`, accesso e modifica con `arrayAccess` e `assignStmt`              | 9  | Liste / Array                                    | ✅         |
+| Array definiti tramite `ID [expr]`, accesso e modifica con `arrayAccess` e `assignStmt`              | 9  | Array                                    | ✅         |
 | `Map<String, Object> memory` usata per mantenere variabili globali e locali                          | 10 | Variabili dinamiche                             | ✅         |
 | Funzioni definite con `funDecl`, registrate in `FunctionRegistry`, gestite in `EvalVisitor`          | 11 | Funzioni senza parametri                        | ✅         |
 | Lexer mode `BF`, parser `bfProgram`, visitor `BrainfuckInterpreter`, stato `Conf.java`               | 12 | `sly{ ... }arnold;` per codice Brainfuck        | ✅         |
