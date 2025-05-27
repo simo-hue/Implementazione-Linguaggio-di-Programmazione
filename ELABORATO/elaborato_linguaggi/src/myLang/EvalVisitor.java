@@ -563,7 +563,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
         callStack.pop();
         syncWithGlobal(newScope);
-        return null;
+        return 0f;
     }
     @Override
     public Object visitSlyStmt(GrammaticaParser.SlyStmtContext ctx) {
