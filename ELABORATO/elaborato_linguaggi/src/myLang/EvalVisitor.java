@@ -62,19 +62,18 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     }
     @Override
     public Object visitWhileStmt(GrammaticaParser.WhileStmtContext ctx) {
-        // Valuta la condizione
-        Object condVal = visit(ctx.expr());
-        // Continua a ciclare finché la condizione è "true" (non-zero)
+        Object condVal = visit(ctx.expr());          // ← singola espressione
+
         while (toNumber(condVal) != 0) {
-            // Visita tutti gli statement all'interno del blocco per eseguirli
             for (GrammaticaParser.StatementContext st : ctx.block().statement()) {
                 visit(st);
             }
-            // Rivaluta la condizione ad ogni iterazione prima del controllo
-            condVal = visit(ctx.expr());
+            condVal = visit(ctx.expr());             // ← rivaluta la stessa condizione
         }
-        return null;  // i cicli non restituiscono un valore
+        return null;
     }
+
+
 
     private void syncWithGlobal(Map<String, Object> newScope) {
         Map<String, Object> globalScope = callStack.getLast();
