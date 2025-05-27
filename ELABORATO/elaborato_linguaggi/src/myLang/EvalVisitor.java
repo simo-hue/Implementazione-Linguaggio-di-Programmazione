@@ -1,14 +1,6 @@
 package myLang;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import myLang.GrammaticaParserBaseVisitor;
-import myLang.GrammaticaParser;
-import java.util.Random;
-import myLang.Conf;
-import myLang.BrainfuckInterpreter;
+
+import java.util.*;
 
 /**
  * EvalVisitor: visita l’albero sintattico e ne valuta
@@ -16,8 +8,44 @@ import myLang.BrainfuckInterpreter;
  */
 public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
-    // Mappa per variabili: nome → valore
-    private Map<String, Object> memory = new HashMap<>();
+    private final java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+    private final Deque<Set<String>> declaredStack = new ArrayDeque<>();
+
+    private final Deque<Map<String,Object>> callStack = new ArrayDeque<>();
+    {
+        callStack.push(new HashMap<>()); // ambiente globale
+    }
+
+    private Map<String, Object> currentScope() {
+        return callStack.peek();
+    }
+
+    private void declareVariable(String name, Object value) {
+        currentScope().put(name, value);
+        if (!declaredStack.isEmpty()) {
+            declaredStack.peek().add(name);
+        }
+    }
+    private Object getVariable(String name) {
+        for (Map<String, Object> scope : callStack) {
+            if (scope.containsKey(name)) return scope.get(name);
+        }
+        return 0; // valore default per variabili non inizializzate
+    }
+
+    private void setVariable(String name, Object value) {
+        for (Map<String, Object> scope : callStack) {
+            if (scope.containsKey(name)) {
+                scope.put(name, value);
+                return;
+            }
+        }
+        currentScope().put(name, value); // nuova variabile nello scope corrente
+    }
+
+    private final Map<String, GrammaticaParser.FunDeclContext> functions = new HashMap<>();
+
 
     // Generatore Random per ND ( non determinismo )
     private final Random rnd = new Random();
@@ -46,6 +74,18 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
             condVal = visit(ctx.expr());
         }
         return null;  // i cicli non restituiscono un valore
+    }
+
+    private void syncWithGlobal(Map<String, Object> newScope) {
+        Map<String, Object> globalScope = callStack.getLast();
+        Set<String> declaredLocally = declaredStack.pop();
+
+        for (Map.Entry<String, Object> entry : newScope.entrySet()) {
+            String var = entry.getKey();
+            if (globalScope.containsKey(var) && !declaredLocally.contains(var)) {
+                globalScope.put(var, entry.getValue());
+            }
+        }
     }
 
     /**
@@ -93,7 +133,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     public Object visitForInit(GrammaticaParser.ForInitContext ctx) {
         String id = ctx.ID().getText();
         Object value = visit(ctx.expr());
-        memory.put(id, value);
+        setVariable(id, value);
         return null;
     }
 
@@ -104,7 +144,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     public Object visitForUpdate(GrammaticaParser.ForUpdateContext ctx) {
         String id = ctx.ID().getText();
         Object value = visit(ctx.expr());
-        memory.put(id, value);
+        setVariable(id, value);
         return null;
     }
 
@@ -114,7 +154,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     @Override
     public Object visitArrayAccess(GrammaticaParser.ArrayAccessContext ctx) {
         String id = ctx.ID().getText();
-        Object arrObj = memory.get(id);
+        Object arrObj = getVariable(id);
         if (!(arrObj instanceof List<?>)) {
             throw new RuntimeException("Variabile '" + id + "' non è un array");
         }
@@ -132,44 +172,42 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      * Gestisce sia x = v che x[i] = v
      */
     @Override
-    public Object visitAssignStmt(GrammaticaParser.AssignStmtContext ctx) {
-        List<GrammaticaParser.ExprContext> exprs = ctx.expr();
+    public Object visitVarDecl(GrammaticaParser.VarDeclContext ctx) {
         String id = ctx.ID().getText();
+        List<GrammaticaParser.ExprContext> exprs = ctx.expr();
 
-        if (exprs.size() == 2) {
-            // array assignment: x[index] = value
-            int index = (int) toNumber(visit(exprs.get(0)));
-            Object value = visit(exprs.get(1));
-
-            // Recupera l'oggetto in memoria
-            Object stored = memory.get(id);
-            List<Object> array;
-            if (stored instanceof List<?>) {
-                // è già un array
-                @SuppressWarnings("unchecked")
-                List<Object> tmp = (List<Object>) stored;
-                array = tmp;
-            } else {
-                // non era una lista: ne creo una nuova
-                array = new ArrayList<>();
-            }
-
-            // Allungo la lista se serve
-            while (array.size() <= index) {
-                array.add(0); // default 0
-            }
-            array.set(index, value);
-
-            // Salvo la lista in memoria (sovrascrive eventuale vecchio scalar)
-            memory.put(id, array);
-        } else {
-            // simple assignment: x = expr
+        if (ctx.getChildCount() == 5) {          // var x = expr ;
             Object value = visit(exprs.get(0));
-            memory.put(id, value);
+
+            // ⬇️  DICHIARAZIONE LOCALE (NON usare setVariable)
+            declareVariable(id, value);
+
+        } else {                                 // var x [idx] = expr ;
+            int idx = (int) toNumber(visit(exprs.get(0)));
+            Object v  = visit(exprs.get(1));
+
+            List<Object> arr = new ArrayList<>();
+            while (arr.size() <= idx) arr.add(0);
+            arr.set(idx, v);
+
+            // ⬇️  DICHIARAZIONE LOCALE
+            declareVariable(id, arr);
+        }
+
+        // Registra la dichiarazione nello stack delle locali
+        if (!declaredStack.isEmpty()) {
+            declaredStack.peek().add(id);
         }
         return null;
     }
 
+    @Override
+    public Object visitAssignStmt(GrammaticaParser.AssignStmtContext ctx) {
+        String id = ctx.ID().getText();
+        Object value = visit(ctx.expr().get(0));
+        setVariable(id, value);
+        return null;
+    }
 
     /**
      * ifStmt: 'if' '(' expr ')' block ( 'else' block )?
@@ -206,33 +244,6 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
         // Converte in stringa e unisce
         return left.toString() + right.toString();
-    }
-
-    /**
-     * VarDecl: 'var' ID '=' expr ';'
-     */
-    @Override
-    public Object visitVarDecl(GrammaticaParser.VarDeclContext ctx) {
-        String id = ctx.ID().getText();
-        // ctx.expr() restituisce 1 solo per scalar, 2 per array
-        List<GrammaticaParser.ExprContext> exprs = (List<GrammaticaParser.ExprContext>) ctx.expr();
-        if (ctx.getChildCount() == 5) {
-            // var x = expr ;
-            // childCount: ['var', ID, '=', expr, ';']
-            Object value = visit(exprs.get(0));
-            memory.put(id, value);
-        } else {
-            // var x [ idx ] = expr ;
-            // childCount: ['var', ID, '[', expr, ']', '=', expr, ';']
-            int idx = (int) toNumber(visit(exprs.get(0)));
-            Object v  = visit(exprs.get(1));
-            // costruisci o estendi l'array
-            List<Object> arr = new ArrayList<>();
-            while (arr.size() <= idx) arr.add(0);
-            arr.set(idx, v);
-            memory.put(id, arr);
-        }
-        return null;
     }
 
     /**
@@ -403,10 +414,10 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      */
     @Override
     public Object visitIdExpr(GrammaticaParser.IdExprContext ctx) {
-        String id = ctx.ID().getText();
-        // se non esiste, restituisci 0 per convenzione
-        return memory.getOrDefault(id, 0);
+        Object val = getVariable(ctx.ID().getText());
+        return val == null ? 0 : val;
     }
+
 
     /**
      * InputExpr: 'input' '(' ')'
@@ -437,15 +448,11 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         return val.toString();
     }
 
-    /**
-     * Helper: assicura un risultato numerico
-     */
     private float toNumber(Object obj) {
         if (obj instanceof Integer) return ((Integer) obj).floatValue();
         if (obj instanceof Float)   return (Float) obj;
         throw new RuntimeException("Non è un numero: " + obj);
     }
-
 
     @Override
     public Object visitLtExpr(GrammaticaParser.LtExprContext ctx) {
@@ -517,9 +524,10 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     @Override
     public Object visitFunDecl(GrammaticaParser.FunDeclContext ctx) {
         String name = ctx.ID().getText();
-        FunctionRegistry.register(name, ctx);
-        return null; // non esegue subito il corpo
+        functions.put(name, ctx); // salva il contesto della funzione
+        return null;
     }
+
 
     @Override
     public Object visitRetStmt(GrammaticaParser.RetStmtContext ctx) {
@@ -529,33 +537,30 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
     @Override
     public Object visitCallExpr(GrammaticaParser.CallExprContext ctx) {
-        String name = ctx.ID().getText();
-        // Recupera la dichiarazione dalla registry
-        GrammaticaParser.FunDeclContext fctx = FunctionRegistry.lookup(name);
-        if (fctx == null) {
-            throw new RuntimeException("Funzione non definita: " + name);
-        }
+        String fname = ctx.ID().getText();
+        GrammaticaParser.FunDeclContext fctx = functions.get(fname);
+        if (fctx == null) throw new RuntimeException("Funzione non definita: " + fname);
 
-        // Salva l'ambiente corrente e creane uno nuovo (scope locale)
-        Map<String,Object> oldMemory = memory;
+        Map<String, Object> newScope = new HashMap<>();
+        Set<String> declaredLocally = new HashSet<>();
 
-        // Quello NUOVO
-        memory = new HashMap<>();
+        callStack.push(newScope);
+        declaredStack.push(declaredLocally);
 
-        Object result = null;
         try {
-            // Esegui il body della funzione (visit del suo block)
-            visit(fctx.block());
+            for (var stmt : fctx.block().statement()) {
+                visit(stmt);
+            }
         } catch (ReturnValue rv) {
-            // Cattura il valore di return
-            result = rv.value;
+            callStack.pop();
+            syncWithGlobal(newScope);
+            return rv.value;
         }
 
-        // Ripristina l'ambiente chiamante
-        memory = oldMemory;
-        return result;
+        callStack.pop();
+        syncWithGlobal(newScope);
+        return null;
     }
-
     @Override
     public Object visitSlyStmt(GrammaticaParser.SlyStmtContext ctx) {
         // Recupera il nodo bfProgram generato dal parser

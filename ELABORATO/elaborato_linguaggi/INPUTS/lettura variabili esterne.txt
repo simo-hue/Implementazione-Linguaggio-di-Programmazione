@@ -1,0 +1,4 @@
+var x = 1;
+fun foo() { x = 2; }
+foo();
+print(x);  // deve stampare 1  (la modifica non “passa” fuori)
