@@ -50,6 +50,25 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     // Generatore Random per ND ( non determinismo )
     private final Random rnd = new Random();
 
+    @SuppressWarnings("unchecked")
+    private List<Object> ensureArray(String id) {
+        Object v = getVariable(id);
+
+        if (v instanceof List<?>) {
+            return (List<Object>) v;
+        }
+
+        // Se non esiste o non è lista: crea nuova ArrayList
+        List<Object> arr = new ArrayList<>();
+
+        // Se esisteva un valore scalare, puoi decidere se conservarlo:
+        // arr.add(v);   // opzionale – metterebbe lo scalare in posizione 0
+        // oppure ignori il vecchio valore
+
+        // Salva l’array nel currentScope/globale
+        setVariable(id, arr);
+        return arr;
+    }
 
     /**
      * ReturnValue è un’eccezione interna usata solo per
@@ -152,18 +171,19 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      */
     @Override
     public Object visitArrayAccess(GrammaticaParser.ArrayAccessContext ctx) {
-        String id = ctx.ID().getText();
-        Object arrObj = getVariable(id);
-        if (!(arrObj instanceof List<?>)) {
-            throw new RuntimeException("Variabile '" + id + "' non è un array");
+
+        String id    = ctx.ID().getText();
+        int    index = (int) toNumber( visit(ctx.expr()) );
+
+        Object v = getVariable(id);
+
+        if (!(v instanceof List<?>)) {
+            // Variabile non definita o scalare: array “vuoto”
+            return 0;                         // puoi restituire null se preferisci
         }
-        @SuppressWarnings("unchecked")
-        List<Object> array = (List<Object>) arrObj;
-        int index = (int) toNumber(visit(ctx.expr()));
-        if (index < 0 || index >= array.size()) {
-            throw new RuntimeException("Indice " + index + " fuori intervallo per array '" + id + "'");
-        }
-        return array.get(index);
+
+        List<?> arr = (List<?>) v;
+        return (index < arr.size()) ? arr.get(index) : 0;
     }
 
     /**
@@ -202,11 +222,31 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
     @Override
     public Object visitAssignStmt(GrammaticaParser.AssignStmtContext ctx) {
+
         String id = ctx.ID().getText();
-        Object value = visit(ctx.expr().get(0));
-        setVariable(id, value);
+
+        // lassi di grammatica:
+        //   ID '=' expr                 → childCount == 3 (+ ';' nel parser)
+        //   ID '[' expr ']' '=' expr    → childCount > 3
+
+        if (ctx.getChildCount() > 4) {                 // assegnamento a x[expr]
+
+            int    index = (int) toNumber( visit(ctx.expr(0)) );
+            Object value =               visit(ctx.expr(1));
+
+            List<Object> arr = ensureArray(id);        // crea o recupera l’array
+            while (arr.size() <= index) arr.add(0);    // auto-espansione
+            arr.set(index, value);
+
+        } else {                                       // assegnamento scalare
+            Object value = visit(ctx.expr(0));
+            setVariable(id, value);
+        }
+
+        // non registrare come dichiarazione se è solo riassegnazione
         return null;
     }
+
 
     /**
      * ifStmt: 'if' '(' expr ')' block ( 'else' block )?
