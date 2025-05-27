@@ -1,5 +1,7 @@
 package myLang;
 
+import org.antlr.v4.runtime.Token;
+
 import java.util.*;
 
 /**
@@ -81,18 +83,19 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     }
     @Override
     public Object visitWhileStmt(GrammaticaParser.WhileStmtContext ctx) {
-        Object condVal = visit(ctx.expr());          // ← singola espressione
 
-        while (toNumber(condVal) != 0) {
+        // Valuta la condizione ogni volta che il while la richiede
+        while (toNumber( visit(ctx.expr()) ) != 0) {
+
+            // esegui il corpo
             for (GrammaticaParser.StatementContext st : ctx.block().statement()) {
                 visit(st);
             }
-            condVal = visit(ctx.expr());             // ← rivaluta la stessa condizione
+            // qui NON ricalcoliamo esplicitamente: il controllo del while
+            // tornerà in cima ed eseguirà di nuovo visit(ctx.expr())
         }
         return null;
     }
-
-
 
     private void syncWithGlobal(Map<String, Object> newScope) {
         Map<String, Object> globalScope = callStack.getLast();
@@ -277,12 +280,11 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      */
     @Override
     public Object visitConcatExpr(GrammaticaParser.ConcatExprContext ctx) {
-        // Valuta i due operandi
-        Object left = visit(ctx.expr(0));
-        Object right = visit(ctx.expr(1));
-
-        // Converte in stringa e unisce
-        return left.toString() + right.toString();
+        StringBuilder result = new StringBuilder(visit(ctx.exprStrPart(0)).toString());
+        for (int i = 1; i < ctx.exprStrPart().size(); i++) {
+            result.append(visit(ctx.exprStrPart(i)).toString());
+        }
+        return result.toString();
     }
 
     /**
@@ -290,8 +292,8 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      */
     @Override
     public Object visitPrintStmt(GrammaticaParser.PrintStmtContext ctx) {
-        Object value = visit(ctx.expr());       // valuta espressione
-        System.out.println(value);              // stampa su console
+        Object val = visit(ctx.expr());
+        System.out.println(val);
         return null;
     }
 
@@ -308,112 +310,70 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      * AddExpr: expr '+' expr
      */
     @Override
-    public Object visitAddExpr(GrammaticaParser.AddExprContext ctx) {
-        Object l = visit(ctx.expr(0));
-        Object r = visit(ctx.expr(1));
-
-        // se entrambi Integer, restituisci Integer
-        if (l instanceof Integer && r instanceof Integer) {
-            return (Integer) l + (Integer) r;
+    public Object visitAddExprOp(GrammaticaParser.AddExprOpContext ctx) {
+        float result = toNumber(visit(ctx.multExpr(0)));
+        for (int i = 1; i < ctx.multExpr().size(); i++) {
+            float right = toNumber(visit(ctx.multExpr(i)));
+            Token op = (Token) ctx.getChild(2 * i - 1).getPayload();
+            switch (op.getType()) {
+                case GrammaticaParser.PLUS:
+                    result += right;
+                    break;
+                case GrammaticaParser.MINUS:
+                    result -= right;
+                    break;
+            }
         }
-        // altrimenti fai operazione in float
-        return toNumber(l) + toNumber(r);
+        return result;
     }
-
-    /**
-     * SubExpr: expr '-' expr
-     */
-    @Override
-    public Object visitSubExpr(GrammaticaParser.SubExprContext ctx) {
-        Object l = visit(ctx.expr(0));
-        Object r = visit(ctx.expr(1));
-
-        // se entrambi Integer, restituisci Integer
-        if (l instanceof Integer && r instanceof Integer) {
-            return (Integer) l - (Integer) r;
-        }
-        // altrimenti fai operazione in float
-        return toNumber(l) - toNumber(r);
-    }
-
     /**
      * MulExpr: expr '*' expr
      */
     @Override
-    public Object visitMulExpr(GrammaticaParser.MulExprContext ctx) {
-        Object l = visit(ctx.expr(0));
-        Object r = visit(ctx.expr(1));
-        // se entrambi Integer, restituisci Integer
-        if (l instanceof Integer && r instanceof Integer) {
-            return (Integer) l * (Integer) r;
+    public Object visitMulExprOp(GrammaticaParser.MulExprOpContext ctx) {
+        float result = toNumber(visit(ctx.powExpr(0)));
+        for (int i = 1; i < ctx.powExpr().size(); i++) {
+            float right = toNumber(visit(ctx.powExpr(i)));
+            Token op = (Token) ctx.getChild(2 * i - 1).getPayload();
+            switch (op.getType()) {
+                case GrammaticaParser.MUL:
+                    result *= right;
+                    break;
+                case GrammaticaParser.DIV:
+                    if (right == 0) throw new RuntimeException("Divisione per zero");
+                    result /= right;
+                    break;
+                case GrammaticaParser.MOD:
+                    result %= right;
+                    break;
+            }
         }
-        // altrimenti fai operazione in float
-        return toNumber(l) * toNumber(r);
-    }
-
-    /**
-     * ModExpr: expr '%' expr
-     */
-    @Override
-    public Object visitModExpr(GrammaticaParser.ModExprContext ctx) {
-        Object l = visit(ctx.expr(0));
-        Object r = visit(ctx.expr(1));
-
-        // se entrambi Integer, restituisci Integer
-        if (l instanceof Integer && r instanceof Integer) {
-            return (Integer) l % (Integer) r;
-        }
-        // altrimenti fai operazione in float
-        return toNumber(l) % toNumber(r);
-    }
-
-    /**
-     * DivExpr: expr '/' expr
-     */
-    @Override
-    public Object visitDivExpr(GrammaticaParser.DivExprContext ctx) {
-        Object l = visit(ctx.expr(0));
-        Object r = visit(ctx.expr(1));
-
-        // se entrambi Integer, restituisci Integer
-        if (l instanceof Integer && r instanceof Integer) {
-            return (Integer) l / (Integer) r;
-        }
-        // altrimenti fai operazione in float
-        return toNumber(l) / toNumber(r);
-    }
-
-    /**
-     * PowExpr: expr '^' expr
-     */
-    /**
-     * PowExpr: expr '^' expr
-     */
-    @Override
-    public Object visitPowExpr(GrammaticaParser.PowExprContext ctx) {
-        // Valuta i due operandi
-        Object lObj = visit(ctx.expr(0));
-        Object rObj = visit(ctx.expr(1));
-        float l = toNumber(lObj);
-        float r = toNumber(rObj);
-        float result = (float) Math.pow(l, r);
-
-        // Se entrambi erano Integer, riconverti a Integer
-        if (lObj instanceof Integer && rObj instanceof Integer) {
-            return (int) result;
-        }
-        // Altrimenti mantieni il float
         return result;
     }
-
+    /**
+     * PowExpr: expr '^' expr
+     */
+    @Override
+    public Object visitPowExprOp(GrammaticaParser.PowExprOpContext ctx) {
+        float base = toNumber(visit(ctx.unaryExpr()));
+        if (ctx.powExpr() != null) {
+            float exp = toNumber(visit(ctx.powExpr()));
+            return (float) Math.pow(base, exp);
+        }
+        return base;
+    }
     /**
      * UnaryMinus: '-' expr
      */
     @Override
     public Object visitUnaryMinus(GrammaticaParser.UnaryMinusContext ctx) {
-        return -toNumber(visit(ctx.expr()));
+        return -toNumber(visit(ctx.unaryExpr()));
     }
 
+    @Override
+    public Object visitToAtom(GrammaticaParser.ToAtomContext ctx) {
+        return visit(ctx.atomExpr());
+    }
     /**
      * ParensExpr: '(' expr ')'
      */
@@ -442,7 +402,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      * StringExpr: STRING
      */
     @Override
-    public Object visitStringExpr(GrammaticaParser.StringExprContext ctx) {
+    public Object visitStringInStrExpr(GrammaticaParser.StringInStrExprContext ctx) {
         // togli le virgolette iniziali/finali
         String text = ctx.STRING().getText();
         return text.substring(1, text.length() - 1);
@@ -465,66 +425,71 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     public Object visitInputExpr(GrammaticaParser.InputExprContext ctx) {
         System.out.print("> ");
         String raw = new java.util.Scanner(System.in).nextLine().trim();
+        System.out.println("[DBG] input() -> " + raw);
 
         try {
-            if (raw.contains(".")) {           // ha parte decimale → float
-                return Float.parseFloat(raw);
-            } else {                           // altrimenti int
-                return Integer.parseInt(raw);
-            }
+            return Float.parseFloat(raw); // sempre Float
         } catch (NumberFormatException ex) {
-            return raw;                        // non numerico → stringa
+            return raw; // stringa
         }
     }
-
 
     /**
      * StrExpr: 'str' '(' expr ')'
      */
     @Override
-    public Object visitStrExpr(GrammaticaParser.StrExprContext ctx) {
-        Object val = visit(ctx.expr());
+    public Object visitToStrInStrExpr(GrammaticaParser.ToStrInStrExprContext ctx) {
+        Object val = visit(ctx.arithExpr());
         return val.toString();
     }
 
     private float toNumber(Object obj) {
         if (obj instanceof Integer) return ((Integer) obj).floatValue();
-        if (obj instanceof Float)   return (Float) obj;
-        throw new RuntimeException("Non è un numero: " + obj);
+        if (obj instanceof Float) return (Float) obj;
+        if (obj instanceof Double) return ((Double) obj).floatValue();
+        if (obj instanceof String) {
+            try {
+                return Float.parseFloat(((String) obj).trim());
+            } catch (NumberFormatException e) {
+                throw new RuntimeException("Stringa non numerica in toNumber(): \"" + obj + "\"");
+            }
+        }
+        throw new RuntimeException("Tipo non numerico: " + obj);
     }
-
     @Override
     public Object visitLtExpr(GrammaticaParser.LtExprContext ctx) {
-        float l = toNumber(visit(ctx.expr(0)));
-        float r = toNumber(visit(ctx.expr(1)));
+        float l = toNumber(visit(ctx.addExpr(0)));
+        float r = toNumber(visit(ctx.addExpr(1)));
+        System.out.println("[DBG] " + l + " < " + r);
         return l < r ? 1 : 0;
     }
 
     @Override
     public Object visitGtExpr(GrammaticaParser.GtExprContext ctx) {
-        float l = toNumber(visit(ctx.expr(0)));
-        float r = toNumber(visit(ctx.expr(1)));
+        float l = toNumber(visit(ctx.addExpr(0)));
+        float r = toNumber(visit(ctx.addExpr(1)));
+        System.out.println("[DBG] " + l + " > " + r);
         return l > r ? 1 : 0;
     }
 
     @Override
     public Object visitLeExpr(GrammaticaParser.LeExprContext ctx) {
-        float l = toNumber(visit(ctx.expr(0)));
-        float r = toNumber(visit(ctx.expr(1)));
+        float l = toNumber(visit(ctx.addExpr(0)));
+        float r = toNumber(visit(ctx.addExpr(1)));
         return l <= r ? 1 : 0;
     }
 
     @Override
     public Object visitGeExpr(GrammaticaParser.GeExprContext ctx) {
-        float l = toNumber(visit(ctx.expr(0)));
-        float r = toNumber(visit(ctx.expr(1)));
+        float l = toNumber(visit(ctx.addExpr(0)));
+        float r = toNumber(visit(ctx.addExpr(1)));
         return l >= r ? 1 : 0;
     }
 
     @Override
     public Object visitEqExpr(GrammaticaParser.EqExprContext ctx) {
-        Object l = visit(ctx.expr(0));
-        Object r = visit(ctx.expr(1));
+        Object l = visit(ctx.addExpr(0));
+        Object r = visit(ctx.addExpr(1));
         // confronto stringhe o numeri
         if (l instanceof String || r instanceof String) {
             return l.toString().equals(r.toString()) ? 1 : 0;
@@ -534,8 +499,8 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
     @Override
     public Object visitNeExpr(GrammaticaParser.NeExprContext ctx) {
-        Object l = visit(ctx.expr(0));
-        Object r = visit(ctx.expr(1));
+        Object l = visit(ctx.addExpr(0));
+        Object r = visit(ctx.addExpr(1));
         if (l instanceof String || r instanceof String) {
             return !l.toString().equals(r.toString()) ? 1 : 0;
         }

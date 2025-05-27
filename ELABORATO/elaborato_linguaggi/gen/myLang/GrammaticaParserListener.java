@@ -1,4 +1,4 @@
-// Generated from /Users/simo/Desktop/CODING/JAVA/UNI/ELABORATO/elaborato_linguaggi/src/myLang/GrammaticaParser.g4 by ANTLR 4.13.2
+// Generated from /Users/simo/Downloads/Implementazione-Linguaggio-di-Programmazione-main/ELABORATO/elaborato_linguaggi/src/myLang/GrammaticaParser.g4 by ANTLR 4.13.2
 package myLang;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -272,279 +272,349 @@ public interface GrammaticaParserListener extends ParseTreeListener {
 	 */
 	void exitBfLoop(GrammaticaParser.BfLoopContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code strExpr}
+	 * Enter a parse tree produced by the {@code exprArith}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterStrExpr(GrammaticaParser.StrExprContext ctx);
+	void enterExprArith(GrammaticaParser.ExprArithContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code strExpr}
+	 * Exit a parse tree produced by the {@code exprArith}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitStrExpr(GrammaticaParser.StrExprContext ctx);
+	void exitExprArith(GrammaticaParser.ExprArithContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code geExpr}
+	 * Enter a parse tree produced by the {@code exprStr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterGeExpr(GrammaticaParser.GeExprContext ctx);
+	void enterExprStr(GrammaticaParser.ExprStrContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code geExpr}
+	 * Exit a parse tree produced by the {@code exprStr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitGeExpr(GrammaticaParser.GeExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code intExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterIntExpr(GrammaticaParser.IntExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code intExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitIntExpr(GrammaticaParser.IntExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code modExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterModExpr(GrammaticaParser.ModExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code modExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitModExpr(GrammaticaParser.ModExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code gtExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterGtExpr(GrammaticaParser.GtExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code gtExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitGtExpr(GrammaticaParser.GtExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code inputExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterInputExpr(GrammaticaParser.InputExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code inputExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitInputExpr(GrammaticaParser.InputExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code neExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterNeExpr(GrammaticaParser.NeExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code neExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitNeExpr(GrammaticaParser.NeExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code parensExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterParensExpr(GrammaticaParser.ParensExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code parensExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitParensExpr(GrammaticaParser.ParensExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code subExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterSubExpr(GrammaticaParser.SubExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code subExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitSubExpr(GrammaticaParser.SubExprContext ctx);
+	void exitExprStr(GrammaticaParser.ExprStrContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code concatExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#strExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterConcatExpr(GrammaticaParser.ConcatExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code concatExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#strExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitConcatExpr(GrammaticaParser.ConcatExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code stringExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Enter a parse tree produced by the {@code toStrInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
 	 * @param ctx the parse tree
 	 */
-	void enterStringExpr(GrammaticaParser.StringExprContext ctx);
+	void enterToStrInStrExpr(GrammaticaParser.ToStrInStrExprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code stringExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Exit a parse tree produced by the {@code toStrInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
 	 * @param ctx the parse tree
 	 */
-	void exitStringExpr(GrammaticaParser.StringExprContext ctx);
+	void exitToStrInStrExpr(GrammaticaParser.ToStrInStrExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code floatExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Enter a parse tree produced by the {@code stringInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
 	 * @param ctx the parse tree
 	 */
-	void enterFloatExpr(GrammaticaParser.FloatExprContext ctx);
+	void enterStringInStrExpr(GrammaticaParser.StringInStrExprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code floatExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Exit a parse tree produced by the {@code stringInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
 	 * @param ctx the parse tree
 	 */
-	void exitFloatExpr(GrammaticaParser.FloatExprContext ctx);
+	void exitStringInStrExpr(GrammaticaParser.StringInStrExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code idInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdInStrExpr(GrammaticaParser.IdInStrExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code idInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdInStrExpr(GrammaticaParser.IdInStrExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code inputInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
+	 * @param ctx the parse tree
+	 */
+	void enterInputInStrExpr(GrammaticaParser.InputInStrExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code inputInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
+	 * @param ctx the parse tree
+	 */
+	void exitInputInStrExpr(GrammaticaParser.InputInStrExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code parensStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
+	 * @param ctx the parse tree
+	 */
+	void enterParensStrExpr(GrammaticaParser.ParensStrExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code parensStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
+	 * @param ctx the parse tree
+	 */
+	void exitParensStrExpr(GrammaticaParser.ParensStrExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammaticaParser#arithExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterArithExpr(GrammaticaParser.ArithExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammaticaParser#arithExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitArithExpr(GrammaticaParser.ArithExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ltExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterLtExpr(GrammaticaParser.LtExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code ltExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitLtExpr(GrammaticaParser.LtExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code eqExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Enter a parse tree produced by the {@code gtExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterEqExpr(GrammaticaParser.EqExprContext ctx);
+	void enterGtExpr(GrammaticaParser.GtExprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code eqExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Exit a parse tree produced by the {@code gtExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitEqExpr(GrammaticaParser.EqExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code addExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterAddExpr(GrammaticaParser.AddExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code addExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitAddExpr(GrammaticaParser.AddExprContext ctx);
+	void exitGtExpr(GrammaticaParser.GtExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code leExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterLeExpr(GrammaticaParser.LeExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code leExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitLeExpr(GrammaticaParser.LeExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code geExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterGeExpr(GrammaticaParser.GeExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code geExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitGeExpr(GrammaticaParser.GeExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code eqExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqExpr(GrammaticaParser.EqExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code eqExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqExpr(GrammaticaParser.EqExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code neExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeExpr(GrammaticaParser.NeExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code neExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeExpr(GrammaticaParser.NeExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code toAdd}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterToAdd(GrammaticaParser.ToAddContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code toAdd}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitToAdd(GrammaticaParser.ToAddContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code addExprOp}
+	 * labeled alternative in {@link GrammaticaParser#addExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddExprOp(GrammaticaParser.AddExprOpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code addExprOp}
+	 * labeled alternative in {@link GrammaticaParser#addExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddExprOp(GrammaticaParser.AddExprOpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code mulExprOp}
+	 * labeled alternative in {@link GrammaticaParser#multExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMulExprOp(GrammaticaParser.MulExprOpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code mulExprOp}
+	 * labeled alternative in {@link GrammaticaParser#multExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMulExprOp(GrammaticaParser.MulExprOpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code powExprOp}
+	 * labeled alternative in {@link GrammaticaParser#powExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPowExprOp(GrammaticaParser.PowExprOpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code powExprOp}
+	 * labeled alternative in {@link GrammaticaParser#powExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPowExprOp(GrammaticaParser.PowExprOpContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code unaryMinus}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#unaryExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterUnaryMinus(GrammaticaParser.UnaryMinusContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code unaryMinus}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#unaryExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitUnaryMinus(GrammaticaParser.UnaryMinusContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code mulExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Enter a parse tree produced by the {@code toAtom}
+	 * labeled alternative in {@link GrammaticaParser#unaryExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterMulExpr(GrammaticaParser.MulExprContext ctx);
+	void enterToAtom(GrammaticaParser.ToAtomContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code mulExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Exit a parse tree produced by the {@code toAtom}
+	 * labeled alternative in {@link GrammaticaParser#unaryExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitMulExpr(GrammaticaParser.MulExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code divExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterDivExpr(GrammaticaParser.DivExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code divExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitDivExpr(GrammaticaParser.DivExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arrayAccess}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterArrayAccess(GrammaticaParser.ArrayAccessContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arrayAccess}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitArrayAccess(GrammaticaParser.ArrayAccessContext ctx);
+	void exitToAtom(GrammaticaParser.ToAtomContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code callExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterCallExpr(GrammaticaParser.CallExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code callExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitCallExpr(GrammaticaParser.CallExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code powExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Enter a parse tree produced by the {@code arrayAccess}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterPowExpr(GrammaticaParser.PowExprContext ctx);
+	void enterArrayAccess(GrammaticaParser.ArrayAccessContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code powExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Exit a parse tree produced by the {@code arrayAccess}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitPowExpr(GrammaticaParser.PowExprContext ctx);
+	void exitArrayAccess(GrammaticaParser.ArrayAccessContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code inputExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterInputExpr(GrammaticaParser.InputExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code inputExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitInputExpr(GrammaticaParser.InputExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code toStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterToStrExpr(GrammaticaParser.ToStrExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code toStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitToStrExpr(GrammaticaParser.ToStrExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code idExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterIdExpr(GrammaticaParser.IdExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code idExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitIdExpr(GrammaticaParser.IdExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code floatExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterFloatExpr(GrammaticaParser.FloatExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code floatExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitFloatExpr(GrammaticaParser.FloatExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code intExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntExpr(GrammaticaParser.IntExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code intExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntExpr(GrammaticaParser.IntExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code parensExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterParensExpr(GrammaticaParser.ParensExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code parensExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitParensExpr(GrammaticaParser.ParensExprContext ctx);
 }

@@ -1,4 +1,4 @@
-// Generated from /Users/simo/Desktop/CODING/JAVA/UNI/ELABORATO/elaborato_linguaggi/src/myLang/GrammaticaLexer.g4 by ANTLR 4.13.2
+// Generated from /Users/simo/Downloads/Implementazione-Linguaggio-di-Programmazione-main/ELABORATO/elaborato_linguaggi/src/myLang/GrammaticaLexer.g4 by ANTLR 4.13.2
 package myLang;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

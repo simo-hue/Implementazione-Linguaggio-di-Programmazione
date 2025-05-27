@@ -1,11 +1,12 @@
 parser grammar GrammaticaParser;
 options { tokenVocab=GrammaticaLexer; }
 
-// ---- Parser rules ----
+/*────────────────────────  PARSER RULES  ────────────────────────*/
 program
     : statement* EOF
     ;
 
+/*────────────  top-level statements  ────────────*/
 statement
     : slyStmt
     | otherStmt
@@ -24,101 +25,101 @@ otherStmt
     | retStmt
     ;
 
-varDecl
-    : VAR ID (LBRACK expr RBRACK)? ASSIGN expr SEMICOLON?
-    ;
+/*────────────  simple statements  ────────────*/
+varDecl        : VAR ID (LBRACK expr RBRACK)? ASSIGN expr SEMICOLON? ;
+assignStmt     : ID ASSIGN expr SEMICOLON?
+               | ID LBRACK expr RBRACK ASSIGN expr SEMICOLON? ;
+printStmt      : PRINT LPAREN expr RPAREN SEMICOLON? ;
+exprStmt       : expr SEMICOLON? ;
 
-assignStmt
-    : ID ASSIGN expr SEMICOLON?
-    | ID LBRACK expr RBRACK ASSIGN expr SEMICOLON?
-    ;
+/*────────────  control flow  ────────────*/
+whileStmt      : WHILE LPAREN expr RPAREN block ;
+ifStmt         : IF LPAREN expr RPAREN block (ELSE block)? ;
+forStmt        : FOR LPAREN forInit? SEMICOLON expr? SEMICOLON forUpdate? RPAREN block ;
 
-printStmt
-    : PRINT LPAREN expr RPAREN SEMICOLON?
-    ;
+forInit        : VAR ID ASSIGN expr | ID ASSIGN expr ;
+forUpdate      : ID ASSIGN expr ;
+block          : LBRACE statement* RBRACE ;
 
-exprStmt
-    : expr SEMICOLON?
-    ;
+nonDetStmt     : block ND LBRACK statement RBRACK SEMICOLON? ;
 
-whileStmt
-    : WHILE LPAREN expr RPAREN block
-    ;
+/*────────────  functions  ────────────*/
+funDecl        : FUN ID LPAREN RPAREN block ;
+retStmt        : RET expr SEMICOLON? ;
 
-ifStmt
-    : IF LPAREN expr RPAREN block (ELSE block)?
-    ;
-
-forStmt
-    : FOR LPAREN forInit? SEMICOLON expr? SEMICOLON forUpdate? RPAREN block
-    ;
-
-forInit
-    : VAR ID ASSIGN expr
-    | ID ASSIGN expr
-    ;
-
-forUpdate
-    : ID ASSIGN expr
-    ;
-
-block
-    : LBRACE statement* RBRACE
-    ;
-
-nonDetStmt
-    : block ND LBRACK statement RBRACK SEMICOLON?
-    ;
-
-funDecl
-    : FUN ID LPAREN RPAREN block
-    ;
-
-retStmt
-    : RET expr SEMICOLON?
-    ;
-
-slyStmt
-    : SLY_START bfProgram BF_RBRACE ARNOLD SEMICOLON?
-    ;
-
-bfProgram
-    : bfCommand*
-    ;
-
+/*────────────  sly { brainfuck }  ────────────*/
+slyStmt        : SLY_START bfProgram BF_RBRACE ARNOLD SEMICOLON? ;
+bfProgram      : bfCommand* ;
 bfCommand
-    : BF_LT      # BfLt
-    | BF_GT      # BfGt
-    | BF_PLUS    # BfPlus
-    | BF_MINUS   # BfMinus
-    | BF_DOT     # BfDot
-    | BF_COMMA   # BfComma
-    | BF_LBRAK bfProgram BF_RBRAK  # BfLoop
+    : BF_LT    # BfLt   | BF_GT  # BfGt   | BF_PLUS # BfPlus
+    | BF_MINUS # BfMinus| BF_DOT # BfDot  | BF_COMMA # BfComma
+    | BF_LBRAK bfProgram BF_RBRAK # BfLoop
     ;
 
-// ---- Expressions ----
+/*────────────────────────  EXPRESSIONS  ────────────────────────*/
+/*  expr = aritmetica  |  testuale (concatenazione)             */
 expr
-    : ID LPAREN RPAREN               # callExpr
-    | expr CONCAT expr               # concatExpr
-    | expr POW expr                  # powExpr
-    | expr MUL expr                  # mulExpr
-    | expr DIV expr                  # divExpr
-    | expr MOD expr                  # modExpr
-    | expr PLUS expr                 # addExpr
-    | expr MINUS expr                # subExpr
-    | expr LT expr                   # ltExpr
-    | expr GT expr                   # gtExpr
-    | expr LE expr                   # leExpr
-    | expr GE expr                   # geExpr
-    | expr EQ expr                   # eqExpr
-    | expr NE expr                   # neExpr
-    | MINUS expr                     # unaryMinus
-    | LPAREN expr RPAREN             # parensExpr
-    | ID LBRACK expr RBRACK          # arrayAccess
-    | INPUT LPAREN RPAREN            # inputExpr
-    | STR_KW LPAREN expr RPAREN      # strExpr
-    | ID                             # idExpr
-    | FLOAT                          # floatExpr
-    | INT                            # intExpr
-    | STRING                         # stringExpr
+    : arithExpr        # exprArith
+    | strExpr          # exprStr
+    ;
+
+/*────────────  STRING-side  ────────────*/
+strExpr
+    : exprStrPart (CONCAT exprStrPart)*   # concatExpr
+    ;
+
+exprStrPart
+    : STR_KW LPAREN arithExpr RPAREN      # toStrInStrExpr
+    | STRING                              # stringInStrExpr
+    | ID                                  # idInStrExpr
+    | INPUT LPAREN RPAREN                 # inputInStrExpr
+    | LPAREN strExpr RPAREN               # parensStrExpr
+    ;
+
+/*────────────  ARITHMETIC-side  ────────────*/
+arithExpr : compExpr ;
+
+/*  comparazioni  (<,>,==,…)  */
+compExpr
+    : addExpr LT addExpr  # ltExpr
+    | addExpr GT addExpr  # gtExpr
+    | addExpr LE addExpr  # leExpr
+    | addExpr GE addExpr  # geExpr
+    | addExpr EQ addExpr  # eqExpr
+    | addExpr NE addExpr  # neExpr
+    | addExpr             # toAdd
+    ;
+
+/*  +  –  */
+addExpr
+    : multExpr ((PLUS | MINUS) multExpr)* # addExprOp
+    ;
+
+/*  *  /  %  */
+multExpr
+    : powExpr ((MUL | DIV | MOD) powExpr)* # mulExprOp
+    ;
+
+/*  ^  (right-assoc)  */
+powExpr
+    : unaryExpr (POW powExpr)?            # powExprOp
+    ;
+
+/*  − unario  */
+unaryExpr
+    : MINUS unaryExpr  # unaryMinus
+    | atomExpr         # toAtom
+    ;
+
+/*────────────  ATOMS  ────────────*/
+/*  >>> NOTA: NIENTE STRING QUI <<< */
+atomExpr
+    : ID LPAREN RPAREN                   # callExpr
+    | ID LBRACK expr RBRACK              # arrayAccess
+    | INPUT LPAREN RPAREN                # inputExpr
+    | STR_KW LPAREN arithExpr RPAREN     # toStrExpr
+    | ID                                 # idExpr
+    | FLOAT                              # floatExpr
+    | INT                                # intExpr
+    | LPAREN expr RPAREN                 # parensExpr
     ;

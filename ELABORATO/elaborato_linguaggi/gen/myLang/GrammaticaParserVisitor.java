@@ -1,4 +1,4 @@
-// Generated from /Users/simo/Desktop/CODING/JAVA/UNI/ELABORATO/elaborato_linguaggi/src/myLang/GrammaticaParser.g4 by ANTLR 4.13.2
+// Generated from /Users/simo/Downloads/Implementazione-Linguaggio-di-Programmazione-main/ELABORATO/elaborato_linguaggi/src/myLang/GrammaticaParser.g4 by ANTLR 4.13.2
 package myLang;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -168,164 +168,205 @@ public interface GrammaticaParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBfLoop(GrammaticaParser.BfLoopContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code strExpr}
+	 * Visit a parse tree produced by the {@code exprArith}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStrExpr(GrammaticaParser.StrExprContext ctx);
+	T visitExprArith(GrammaticaParser.ExprArithContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code geExpr}
+	 * Visit a parse tree produced by the {@code exprStr}
 	 * labeled alternative in {@link GrammaticaParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitGeExpr(GrammaticaParser.GeExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code intExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIntExpr(GrammaticaParser.IntExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code modExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitModExpr(GrammaticaParser.ModExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code gtExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGtExpr(GrammaticaParser.GtExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code inputExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInputExpr(GrammaticaParser.InputExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code neExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNeExpr(GrammaticaParser.NeExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code parensExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParensExpr(GrammaticaParser.ParensExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code subExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSubExpr(GrammaticaParser.SubExprContext ctx);
+	T visitExprStr(GrammaticaParser.ExprStrContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code concatExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#strExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitConcatExpr(GrammaticaParser.ConcatExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stringExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Visit a parse tree produced by the {@code toStrInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStringExpr(GrammaticaParser.StringExprContext ctx);
+	T visitToStrInStrExpr(GrammaticaParser.ToStrInStrExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code floatExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Visit a parse tree produced by the {@code stringInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFloatExpr(GrammaticaParser.FloatExprContext ctx);
+	T visitStringInStrExpr(GrammaticaParser.StringInStrExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code idInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdInStrExpr(GrammaticaParser.IdInStrExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code inputInStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInputInStrExpr(GrammaticaParser.InputInStrExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parensStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#exprStrPart}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParensStrExpr(GrammaticaParser.ParensStrExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GrammaticaParser#arithExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArithExpr(GrammaticaParser.ArithExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ltExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLtExpr(GrammaticaParser.LtExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code eqExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Visit a parse tree produced by the {@code gtExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitEqExpr(GrammaticaParser.EqExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code addExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAddExpr(GrammaticaParser.AddExprContext ctx);
+	T visitGtExpr(GrammaticaParser.GtExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code leExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLeExpr(GrammaticaParser.LeExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code geExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGeExpr(GrammaticaParser.GeExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code eqExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqExpr(GrammaticaParser.EqExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code neExpr}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNeExpr(GrammaticaParser.NeExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code toAdd}
+	 * labeled alternative in {@link GrammaticaParser#compExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitToAdd(GrammaticaParser.ToAddContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code addExprOp}
+	 * labeled alternative in {@link GrammaticaParser#addExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddExprOp(GrammaticaParser.AddExprOpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code mulExprOp}
+	 * labeled alternative in {@link GrammaticaParser#multExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMulExprOp(GrammaticaParser.MulExprOpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code powExprOp}
+	 * labeled alternative in {@link GrammaticaParser#powExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPowExprOp(GrammaticaParser.PowExprOpContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code unaryMinus}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#unaryExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitUnaryMinus(GrammaticaParser.UnaryMinusContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code mulExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Visit a parse tree produced by the {@code toAtom}
+	 * labeled alternative in {@link GrammaticaParser#unaryExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMulExpr(GrammaticaParser.MulExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code divExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDivExpr(GrammaticaParser.DivExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code arrayAccess}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArrayAccess(GrammaticaParser.ArrayAccessContext ctx);
+	T visitToAtom(GrammaticaParser.ToAtomContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code callExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitCallExpr(GrammaticaParser.CallExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code powExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * Visit a parse tree produced by the {@code arrayAccess}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPowExpr(GrammaticaParser.PowExprContext ctx);
+	T visitArrayAccess(GrammaticaParser.ArrayAccessContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code inputExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInputExpr(GrammaticaParser.InputExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code toStrExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitToStrExpr(GrammaticaParser.ToStrExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code idExpr}
-	 * labeled alternative in {@link GrammaticaParser#expr}.
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIdExpr(GrammaticaParser.IdExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code floatExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFloatExpr(GrammaticaParser.FloatExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code intExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntExpr(GrammaticaParser.IntExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parensExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParensExpr(GrammaticaParser.ParensExprContext ctx);
 }

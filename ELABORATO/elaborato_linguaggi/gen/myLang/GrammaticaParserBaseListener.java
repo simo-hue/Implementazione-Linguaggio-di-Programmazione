@@ -1,4 +1,4 @@
-// Generated from /Users/simo/Desktop/CODING/JAVA/UNI/ELABORATO/elaborato_linguaggi/src/myLang/GrammaticaParser.g4 by ANTLR 4.13.2
+// Generated from /Users/simo/Downloads/Implementazione-Linguaggio-di-Programmazione-main/ELABORATO/elaborato_linguaggi/src/myLang/GrammaticaParser.g4 by ANTLR 4.13.2
 package myLang;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -317,109 +317,25 @@ public class GrammaticaParserBaseListener implements GrammaticaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStrExpr(GrammaticaParser.StrExprContext ctx) { }
+	@Override public void enterExprArith(GrammaticaParser.ExprArithContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStrExpr(GrammaticaParser.StrExprContext ctx) { }
+	@Override public void exitExprArith(GrammaticaParser.ExprArithContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGeExpr(GrammaticaParser.GeExprContext ctx) { }
+	@Override public void enterExprStr(GrammaticaParser.ExprStrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGeExpr(GrammaticaParser.GeExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterIntExpr(GrammaticaParser.IntExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIntExpr(GrammaticaParser.IntExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterModExpr(GrammaticaParser.ModExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitModExpr(GrammaticaParser.ModExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterGtExpr(GrammaticaParser.GtExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitGtExpr(GrammaticaParser.GtExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterInputExpr(GrammaticaParser.InputExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitInputExpr(GrammaticaParser.InputExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNeExpr(GrammaticaParser.NeExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNeExpr(GrammaticaParser.NeExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterParensExpr(GrammaticaParser.ParensExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitParensExpr(GrammaticaParser.ParensExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSubExpr(GrammaticaParser.SubExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSubExpr(GrammaticaParser.SubExprContext ctx) { }
+	@Override public void exitExprStr(GrammaticaParser.ExprStrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -437,25 +353,73 @@ public class GrammaticaParserBaseListener implements GrammaticaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStringExpr(GrammaticaParser.StringExprContext ctx) { }
+	@Override public void enterToStrInStrExpr(GrammaticaParser.ToStrInStrExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStringExpr(GrammaticaParser.StringExprContext ctx) { }
+	@Override public void exitToStrInStrExpr(GrammaticaParser.ToStrInStrExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFloatExpr(GrammaticaParser.FloatExprContext ctx) { }
+	@Override public void enterStringInStrExpr(GrammaticaParser.StringInStrExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFloatExpr(GrammaticaParser.FloatExprContext ctx) { }
+	@Override public void exitStringInStrExpr(GrammaticaParser.StringInStrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdInStrExpr(GrammaticaParser.IdInStrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdInStrExpr(GrammaticaParser.IdInStrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInputInStrExpr(GrammaticaParser.InputInStrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInputInStrExpr(GrammaticaParser.InputInStrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParensStrExpr(GrammaticaParser.ParensStrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParensStrExpr(GrammaticaParser.ParensStrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArithExpr(GrammaticaParser.ArithExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArithExpr(GrammaticaParser.ArithExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -473,25 +437,13 @@ public class GrammaticaParserBaseListener implements GrammaticaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEqExpr(GrammaticaParser.EqExprContext ctx) { }
+	@Override public void enterGtExpr(GrammaticaParser.GtExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEqExpr(GrammaticaParser.EqExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAddExpr(GrammaticaParser.AddExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAddExpr(GrammaticaParser.AddExprContext ctx) { }
+	@Override public void exitGtExpr(GrammaticaParser.GtExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -509,6 +461,90 @@ public class GrammaticaParserBaseListener implements GrammaticaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGeExpr(GrammaticaParser.GeExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGeExpr(GrammaticaParser.GeExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEqExpr(GrammaticaParser.EqExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqExpr(GrammaticaParser.EqExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNeExpr(GrammaticaParser.NeExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNeExpr(GrammaticaParser.NeExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterToAdd(GrammaticaParser.ToAddContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitToAdd(GrammaticaParser.ToAddContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAddExprOp(GrammaticaParser.AddExprOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAddExprOp(GrammaticaParser.AddExprOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMulExprOp(GrammaticaParser.MulExprOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMulExprOp(GrammaticaParser.MulExprOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPowExprOp(GrammaticaParser.PowExprOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPowExprOp(GrammaticaParser.PowExprOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterUnaryMinus(GrammaticaParser.UnaryMinusContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -521,37 +557,13 @@ public class GrammaticaParserBaseListener implements GrammaticaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMulExpr(GrammaticaParser.MulExprContext ctx) { }
+	@Override public void enterToAtom(GrammaticaParser.ToAtomContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMulExpr(GrammaticaParser.MulExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDivExpr(GrammaticaParser.DivExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDivExpr(GrammaticaParser.DivExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArrayAccess(GrammaticaParser.ArrayAccessContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArrayAccess(GrammaticaParser.ArrayAccessContext ctx) { }
+	@Override public void exitToAtom(GrammaticaParser.ToAtomContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -569,13 +581,37 @@ public class GrammaticaParserBaseListener implements GrammaticaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPowExpr(GrammaticaParser.PowExprContext ctx) { }
+	@Override public void enterArrayAccess(GrammaticaParser.ArrayAccessContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPowExpr(GrammaticaParser.PowExprContext ctx) { }
+	@Override public void exitArrayAccess(GrammaticaParser.ArrayAccessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInputExpr(GrammaticaParser.InputExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInputExpr(GrammaticaParser.InputExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterToStrExpr(GrammaticaParser.ToStrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitToStrExpr(GrammaticaParser.ToStrExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -588,6 +624,42 @@ public class GrammaticaParserBaseListener implements GrammaticaParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIdExpr(GrammaticaParser.IdExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFloatExpr(GrammaticaParser.FloatExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFloatExpr(GrammaticaParser.FloatExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIntExpr(GrammaticaParser.IntExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIntExpr(GrammaticaParser.IntExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParensExpr(GrammaticaParser.ParensExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParensExpr(GrammaticaParser.ParensExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
