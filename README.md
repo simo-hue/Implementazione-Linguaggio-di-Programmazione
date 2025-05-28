@@ -25,12 +25,12 @@ La particolarità di MyLang è il supporto integrato al linguaggio **Brainfuck**
 | Regola `whileStmt` + `EvalVisitor.visitWhileStmt()` che valuta la condizione dinamicamente           | 3  | Ciclo `while`                      | ✅         |
 | Regola `forStmt` + `visitForStmt()` con valutazione di init, condizione e update                     | 4  | Ciclo `for`                                     | ✅         |
 | Regola `ifStmt` + `EvalVisitor.visitIfStmt()` che gestisce blocchi condizionali                      | 5  | `if`, `if-else`                                 | ✅         |
-| `print()` e `input()` sono gestite tramite `visitPrintStmt` nel EvalVisitor        | 6  | `input()` e `print()`                           | ✅         |
-| Concatenazione stringhe con `++`, `str()` implementato in `EvalVisitor.visitStrExpr()`               | 7  | Stringhe + `str()`                              | ✅         |
+| `print()` e `input()` sono gestite tramite `visitPrintStmt` e `visitInputInStrExpr` nel EvalVisitor        | 6  | `input()` e `print()`                           | ✅         |
+| Concatenazione stringhe con `++`, `str()` implementato in `EvalVisitor.visitStringInStrExpr()`               | 7  | Stringhe + `str()`                              | ✅         |
 | Supporto `FLOAT` in lexer + casting/aritmetica in `EvalVisitor`                                      | 8  | Float                                            | ✅         |
 | Array definiti tramite `ID [expr]`, accesso e modifica con `arrayAccess` e `assignStmt`              | 9  | Array                                    | ✅         |
-| `Map<String, Object> memory` usata per mantenere variabili globali e locali                          | 10 | Variabili dinamiche                             | ✅         |
-| Funzioni definite con `funDecl`, registrate in `FunctionRegistry`, gestite in `EvalVisitor`          | 11 | Funzioni senza parametri                        | ✅         |
+| `Map<String, Object>` usata per mantenere variabili globali e locali                          | 10 | Variabili dinamiche                             | ✅         |
+| Funzioni definite con `funDecl`, registrate in una mappa `functions`, gestite in `EvalVisitor`          | 11 | Funzioni senza parametri                        | ✅         |
 | Lexer mode `BF`, parser `bfProgram`, visitor `BrainfuckInterpreter`, stato `Conf.java`               | 12 | `sly{ ... }arnold;` per codice Brainfuck        | ✅         |
 
 ---
@@ -108,6 +108,81 @@ ELABORATO
 
 ---
 
+## 🧠 Variabili Globali di EvalVisitor
+
+Questa sezione descrive le principali variabili d’istanza presenti nella classe `EvalVisitor`, spiegando il loro ruolo nella gestione dello scope, delle funzioni e dell’esecuzione del linguaggio MyLang.
+
+---
+
+### 🧠 `Salvataggio Ambienti`
+
+```java
+private Deque<Map<String, Object>> callStack = new ArrayDeque<>();
+```
+
+#### 📌 Scopo:
+Rappresenta **la pila degli ambienti (scope)**. Ogni `Map<String, Object>` è uno scope attivo:
+
+- Quando entri in una funzione: `callStack.push(nuovoScope)`
+- Quando esci: `callStack.pop()`
+- Le variabili vengono cercate **a partire dal frame corrente** (top dello stack) e risalendo
+
+#### 📍 Uso:
+- `getVariable(name)` scorre gli scope per risolvere una variabile
+- `visitAssignStmt()` e `visitVarDecl()` modificano lo scope in cima allo stack
+
+---
+
+### 📚 `Salvataggio Funzioni`
+
+```java
+private final Map<String, GrammaticaParser.FunDeclContext> functions = new HashMap<>();
+```
+
+#### 📌 Scopo:
+È il **registro delle funzioni dichiarate**.
+
+- La chiave è il nome della funzione (`ID`)
+- Il valore è il `FunDeclContext`, cioè il sottoalbero del parse tree associato
+
+#### 📍 Uso:
+- Popolato in `visitFunDecl()`
+- Consultato in `visitCallExpr()` per ottenere il corpo da eseguire
+
+---
+
+### 🔢 `Non Determinismo`
+
+```java
+private Random random = new Random();
+```
+
+#### 📌 Scopo:
+Serve per il **costrutto non-deterministico** (`ND`), che esegue uno dei blocchi a caso.
+
+#### 📍 Uso:
+In `visitNonDetStmt()`, scegli a caso se eseguire il blocco sinistro o quello destro:
+
+```java
+if (random.nextBoolean()) {
+    visit(ctx.block(0));
+} else {
+    visit(ctx.block(1));
+}
+```
+
+---
+
+### 🧮 `ReturnException` (classe usata)
+
+> Anche se non è una variabile, è fondamentale nella logica delle funzioni:
+
+- Lanciata in `visitRetStmt()` per interrompere l’esecuzione e portare un valore di ritorno
+- Intercettata in `visitCallExpr()` per recuperare il valore ritornato
+- Permette una gestione del flusso più pulita rispetto a flag o return manuali
+
+---
+
 ## 🛠️ Scelte Implementative
 
 ### 🧮 Tipi e Operazioni
@@ -128,16 +203,223 @@ ELABORATO
 - Ogni livello è implementato secondo le regole di precedenza e associatività.
 - Conversione a numero (`toNumber`) viene invocata solo quando l’operatore effettivamente lo richiede.
 
-### 🧠 Funzioni
+---
+
+## ⚙️ Gestione dello Scoping in MyLang
+
+Il linguaggio MyLang implementa un sistema di scoping **a pila dinamica** e sincronizzazione controllata verso lo scope globale.
+
+---
+
+### 🔁 Stack degli Scope – `callStack`
+
+```java
+private Deque<Map<String, Object>> callStack = new ArrayDeque<>();
+```
+
+- Ogni `Map<String, Object>` rappresenta uno scope attivo.
+- Lo scope in cima (top) rappresenta l’ambiente **corrente** (es. corpo di una funzione).
+- Lo scope in fondo (last) è l’ambiente **globale**.
+
+Le variabili vengono cercate **a partire dal top** e risalendo verso il globale.
+
+---
+
+### 📌 Funzione `getVariable(String name)`
+
+```java
+private Object getVariable(String name) {
+    for (Map<String, Object> scope : callStack) {
+        if (scope.containsKey(name)) return scope.get(name);
+    }
+    throw new RuntimeException("Variabile non dichiarata: " + name);
+}
+```
+
+- Cerca una variabile a partire dallo scope più recente.
+- Se non trovata in nessuno scope, lancia un’eccezione.
+- Questo approccio consente **shadowing** (una variabile locale può mascherare una globale).
+
+---
+
+### 🧠 Dichiarazioni Locali – `declaredStack`
+
+```java
+private Deque<Set<String>> declaredStack = new ArrayDeque<>();
+```
+
+- Ogni funzione inserisce nel `declaredStack` l’insieme dei nomi **dichiarati localmente** (con `var`).
+- Serve a distinguere le modifiche globali da quelle puramente locali.
+
+---
+
+### 🔄 Sincronizzazione con lo Scope Globale – `syncWithGlobal(...)`
+
+```java
+private void syncWithGlobal(Map<String, Object> newScope) {
+    Map<String, Object> globalScope = callStack.getLast();
+    Set<String> declaredLocally = declaredStack.pop();
+
+    for (Map.Entry<String, Object> entry : newScope.entrySet()) {
+        String var = entry.getKey();
+        if (globalScope.containsKey(var) && !declaredLocally.contains(var)) {
+            globalScope.put(var, entry.getValue());
+        }
+    }
+}
+```
+
+#### 📌 Cosa fa:
+- Alla fine di una funzione, prende lo scope appena uscito (`newScope`).
+- Per ogni variabile:
+  - Se esiste nello scope globale
+  - E **non è stata dichiarata localmente**
+  - Allora la modifica viene sincronizzata (copiata) nel globale.
+
+---
+
+### 🧪 Esempio
+
+```mylang
+var x = 1;
+
+fun test() {
+  x = 5;        // Modifica la variabile globale
+  var y = 100;  // y è locale e non tocca lo scope globale
+}
+
+test();
+print(x);  // Stampa 5
+print(y);  // Errore: y non esiste nello scope globale
+```
+
+---
+
+### 🧩 Vantaggi dell'approccio
+
+- ✅ Isolamento garantito tra ambienti (ogni funzione ha il suo scope)
+- ✅ Supporto al shadowing
+- ✅ Possibilità di modificare variabili globali in modo controllato
+- ❌ Nessun accesso diretto da una funzione allo scope di un’altra funzione
+
+---
+
+## 🔧 Gestione delle Funzioni in MyLang
 
 - **Dichiarazione**: `fun nome() { ... }`
 - **Nessun parametro** supportato (per semplicità).
 - **Return** gestito via eccezione lanciata in `visitRetStmt` e catturata in `visitCallExpr`, per evitare propagazione manuale del flag di ritorno.
+---
+
+### 🧾 Sintassi
+
+**Dichiarazione:**
+```mylang
+fun nomeFunzione() {
+    // corpo
+    ret espressione;
+}
+```
+
+**Chiamata:**
+```mylang
+nomeFunzione();
+```
+
+---
+
+### 🧠 Implementazione nel Visitor
+
+#### 1. **Registrazione delle funzioni**
+
+Durante la visita del nodo `funDecl`, ogni funzione viene registrata nel `FunctionRegistry` (una mappa `Map<String, FunDeclContext>`), associando il nome alla sua definizione.
+
+
+```java
+@Override
+public Object visitFunDecl(GrammaticaParser.FunDeclContext ctx) {
+    String functionName = ctx.ID().getText();
+    functionRegistry.put(functionName, ctx);
+    return null;
+}
+```
+
+---
+
+#### 2. **Chiamata di funzione (`visitCallExpr`)**
+
+Quando si richiama una funzione, l’interprete:
+
+- Recupera il contesto (`FunDeclContext`) dal registro
+- Crea un **nuovo ambiente (scope)** con una `Map<String, Object>` vuota
+- Visita il blocco della funzione
+- Intercetta l’eccezione `ReturnException` per ottenere il valore ritornato
+- Ripristina lo scope e lo stato precedente
+
+```java
+@Override
+public Object visitCallExpr(GrammaticaParser.CallExprContext ctx) {
+    String name = ctx.ID().getText();
+    GrammaticaParser.FunDeclContext funCtx = functionRegistry.get(name);
+    if (funCtx == null) {
+        throw new RuntimeException("Funzione non definita: " + name);
+    }
+
+    Map<String, Object> local = new HashMap<>();
+    callStack.push(local);
+
+    boolean prev = insideFunction;
+    insideFunction = true;
+
+    try {
+        visit(funCtx.block());
+    } catch (ReturnException ret) {
+        return ret.getValue();
+    } finally {
+        insideFunction = prev;
+        callStack.pop();
+    }
+
+    return null;
+}
+```
+
+---
+
+#### 3. **Gestione del `ret` (`visitRetStmt`)**
+
+Il valore ritornato da una funzione viene gestito con una `ReturnException`: Viene lanciata l’eccezione per uscire dal blocco corrente e restituire il valore.
+
+```java
+@Override
+public Object visitRetStmt(GrammaticaParser.RetStmtContext ctx) {
+    Object returnValue = visit(ctx.expr());
+    throw new ReturnException(returnValue);
+}
+```
+
+---
+
+### 🧠 Memoria e Scope
+
+- Ogni funzione ha un **ambiente locale indipendente**, creato con una `HashMap` al momento della chiamata.
+- Alla fine della funzione, l’ambiente viene rimosso dal `callStack`, ripristinando quello precedente.
+- Le variabili globali possono essere lette e modificate (se non shadowate da locali).
+
+---
+
+### 🚫 Limitazioni attuali
+
+- ❌ Le funzioni **non accettano parametri**.
+- ❌ Nessun supporto per funzioni annidate.
+- ❌ Possibile miglioramento controllando se sono dentro o fuori da una funzione per poter fare ret [ e gestire meglio l'eccezione ]
+- ✅ È possibile accedere a variabili globali se non mascherate da dichiarazioni locali.
+
+---
 
 ### 🧠 Memoria e Scope
 
 - **Memoria come Map<String, Object>**: rappresenta lo scope corrente.
-- **Scope di funzione**: all’entrata di una funzione, viene creata una nuova mappa di memoria (ambiente locale), salvando quella attuale. Al termine della funzione, lo scope esterno viene ripristinato.
 - **Variabili**: dichiarate con `var`, opzionalmente array. Supportano riassegnazione e indexing (`x[3] = ...`).
 
 ### 🎮 Altri costrutti
@@ -290,6 +572,9 @@ Dove:
 - ✅ La modalità `BF` evita che simboli Brainfuck entrino in conflitto con il lessico di MyLang.
 
 ---
+
+
+
 
 ## 🧪 Test di Verifica – MyLang
 
