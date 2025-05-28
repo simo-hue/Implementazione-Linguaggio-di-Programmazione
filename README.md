@@ -1,3 +1,4 @@
+![Linguaggi - UniVR](https://img.shields.io/badge/Linguaggi-UniVR-blueviolet?style=for-the-badge&logo=bookstack&logoColor=white)
 
 # 🧠 MyLang – Linguaggio Interpretato + Brainfuck
 
@@ -13,25 +14,6 @@ MyLang è un linguaggio interpretato progettato da zero, conforme ai 12 requisit
 È stato realizzato usando **ANTLR4** per la generazione del lexer/parser e **Java** per l'interprete.
 
 La particolarità di MyLang è il supporto integrato al linguaggio **Brainfuck**, eseguibile inline
-
----
-
-## ✅ Specifiche richieste
-
-| Implementazione                                                                                      | #  | Requisito                                        | Supportato |
-|-------------------------------------------------------------------------------------------------------|----|--------------------------------------------------|------------|
-| Operazioni gestite in `EvalVisitor.visitAddExpr`, `visitMulExpr`, ecc., con casting dinamico         | 1  | Operazioni base `+ - * / % ^`                   | ✅         |
-| Definito in `nonDetStmt` (parser) e gestito in `EvalVisitor.visitNonDetStmt()` con `Random`          | 2  | Non-determinismo `{...} ND [...] ND [...]`       | ✅         |
-| Regola `whileStmt` + `EvalVisitor.visitWhileStmt()` che valuta la condizione dinamicamente           | 3  | Ciclo `while`                      | ✅         |
-| Regola `forStmt` + `visitForStmt()` con valutazione di init, condizione e update                     | 4  | Ciclo `for`                                     | ✅         |
-| Regola `ifStmt` + `EvalVisitor.visitIfStmt()` che gestisce blocchi condizionali                      | 5  | `if`, `if-else`                                 | ✅         |
-| `print()` e `input()` sono gestite tramite `visitPrintStmt` e `visitInputInStrExpr` nel EvalVisitor        | 6  | `input()` e `print()`                           | ✅         |
-| Concatenazione stringhe con `++`, `str()` implementato in `EvalVisitor.visitStringInStrExpr()`               | 7  | Stringhe + `str()`                              | ✅         |
-| Supporto `FLOAT` in lexer + casting/aritmetica in `EvalVisitor`                                      | 8  | Float                                            | ✅         |
-| Array definiti tramite `var ID [expr]`, accesso e modifica con `arrayAccess` e `assignStmt`              | 9  | Array                                    | ✅         |
-| `Map<String, Object>` usata per mantenere variabili globali e locali                          | 10 | Variabili dinamiche                             | ✅         |
-| Funzioni definite con `funDecl`, registrate in una mappa `functions`, gestite in `EvalVisitor`          | 11 | Funzioni senza parametri                        | ✅         |
-| Lexer mode `BF`, parser `bfProgram`, visitor `BrainfuckInterpreter`, stato `Conf.java`               | 12 | `sly{ ... }arnold;` per codice Brainfuck        | ✅         |
 
 ---
 

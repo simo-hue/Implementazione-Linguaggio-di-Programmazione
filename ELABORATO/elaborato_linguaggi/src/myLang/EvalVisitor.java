@@ -413,17 +413,32 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
                 if (left instanceof String || right instanceof String) {
                     throw new RuntimeException("Uso scorretto di + con tipi non numerici: " +
                             left.getClass().getSimpleName() + ", " + right.getClass().getSimpleName());
-                } else { // entrambi numeri
+                } else if (left instanceof Integer && right instanceof Integer) {
+                    left = (Integer) left + (Integer) right;
+                    return left; // somma tra interi
+                } { // entrambi numeri
                     float l = toNumber(left);
                     float r = toNumber(right);
                     left = l + r;
                 }
-            } else if (op.getType() == GrammaticaParser.MINUS) {
+            }else if (op.getType() == GrammaticaParser.MINUS) {
                 // La sottrazione ha senso solo tra numeri
-                float l = toNumber(left);
-                float r = toNumber(right);
-                left = l - r;
+                if (left instanceof Integer && right instanceof Integer) {
+                    left = (Integer) left - (Integer) right;
+                } else {
+                    float l = toNumber(left);
+                    float r = toNumber(right);
+                    float result = l - r;
+
+                    // Se il risultato è un intero, restituiscilo come Integer
+                    if (result == (int) result) {
+                        left = (int) result;
+                    } else {
+                        left = result;
+                    }
+                }
             }
+
         }
 
         return left;
@@ -453,18 +468,30 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
                 throw new RuntimeException("Errore: operazione aritmetica non valida su stringa → \"" + left + "\" o \"" + right + "\"");
             }
 
+            float result;
+
             switch (op.getType()) {
                 case GrammaticaParser.MUL:
-                    left = l * r;
+                    result = l * r;
                     break;
                 case GrammaticaParser.DIV:
                     if (r == 0) throw new RuntimeException("Divisione per zero");
-                    left = l / r;
+                    result = l / r;
                     break;
                 case GrammaticaParser.MOD:
-                    left = l % r;
+                    result = l % r;
                     break;
+                default:
+                    throw new RuntimeException("Operatore aritmetico sconosciuto: " + op.getText());
             }
+
+            // Se il risultato è intero, restituisci Integer
+            if (result == (int) result) {
+                left = (int) result;
+            } else {
+                left = result;
+            }
+
         }
 
         return left;
@@ -483,7 +510,15 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
         float base = toNumber(left);
         float exp  = toNumber(visit(ctx.powExpr()));
-        return (float) Math.pow(base, exp);
+        float result = (float) Math.pow(base, exp);
+
+        // Se il risultato è un intero, ritorna Integer
+        if (result == (int) result) {
+            return (int) result;
+        } else {
+            return result;
+        }
+
     }
 
     /**
@@ -552,7 +587,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     public Object visitInputExpr(GrammaticaParser.InputExprContext ctx) {
         System.out.print("> ");
         String raw = scanner.nextLine().trim();
-        System.out.println("[DBG] input() -> " + raw);
+        //System.out.println("[DBG] input() -> " + raw);
 
         // stringa tra virgolette → "ciao"
         if (raw.startsWith("\"") && raw.endsWith("\"") && raw.length() >= 2) {
@@ -619,6 +654,15 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
             sb.append("]");
             return sb.toString();
         }
+
+        if (obj instanceof Float f) {
+            // Se il float è un intero esatto, stampalo come int
+            if (f == f.intValue()) {
+                return String.valueOf(f.intValue());
+            }
+            return f.toString();  // Altrimenti stampa come float
+        }
+
         return String.valueOf(obj);
     }
 
