@@ -321,7 +321,7 @@ Durante la visita del nodo `funDecl`, ogni funzione viene registrata nel `Functi
 @Override
 public Object visitFunDecl(GrammaticaParser.FunDeclContext ctx) {
     String functionName = ctx.ID().getText();
-    functionRegistry.put(functionName, ctx);
+    visitFunDecl.put(functionName, ctx);
     return null;
 }
 ```
