@@ -116,7 +116,6 @@ unaryExpr
 atomExpr
     : ID LPAREN RPAREN                   # callExpr
     | ID LBRACK expr RBRACK              # arrayAccess
-    | STR_KW LPAREN arithExpr RPAREN     # toStrExpr
     | ID                                 # idExpr
     | FLOAT                              # floatExpr
     | INT                                # intExpr

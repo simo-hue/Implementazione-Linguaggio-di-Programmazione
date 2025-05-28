@@ -28,7 +28,7 @@ La particolarità di MyLang è il supporto integrato al linguaggio **Brainfuck**
 | `print()` e `input()` sono gestite tramite `visitPrintStmt` e `visitInputInStrExpr` nel EvalVisitor        | 6  | `input()` e `print()`                           | ✅         |
 | Concatenazione stringhe con `++`, `str()` implementato in `EvalVisitor.visitStringInStrExpr()`               | 7  | Stringhe + `str()`                              | ✅         |
 | Supporto `FLOAT` in lexer + casting/aritmetica in `EvalVisitor`                                      | 8  | Float                                            | ✅         |
-| Array definiti tramite `ID [expr]`, accesso e modifica con `arrayAccess` e `assignStmt`              | 9  | Array                                    | ✅         |
+| Array definiti tramite `var ID [expr]`, accesso e modifica con `arrayAccess` e `assignStmt`              | 9  | Array                                    | ✅         |
 | `Map<String, Object>` usata per mantenere variabili globali e locali                          | 10 | Variabili dinamiche                             | ✅         |
 | Funzioni definite con `funDecl`, registrate in una mappa `functions`, gestite in `EvalVisitor`          | 11 | Funzioni senza parametri                        | ✅         |
 | Lexer mode `BF`, parser `bfProgram`, visitor `BrainfuckInterpreter`, stato `Conf.java`               | 12 | `sly{ ... }arnold;` per codice Brainfuck        | ✅         |
@@ -114,7 +114,7 @@ Questa sezione descrive le principali variabili d’istanza presenti nella class
 
 ---
 
-### 🧠 `Salvataggio Ambienti`
+### 📚 `Salvataggio Ambienti`
 
 ```java
 private Deque<Map<String, Object>> callStack = new ArrayDeque<>();
@@ -358,30 +358,31 @@ Quando si richiama una funzione, l’interprete:
 
 ```java
 @Override
-public Object visitCallExpr(GrammaticaParser.CallExprContext ctx) {
-    String name = ctx.ID().getText();
-    GrammaticaParser.FunDeclContext funCtx = functionRegistry.get(name);
-    if (funCtx == null) {
-        throw new RuntimeException("Funzione non definita: " + name);
-    }
+    public Object visitCallExpr(GrammaticaParser.CallExprContext ctx) {
+        String fname = ctx.ID().getText();
+        GrammaticaParser.FunDeclContext fctx = functions.get(fname);
+        if (fctx == null) throw new RuntimeException("Funzione non definita: " + fname);
 
-    Map<String, Object> local = new HashMap<>();
-    callStack.push(local);
+        Map<String, Object> newScope = new HashMap<>();
+        Set<String> declaredLocally = new HashSet<>();
 
-    boolean prev = insideFunction;
-    insideFunction = true;
+        callStack.push(newScope);
+        declaredStack.push(declaredLocally);
 
-    try {
-        visit(funCtx.block());
-    } catch (ReturnException ret) {
-        return ret.getValue();
-    } finally {
-        insideFunction = prev;
+        try {
+            for (var stmt : fctx.block().statement()) {
+                visit(stmt);
+            }
+        } catch (ReturnValue rv) {
+            callStack.pop();
+            syncWithGlobal(newScope);
+            return rv.value;
+        }
+
         callStack.pop();
+        syncWithGlobal(newScope);
+        return 0f;
     }
-
-    return null;
-}
 ```
 
 ---
@@ -411,16 +412,10 @@ public Object visitRetStmt(GrammaticaParser.RetStmtContext ctx) {
 ### 🚫 Limitazioni attuali
 
 - ❌ Le funzioni **non accettano parametri**.
-- ❌ Nessun supporto per funzioni annidate.
 - ❌ Possibile miglioramento controllando se sono dentro o fuori da una funzione per poter fare ret [ e gestire meglio l'eccezione ]
 - ✅ È possibile accedere a variabili globali se non mascherate da dichiarazioni locali.
 
 ---
-
-### 🧠 Memoria e Scope
-
-- **Memoria come Map<String, Object>**: rappresenta lo scope corrente.
-- **Variabili**: dichiarate con `var`, opzionalmente array. Supportano riassegnazione e indexing (`x[3] = ...`).
 
 ### 🎮 Altri costrutti
 

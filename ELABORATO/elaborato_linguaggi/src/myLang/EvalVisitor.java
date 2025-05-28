@@ -12,46 +12,75 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
     private final java.util.Scanner scanner = new java.util.Scanner(System.in);
 
+    // Stack per gestire le variabili dichiarate localmente
     private final Deque<Set<String>> declaredStack = new ArrayDeque<>();
 
+    // Stack per gestire gli scope delle variabili
     private final Deque<Map<String,Object>> callStack = new ArrayDeque<>();
     {
-        callStack.push(new HashMap<>()); // ambiente globale
+        // Inizializza lo stack con l'ambiente globale
+        callStack.push(new HashMap<>());
     }
 
+    // Gestione delle variabili
     private Map<String, Object> currentScope() {
         return callStack.peek();
     }
 
+    /**
+     * Dichiarazione di una variabile locale.
+     * Se la variabile esiste già, viene aggiornata.
+     * Se non esiste, viene creata e aggiunta allo scope corrente.
+     */
     private void declareVariable(String name, Object value) {
         currentScope().put(name, value);
         if (!declaredStack.isEmpty()) {
             declaredStack.peek().add(name);
         }
     }
+
+    /**
+     * Recupera il valore di una variabile, cercando
+     * in tutti gli scope attivi (dallo stack).
+     * Se non trovata, lancia un'eccezione.
+     */
     private Object getVariable(String name) {
         for (Map<String, Object> scope : callStack) {
             if (scope.containsKey(name)) return scope.get(name);
         }
-        return null; // lascia che chi lo usa gestisca il caso "non definito"
+        throw new RuntimeException("Variabile non dichiarata: " + name);
     }
 
+    /**
+     * Imposta il valore di una variabile, cercando
+     * in tutti gli scope attivi (dallo stack).
+     * Se non trovata, la crea nello scope corrente.
+     */
     private void setVariable(String name, Object value) {
         for (Map<String, Object> scope : callStack) {
-            if (scope.containsKey(name)) {
-                scope.put(name, value);
+            if (scope.containsKey(name)) { // variabile già esistente
+                scope.put(name, value); // aggiorna il valore
                 return;
             }
         }
-        currentScope().put(name, value); // nuova variabile nello scope corrente
+        currentScope().put(name, value); // crea nuova variabile nello scope corrente
     }
 
+    /**
+     * Mappa per memorizzare le dichiarazioni di funzioni.
+     * Chiave: nome della funzione (ID)
+     * Valore: contesto della dichiarazione della funzione
+     */
     private final Map<String, GrammaticaParser.FunDeclContext> functions = new HashMap<>();
-
 
     // Generatore Random per ND ( non determinismo )
     private final Random rnd = new Random();
 
+    /**
+     * ensureArray: garantisce che la variabile sia un array.
+     * Se non esiste, la crea come lista vuota.
+     * Se è un numero o altro tipo, lancia un'eccezione.
+     */
     @SuppressWarnings("unchecked")
     private List<Object> ensureArray(String id) {
         Object v = getVariable(id);
@@ -80,6 +109,8 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         final Object value; // valore passato al RETURN
         ReturnValue(Object v) { super(null, null, false, false); value = v; }
     }
+
+    // Esegue il WHILE
     @Override
     public Object visitWhileStmt(GrammaticaParser.WhileStmtContext ctx) {
 
@@ -90,12 +121,15 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
             for (GrammaticaParser.StatementContext st : ctx.block().statement()) {
                 visit(st);
             }
-            // qui NON ricalcoliamo esplicitamente: il controllo del while
-            // tornerà in cima ed eseguirà di nuovo visit(ctx.expr())
         }
         return null;
     }
 
+    /**
+     * syncWithGlobal: sincronizza le variabili locali con lo scope globale.
+     * Aggiorna solo le variabili dichiarate globalmente che non sono state
+     * dichiarate localmente nel blocco corrente.
+     */
     private void syncWithGlobal(Map<String, Object> newScope) {
         Map<String, Object> globalScope = callStack.getLast();
         Set<String> declaredLocally = declaredStack.pop();
@@ -113,19 +147,20 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      */
     @Override
     public Object visitForStmt(GrammaticaParser.ForStmtContext ctx) {
-        // 1) INIT (var x=... oppure x=...)
+        // INIT (var x=... oppure x=...)
         if (ctx.forInit() != null) {
             visit(ctx.forInit());
         }
 
-        // 2) Prepara il corpo del ciclo
+        // Prepara il corpo del ciclo
         List<GrammaticaParser.StatementContext> body = ctx.block().statement();
 
-        // 3) Loop principale
+        // Loop principale
         while (true) {
             // condizione: ctx.expr() restituisce ExprContext o null
             boolean condTrue = true;
             GrammaticaParser.ExprContext condCtx = ctx.expr();
+
             if (condCtx != null) {
                 float cond = toNumber(visit(condCtx));
                 condTrue = (cond != 0);
@@ -147,7 +182,9 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     }
 
     /**
-     * forInit: 'var' ID '=' expr | ID '=' expr
+     * forInit: ID '=' expr
+     * Gestisce l'inizializzazione di una variabile nel ciclo for.
+     * Se la variabile esiste già, viene aggiornata; altrimenti, viene creata.
      */
     @Override
     public Object visitForInit(GrammaticaParser.ForInitContext ctx) {
@@ -157,9 +194,8 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         return null;
     }
 
-    /**
-     * forUpdate: ID '=' expr
-     */
+
+
     @Override
     public Object visitForUpdate(GrammaticaParser.ForUpdateContext ctx) {
         String id = ctx.ID().getText();
@@ -169,7 +205,9 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     }
 
     /**
-     * arrayAccess: ID '[' expr ']'    // x[ i ]
+     * arrayAccess: ID '[' expr ']'
+     * Gestisce l'accesso a un elemento di un array.
+     * Se l'array non esiste o l'indice è fuori dai limiti, restituisce 0.
      */
     @Override
     public Object visitArrayAccess(GrammaticaParser.ArrayAccessContext ctx) {
@@ -181,7 +219,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
         if (!(v instanceof List<?>)) {
             // Variabile non definita o scalare: array “vuoto”
-            return 0;                         // puoi restituire null se preferisci
+            return 0;
         }
 
         List<?> arr = (List<?>) v;
@@ -189,18 +227,21 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     }
 
     /**
-     * assignStmt: ( ID | ID '[' expr ']' ) '=' expr ';'
-     * Gestisce sia x = v che x[i] = v
+     * varDecl: 'var' ID '=' expr ';'
+     *        | 'var' ID '[' expr ']' '=' expr ';'
+     * Gestisce la dichiarazione di variabili, sia scalari che array.
      */
     @Override
     public Object visitVarDecl(GrammaticaParser.VarDeclContext ctx) {
         String id = ctx.ID().getText();
         List<GrammaticaParser.ExprContext> exprs = ctx.expr();
 
+        // Controlla se è una dichiarazione scalare o un array
         if (ctx.getChildCount() == 5) {          // var x = expr ;
+
             Object value = visit(exprs.get(0));
 
-            // ⬇️  DICHIARAZIONE LOCALE (NON usare setVariable)
+            // DICHIARAZIONE LOCALE
             declareVariable(id, value);
 
         } else {
@@ -215,7 +256,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
             while (arr.size() <= idx) arr.add(0);
             arr.set(idx, v);
 
-            // ⬇️  DICHIARAZIONE LOCALE
+            // DICHIARAZIONE LOCALE
             declareVariable(id, arr);
         }
 
@@ -226,14 +267,14 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         return null;
     }
 
+    /**
+     * assignStmt: ID '=' expr ';'
+     *           | ID '[' expr ']' '=' expr ';'
+     * Gestisce l'assegnamento di valori a variabili scalari o array.
+     */
     @Override
     public Object visitAssignStmt(GrammaticaParser.AssignStmtContext ctx) {
-
         String id = ctx.ID().getText();
-
-        // lassi di grammatica:
-        //   ID '=' expr                 → childCount == 3 (+ ';' nel parser)
-        //   ID '[' expr ']' '=' expr    → childCount > 3
 
         if (ctx.getChildCount() > 4) {                 // assegnamento a x[expr]
 
@@ -257,13 +298,12 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         return null;
     }
 
-
     /**
      * ifStmt: 'if' '(' expr ')' block ( 'else' block )?
      */
     @Override
     public Object visitIfStmt(GrammaticaParser.IfStmtContext ctx) {
-        // 1) valuta la condizione
+        // valuta la condizione
         float cond = toNumber(visit(ctx.expr()));
         if (cond != 0) {
             // vero: esegui il primo block
@@ -278,7 +318,6 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         }
         return null;
     }
-
 
     /**
      * concatExpr: expr '++' expr
@@ -298,12 +337,22 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         return result.toString();
     }
 
+    /**
+     * IdInStrExpr: ID
+     * Recupera il valore della variabile e lo converte in stringa.
+     * Se la variabile non esiste, restituisce "undefined".
+     */
     @Override
     public Object visitIdInStrExpr(GrammaticaParser.IdInStrExprContext ctx) {
         Object val = getVariable(ctx.ID().getText());
         return toString(val);  // converte il valore in stringa
     }
 
+    /**
+     * InputInStrExpr: 'input' '(' ')'
+     * Chiede all'utente di inserire una stringa e la restituisce.
+     * Se l'input è vuoto, restituisce una stringa vuota.
+     */
     @Override
     public Object visitInputInStrExpr(GrammaticaParser.InputInStrExprContext ctx) {
         System.out.print("> ");
@@ -311,6 +360,10 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         return raw;
     }
 
+    /**
+     * ParensStrExpr: '(' strExpr ')'
+     * Valuta l'espressione tra parentesi e restituisce il risultato.
+     */
     @Override
     public Object visitParensStrExpr(GrammaticaParser.ParensStrExprContext ctx) {
         return visit(ctx.strExpr());
@@ -322,6 +375,11 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     @Override
     public Object visitPrintStmt(GrammaticaParser.PrintStmtContext ctx) {
         Object val = visit(ctx.expr());
+
+        if (val == null) {
+            throw new RuntimeException("Tentativo di stampare un valore nullo (variabile non definita?)");
+        }
+
         System.out.println(toString(val));  // Usa conversione stringa sicura
         return null;
     }
@@ -336,21 +394,26 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     }
 
     /**
-     * AddExpr: expr '+' expr
+     * AddExprOp: multExpr ('+' multExpr | '-' multExpr)*
+     * Gestisce le operazioni di addizione e sottrazione tra espressioni.
+     * Se uno dei due operandi è una stringa, lancia un'eccezione.
      */
     @Override
     public Object visitAddExprOp(GrammaticaParser.AddExprOpContext ctx) {
         Object left = visit(ctx.multExpr(0));
 
+        // Validazione: entrambi devono essere numerici o stringhe
         for (int i = 1; i < ctx.multExpr().size(); i++) {
+
             Object right = visit(ctx.multExpr(i));
             Token op = (Token) ctx.getChild(2 * i - 1).getPayload();
 
             if (op.getType() == GrammaticaParser.PLUS) {
-                // Se uno dei due è stringa, fai concatenazione
+                // La somma può essere tra numeri o concatenazione di stringhe
                 if (left instanceof String || right instanceof String) {
-                    left = toString(left) + toString(right);
-                } else {
+                    throw new RuntimeException("Uso scorretto di + con tipi non numerici: " +
+                            left.getClass().getSimpleName() + ", " + right.getClass().getSimpleName());
+                } else { // entrambi numeri
                     float l = toNumber(left);
                     float r = toNumber(right);
                     left = l + r;
@@ -465,12 +528,13 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     @Override
     public Object visitStringInStrExpr(GrammaticaParser.StringInStrExprContext ctx) {
         String text = ctx.STRING().getText();
+
+        // Rimuove le virgolette iniziali e finali
         if (text.length() >= 2 && text.startsWith("\"") && text.endsWith("\"")) {
             return text.substring(1, text.length() - 1);  // rimuove virgolette
         }
         return text;
     }
-
 
     /**
      * IdExpr: ID
@@ -490,13 +554,13 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         String raw = scanner.nextLine().trim();
         System.out.println("[DBG] input() -> " + raw);
 
-        // Caso 1: stringa tra virgolette → "ciao"
+        // stringa tra virgolette → "ciao"
         if (raw.startsWith("\"") && raw.endsWith("\"") && raw.length() >= 2) {
             return raw.substring(1, raw.length() - 1);
         }
 
-        // Caso 2: numeri
-        try {
+        // numeri
+        try { // prova a convertire in numero
             return raw.contains(".") ? Float.parseFloat(raw) : Integer.parseInt(raw);
         } catch (NumberFormatException e) {
             // Caso 3: fallback → trattalo come stringa normale
@@ -510,9 +574,14 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     @Override
     public Object visitToStrInStrExpr(GrammaticaParser.ToStrInStrExprContext ctx) {
         Object val = visit(ctx.arithExpr());
-        return toString(val);  // Usa la versione sicura che gestisce anche liste/null
+        return toString(val);
     }
 
+    /**
+     * ToNumberExpr: 'toNumber' '(' expr ')'
+     * Converte l'espressione in un numero.
+     * Se non è possibile, lancia un'eccezione.
+     */
     private float toNumber(Object obj) {
         if (obj == null)
             throw new RuntimeException("Errore: toNumber() ricevuto null (variabile non inizializzata)");
@@ -533,6 +602,11 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
         throw new RuntimeException("Tipo non numerico: " + obj);
     }
+
+    /**
+     * toString: converte un oggetto in una stringa.
+     * Gestisce liste e null in modo sicuro.
+     */
     private String toString(Object obj) {
         if (obj == null) return "null";
         if (obj instanceof List<?>) {
@@ -552,7 +626,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     public Object visitLtExpr(GrammaticaParser.LtExprContext ctx) {
         float l = toNumber(visit(ctx.addExpr(0)));
         float r = toNumber(visit(ctx.addExpr(1)));
-        System.out.println("[DBG] " + l + " < " + r);
+        // System.out.println("[DBG] " + l + " < " + r);
         return l < r ? 1 : 0;
     }
 
@@ -560,7 +634,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     public Object visitGtExpr(GrammaticaParser.GtExprContext ctx) {
         float l = toNumber(visit(ctx.addExpr(0)));
         float r = toNumber(visit(ctx.addExpr(1)));
-        System.out.println("[DBG] " + l + " > " + r);
+        // System.out.println("[DBG] " + l + " > " + r);
         return l > r ? 1 : 0;
     }
 
@@ -608,15 +682,19 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     @Override
     public Object visitNonDetStmt(GrammaticaParser.NonDetStmtContext ctx) {
         if (rnd.nextBoolean()) {
-            // branch 1: esegue il blocco { ... }
+            // esegue il blocco { ... }
             visit(ctx.block());
         } else {
-            // branch 2: esegue lo statement dentro [ ... ]
+            // esegue lo statement dentro [ ... ]
             visit(ctx.statement());
         }
         return null;
     }
 
+    /**
+     * visitFunDecl: gestisce la dichiarazione di una funzione.
+     * Salva il contesto della funzione nella mappa functions.
+     */
     @Override
     public Object visitFunDecl(GrammaticaParser.FunDeclContext ctx) {
         String name = ctx.ID().getText();
@@ -624,39 +702,55 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         return null;
     }
 
-
+    /**
+     * visitRetStmt: gestisce l'istruzione di ritorno.
+     * Lancia un'eccezione ReturnValue per interrompere l'esecuzione della funzione.
+     */
     @Override
     public Object visitRetStmt(GrammaticaParser.RetStmtContext ctx) {
         Object v = visit(ctx.expr());
         throw new ReturnValue(v);
     }
 
+    /**
+     * visitCallExpr: gestisce le chiamate a funzioni.
+     * Crea un nuovo scope per le variabili locali della funzione.
+     * Esegue il corpo della funzione e gestisce il ritorno del valore.
+     */
     @Override
     public Object visitCallExpr(GrammaticaParser.CallExprContext ctx) {
         String fname = ctx.ID().getText();
         GrammaticaParser.FunDeclContext fctx = functions.get(fname);
         if (fctx == null) throw new RuntimeException("Funzione non definita: " + fname);
 
+        // Crea un nuovo scope per le variabili locali della funzione
         Map<String, Object> newScope = new HashMap<>();
+        // Inizializza lo stack delle dichiarazioni locali
         Set<String> declaredLocally = new HashSet<>();
 
         callStack.push(newScope);
         declaredStack.push(declaredLocally);
 
-        try {
+        try { // Esegui il corpo della funzione
             for (var stmt : fctx.block().statement()) {
                 visit(stmt);
             }
-        } catch (ReturnValue rv) {
+        } catch (ReturnValue rv) { // Gestione del ritorno
             callStack.pop();
             syncWithGlobal(newScope);
             return rv.value;
         }
 
+        // Se non c'è un return, esci pulendo lo stack
         callStack.pop();
         syncWithGlobal(newScope);
         return 0f;
     }
+
+    /**
+     * visitSlyStmt: gestisce l'istruzione SLY.
+     * Esegue un programma Brainfuck definito nel contesto slyStmt.
+     */
     @Override
     public Object visitSlyStmt(GrammaticaParser.SlyStmtContext ctx) {
         // Recupera il nodo bfProgram generato dal parser
