@@ -394,7 +394,6 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     }
 
     /**
-     * AddExprOp: multExpr ('+' multExpr | '-' multExpr)*
      * Gestisce le operazioni di addizione e sottrazione tra espressioni.
      * Se uno dei due operandi è una stringa, lancia un'eccezione.
      */
@@ -421,7 +420,8 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
                     float r = toNumber(right);
                     left = l + r;
                 }
-            }else if (op.getType() == GrammaticaParser.MINUS) {
+            }
+            else if (op.getType() == GrammaticaParser.MINUS) {
                 // La sottrazione ha senso solo tra numeri
                 if (left instanceof Integer && right instanceof Integer) {
                     left = (Integer) left - (Integer) right;
@@ -438,7 +438,6 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
                     }
                 }
             }
-
         }
 
         return left;

@@ -1,12 +1,11 @@
 parser grammar GrammaticaParser;
 options { tokenVocab=GrammaticaLexer; }
 
-/*────────────────────────  PARSER RULES  ────────────────────────*/
+/*────────────────────────  PARSER  ────────────────────────*/
 program
     : statement* EOF
     ;
 
-/*────────────  top-level statements  ────────────*/
 statement
     : slyStmt
     | otherStmt
@@ -25,31 +24,41 @@ otherStmt
     | retStmt
     ;
 
-/*────────────  simple statements  ────────────*/
+/*────────────  simple  ────────────*/
 varDecl        : VAR ID (LBRACK expr RBRACK)? ASSIGN expr SEMICOLON? ;
+
 assignStmt     : ID ASSIGN expr SEMICOLON?
                | ID LBRACK expr RBRACK ASSIGN expr SEMICOLON? ;
+
 printStmt      : PRINT LPAREN expr RPAREN SEMICOLON? ;
+
 exprStmt       : expr SEMICOLON? ;
 
-/*────────────  control flow  ────────────*/
+/*────────────  control  ────────────*/
 whileStmt      : WHILE LPAREN expr RPAREN block ;
+
 ifStmt         : IF LPAREN expr RPAREN block (ELSE block)? ;
+
 forStmt        : FOR LPAREN forInit? SEMICOLON expr? SEMICOLON forUpdate? RPAREN block ;
 
 forInit        : VAR ID ASSIGN expr | ID ASSIGN expr ;
+
 forUpdate      : ID ASSIGN expr ;
+
 block          : LBRACE statement* RBRACE ;
 
 nonDetStmt     : block ND LBRACK statement RBRACK SEMICOLON? ;
 
 /*────────────  functions  ────────────*/
 funDecl        : FUN ID LPAREN RPAREN block ;
+
 retStmt        : RET expr SEMICOLON? ;
 
 /*────────────  sly { brainfuck }  ────────────*/
 slyStmt        : SLY_START bfProgram BF_RBRACE ARNOLD SEMICOLON? ;
+
 bfProgram      : bfCommand* ;
+
 bfCommand
     : BF_LT    # BfLt   | BF_GT  # BfGt   | BF_PLUS # BfPlus
     | BF_MINUS # BfMinus| BF_DOT # BfDot  | BF_COMMA # BfComma
@@ -63,21 +72,21 @@ expr
     | strExpr          # exprStr
     ;
 
-/*────────────  STRING-side  ────────────*/
+/*────────────  STRINGS  ────────────*/
 strExpr
     : exprStrPart (CONCAT exprStrPart)*      # concatExpr
     ;
 
 exprStrPart
-    : STR_KW LPAREN arithExpr RPAREN         # toStrInStrExpr
-    | STRING                                 # stringInStrExpr
-    | ID                                     # idInStrExpr
-    | INPUT LPAREN RPAREN                    # inputInStrExpr
-    | LPAREN strExpr RPAREN                  # parensStrExpr
+    : STR_KW LPAREN arithExpr RPAREN         # toStrInStrExpr // Conversione
+    | STRING                                 # stringInStrExpr // Stringa
+    | ID                                     # idInStrExpr // Variabile
+    | INPUT LPAREN RPAREN                    # inputInStrExpr // Da Input
+    | LPAREN strExpr RPAREN                  # parensStrExpr // espressione tra parentesi
     ;
 
 
-/*────────────  ARITHMETIC-side  ────────────*/
+/*────────────  ARITHMETIC  ────────────*/
 arithExpr : compExpr ;
 
 /*  comparazioni  (<,>,==,…)  */
@@ -101,7 +110,6 @@ multExpr
     : powExpr ((MUL | DIV | MOD) powExpr)* # mulExprOp
     ;
 
-/*  ^  (right-assoc)  */
 powExpr
     : unaryExpr (POW powExpr)?            # powExprOp
     ;
