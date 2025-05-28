@@ -33,7 +33,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
         for (Map<String, Object> scope : callStack) {
             if (scope.containsKey(name)) return scope.get(name);
         }
-        return 0; // valore default per variabili non inizializzate
+        return null; // lascia che chi lo usa gestisca il caso "non definito"
     }
 
     private void setVariable(String name, Object value) {
@@ -60,16 +60,15 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
             return (List<Object>) v;
         }
 
-        // Se non esiste o non è lista: crea nuova ArrayList
-        List<Object> arr = new ArrayList<>();
+        if (v == null || v.equals(0)) {
+            // Non inizializzata o zero: crea nuova lista
+            List<Object> arr = new ArrayList<>();
+            setVariable(id, arr);
+            return arr;
+        }
 
-        // Se esisteva un valore scalare, puoi decidere se conservarlo:
-        // arr.add(v);   // opzionale – metterebbe lo scalare in posizione 0
-        // oppure ignori il vecchio valore
-
-        // Salva l’array nel currentScope/globale
-        setVariable(id, arr);
-        return arr;
+        // Se è altro (es. numero), errore
+        throw new RuntimeException("Variabile '" + id + "' non è un array.");
     }
 
     /**
@@ -204,8 +203,12 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
             // ⬇️  DICHIARAZIONE LOCALE (NON usare setVariable)
             declareVariable(id, value);
 
-        } else {                                 // var x [idx] = expr ;
-            int idx = (int) toNumber(visit(exprs.get(0)));
+        } else {
+            Object idxRaw = visit(exprs.get(0));
+            if (!(idxRaw instanceof Number)) {
+                throw new RuntimeException("L'indice dell'array deve essere un numero: trovato → " + idxRaw);
+            }
+            int idx = ((Number) idxRaw).intValue();
             Object v  = visit(exprs.get(1));
 
             List<Object> arr = new ArrayList<>();
@@ -234,8 +237,12 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
 
         if (ctx.getChildCount() > 4) {                 // assegnamento a x[expr]
 
-            int    index = (int) toNumber( visit(ctx.expr(0)) );
-            Object value =               visit(ctx.expr(1));
+            Object indexRaw = visit(ctx.expr(0));
+            if (!(indexRaw instanceof Number)) {
+                throw new RuntimeException("L'indice dell'array deve essere un numero: trovato → " + indexRaw);
+            }
+            int index = ((Number) indexRaw).intValue();
+            Object value = visit(ctx.expr(1));
 
             List<Object> arr = ensureArray(id);        // crea o recupera l’array
             while (arr.size() <= index) arr.add(0);    // auto-espansione
@@ -280,11 +287,33 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      */
     @Override
     public Object visitConcatExpr(GrammaticaParser.ConcatExprContext ctx) {
-        StringBuilder result = new StringBuilder(visit(ctx.exprStrPart(0)).toString());
+        Object first = visit(ctx.exprStrPart(0));
+        StringBuilder result = new StringBuilder(toString(first));
+
         for (int i = 1; i < ctx.exprStrPart().size(); i++) {
-            result.append(visit(ctx.exprStrPart(i)).toString());
+            Object part = visit(ctx.exprStrPart(i));
+            result.append(toString(part));
         }
+
         return result.toString();
+    }
+
+    @Override
+    public Object visitIdInStrExpr(GrammaticaParser.IdInStrExprContext ctx) {
+        Object val = getVariable(ctx.ID().getText());
+        return toString(val);  // converte il valore in stringa
+    }
+
+    @Override
+    public Object visitInputInStrExpr(GrammaticaParser.InputInStrExprContext ctx) {
+        System.out.print("> ");
+        String raw = scanner.nextLine().trim();
+        return raw;
+    }
+
+    @Override
+    public Object visitParensStrExpr(GrammaticaParser.ParensStrExprContext ctx) {
+        return visit(ctx.strExpr());
     }
 
     /**
@@ -293,7 +322,7 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     @Override
     public Object visitPrintStmt(GrammaticaParser.PrintStmtContext ctx) {
         Object val = visit(ctx.expr());
-        System.out.println(val);
+        System.out.println(toString(val));  // Usa conversione stringa sicura
         return null;
     }
 
@@ -311,57 +340,90 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      */
     @Override
     public Object visitAddExprOp(GrammaticaParser.AddExprOpContext ctx) {
-        float result = toNumber(visit(ctx.multExpr(0)));
+        Object left = visit(ctx.multExpr(0));
+
         for (int i = 1; i < ctx.multExpr().size(); i++) {
-            float right = toNumber(visit(ctx.multExpr(i)));
+            Object right = visit(ctx.multExpr(i));
             Token op = (Token) ctx.getChild(2 * i - 1).getPayload();
-            switch (op.getType()) {
-                case GrammaticaParser.PLUS:
-                    result += right;
-                    break;
-                case GrammaticaParser.MINUS:
-                    result -= right;
-                    break;
+
+            if (op.getType() == GrammaticaParser.PLUS) {
+                // Se uno dei due è stringa, fai concatenazione
+                if (left instanceof String || right instanceof String) {
+                    left = toString(left) + toString(right);
+                } else {
+                    float l = toNumber(left);
+                    float r = toNumber(right);
+                    left = l + r;
+                }
+            } else if (op.getType() == GrammaticaParser.MINUS) {
+                // La sottrazione ha senso solo tra numeri
+                float l = toNumber(left);
+                float r = toNumber(right);
+                left = l - r;
             }
         }
-        return result;
+
+        return left;
     }
     /**
      * MulExpr: expr '*' expr
      */
     @Override
     public Object visitMulExprOp(GrammaticaParser.MulExprOpContext ctx) {
-        float result = toNumber(visit(ctx.powExpr(0)));
+        Object left = visit(ctx.powExpr(0));
+
         for (int i = 1; i < ctx.powExpr().size(); i++) {
-            float right = toNumber(visit(ctx.powExpr(i)));
+            Object right = visit(ctx.powExpr(i));
             Token op = (Token) ctx.getChild(2 * i - 1).getPayload();
+
+            // Validazione: entrambi devono essere numerici
+            if (!(left instanceof Number || left instanceof String) ||
+                    !(right instanceof Number || right instanceof String)) {
+                throw new RuntimeException("Moltiplicazione/divisione/modulo supportati solo tra numeri");
+            }
+
+            float l, r;
+            try {
+                l = toNumber(left);
+                r = toNumber(right);
+            } catch (RuntimeException e) {
+                throw new RuntimeException("Errore: operazione aritmetica non valida su stringa → \"" + left + "\" o \"" + right + "\"");
+            }
+
             switch (op.getType()) {
                 case GrammaticaParser.MUL:
-                    result *= right;
+                    left = l * r;
                     break;
                 case GrammaticaParser.DIV:
-                    if (right == 0) throw new RuntimeException("Divisione per zero");
-                    result /= right;
+                    if (r == 0) throw new RuntimeException("Divisione per zero");
+                    left = l / r;
                     break;
                 case GrammaticaParser.MOD:
-                    result %= right;
+                    left = l % r;
                     break;
             }
         }
-        return result;
+
+        return left;
     }
     /**
      * PowExpr: expr '^' expr
      */
     @Override
     public Object visitPowExprOp(GrammaticaParser.PowExprOpContext ctx) {
-        float base = toNumber(visit(ctx.unaryExpr()));
-        if (ctx.powExpr() != null) {
-            float exp = toNumber(visit(ctx.powExpr()));
-            return (float) Math.pow(base, exp);
+        Object left = visit(ctx.unaryExpr());
+
+        // se non c’è '^', restituisci il valore così com’è
+        if (ctx.powExpr() == null) {
+            return left;        // può essere int, float, stringa, lista…
         }
-        return base;
+
+        // altrimenti calcola la potenza (entrambi devono essere numeri)
+        float base = toNumber(left);
+        float exp  = toNumber(visit(ctx.powExpr()));
+        return (float)Math.pow(base, exp);
     }
+
     /**
      * UnaryMinus: '-' expr
      */
@@ -403,18 +465,20 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      */
     @Override
     public Object visitStringInStrExpr(GrammaticaParser.StringInStrExprContext ctx) {
-        // togli le virgolette iniziali/finali
         String text = ctx.STRING().getText();
-        return text.substring(1, text.length() - 1);
+        if (text.length() >= 2 && text.startsWith("\"") && text.endsWith("\"")) {
+            return text.substring(1, text.length() - 1);  // rimuove virgolette
+        }
+        return text;
     }
+
 
     /**
      * IdExpr: ID
      */
     @Override
     public Object visitIdExpr(GrammaticaParser.IdExprContext ctx) {
-        Object val = getVariable(ctx.ID().getText());
-        return val == null ? 0 : val;
+        return getVariable(ctx.ID().getText()); // lascia null se non esiste
     }
 
 
@@ -424,13 +488,20 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     @Override
     public Object visitInputExpr(GrammaticaParser.InputExprContext ctx) {
         System.out.print("> ");
-        String raw = new java.util.Scanner(System.in).nextLine().trim();
+        String raw = scanner.nextLine().trim();
         System.out.println("[DBG] input() -> " + raw);
 
+        // Caso 1: stringa tra virgolette → "ciao"
+        if (raw.startsWith("\"") && raw.endsWith("\"") && raw.length() >= 2) {
+            return raw.substring(1, raw.length() - 1);
+        }
+
+        // Caso 2: numeri
         try {
-            return Float.parseFloat(raw); // sempre Float
-        } catch (NumberFormatException ex) {
-            return raw; // stringa
+            return raw.contains(".") ? Float.parseFloat(raw) : Integer.parseInt(raw);
+        } catch (NumberFormatException e) {
+            // Caso 3: fallback → trattalo come stringa normale
+            return raw;
         }
     }
 
@@ -440,22 +511,44 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
     @Override
     public Object visitToStrInStrExpr(GrammaticaParser.ToStrInStrExprContext ctx) {
         Object val = visit(ctx.arithExpr());
-        return val.toString();
+        return toString(val);  // Usa la versione sicura che gestisce anche liste/null
     }
 
     private float toNumber(Object obj) {
+        if (obj == null)
+            throw new RuntimeException("Errore: toNumber() ricevuto null (variabile non inizializzata)");
+
         if (obj instanceof Integer) return ((Integer) obj).floatValue();
         if (obj instanceof Float) return (Float) obj;
         if (obj instanceof Double) return ((Double) obj).floatValue();
         if (obj instanceof String) {
+            String s = ((String) obj).trim();
+            if (s.equals("undefined"))
+                throw new RuntimeException("Errore: toNumber() ricevuto 'undefined' (variabile non definita)");
             try {
-                return Float.parseFloat(((String) obj).trim());
+                return Float.parseFloat(s);
             } catch (NumberFormatException e) {
                 throw new RuntimeException("Stringa non numerica in toNumber(): \"" + obj + "\"");
             }
         }
+
         throw new RuntimeException("Tipo non numerico: " + obj);
     }
+    private String toString(Object obj) {
+        if (obj == null) return "null";
+        if (obj instanceof List<?>) {
+            List<?> list = (List<?>) obj;
+            StringBuilder sb = new StringBuilder("[");
+            for (int i = 0; i < list.size(); i++) {
+                if (i > 0) sb.append(", ");
+                sb.append(toString(list.get(i)));
+            }
+            sb.append("]");
+            return sb.toString();
+        }
+        return String.valueOf(obj);
+    }
+
     @Override
     public Object visitLtExpr(GrammaticaParser.LtExprContext ctx) {
         float l = toNumber(visit(ctx.addExpr(0)));

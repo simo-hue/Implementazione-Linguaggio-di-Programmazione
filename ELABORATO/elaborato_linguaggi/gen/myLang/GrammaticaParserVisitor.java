@@ -328,13 +328,6 @@ public interface GrammaticaParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArrayAccess(GrammaticaParser.ArrayAccessContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code inputExpr}
-	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInputExpr(GrammaticaParser.InputExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code toStrExpr}
 	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
 	 * @param ctx the parse tree
@@ -362,6 +355,13 @@ public interface GrammaticaParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIntExpr(GrammaticaParser.IntExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code inputExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInputExpr(GrammaticaParser.InputExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code parensExpr}
 	 * labeled alternative in {@link GrammaticaParser#atomExpr}.

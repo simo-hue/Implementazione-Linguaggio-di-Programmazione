@@ -546,18 +546,6 @@ public interface GrammaticaParserListener extends ParseTreeListener {
 	 */
 	void exitArrayAccess(GrammaticaParser.ArrayAccessContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code inputExpr}
-	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterInputExpr(GrammaticaParser.InputExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code inputExpr}
-	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitInputExpr(GrammaticaParser.InputExprContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code toStrExpr}
 	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
 	 * @param ctx the parse tree
@@ -605,6 +593,18 @@ public interface GrammaticaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIntExpr(GrammaticaParser.IntExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code inputExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterInputExpr(GrammaticaParser.InputExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code inputExpr}
+	 * labeled alternative in {@link GrammaticaParser#atomExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitInputExpr(GrammaticaParser.InputExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code parensExpr}
 	 * labeled alternative in {@link GrammaticaParser#atomExpr}.

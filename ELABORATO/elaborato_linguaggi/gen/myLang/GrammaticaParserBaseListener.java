@@ -593,18 +593,6 @@ public class GrammaticaParserBaseListener implements GrammaticaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInputExpr(GrammaticaParser.InputExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitInputExpr(GrammaticaParser.InputExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterToStrExpr(GrammaticaParser.ToStrExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -648,6 +636,18 @@ public class GrammaticaParserBaseListener implements GrammaticaParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIntExpr(GrammaticaParser.IntExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInputExpr(GrammaticaParser.InputExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInputExpr(GrammaticaParser.InputExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

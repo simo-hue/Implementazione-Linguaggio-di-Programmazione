@@ -112,14 +112,13 @@ unaryExpr
     ;
 
 /*────────────  ATOMS  ────────────*/
-/*  >>> NOTA: NIENTE STRING QUI <<< */
 atomExpr
     : ID LPAREN RPAREN                   # callExpr
     | ID LBRACK expr RBRACK              # arrayAccess
-    | INPUT LPAREN RPAREN                # inputExpr
     | STR_KW LPAREN arithExpr RPAREN     # toStrExpr
     | ID                                 # idExpr
     | FLOAT                              # floatExpr
     | INT                                # intExpr
+    | INPUT LPAREN RPAREN                 # inputExpr
     | LPAREN expr RPAREN                 # parensExpr
     ;

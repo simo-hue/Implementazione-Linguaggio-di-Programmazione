@@ -2765,26 +2765,6 @@ public class GrammaticaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class InputExprContext extends AtomExprContext {
-		public TerminalNode INPUT() { return getToken(GrammaticaParser.INPUT, 0); }
-		public TerminalNode LPAREN() { return getToken(GrammaticaParser.LPAREN, 0); }
-		public TerminalNode RPAREN() { return getToken(GrammaticaParser.RPAREN, 0); }
-		public InputExprContext(AtomExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammaticaParserListener ) ((GrammaticaParserListener)listener).enterInputExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammaticaParserListener ) ((GrammaticaParserListener)listener).exitInputExpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GrammaticaParserVisitor ) return ((GrammaticaParserVisitor<? extends T>)visitor).visitInputExpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
 	public static class ToStrExprContext extends AtomExprContext {
 		public TerminalNode STR_KW() { return getToken(GrammaticaParser.STR_KW, 0); }
 		public TerminalNode LPAREN() { return getToken(GrammaticaParser.LPAREN, 0); }
@@ -2804,6 +2784,26 @@ public class GrammaticaParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof GrammaticaParserVisitor ) return ((GrammaticaParserVisitor<? extends T>)visitor).visitToStrExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class InputExprContext extends AtomExprContext {
+		public TerminalNode INPUT() { return getToken(GrammaticaParser.INPUT, 0); }
+		public TerminalNode LPAREN() { return getToken(GrammaticaParser.LPAREN, 0); }
+		public TerminalNode RPAREN() { return getToken(GrammaticaParser.RPAREN, 0); }
+		public InputExprContext(AtomExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaParserListener ) ((GrammaticaParserListener)listener).enterInputExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GrammaticaParserListener ) ((GrammaticaParserListener)listener).exitInputExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GrammaticaParserVisitor ) return ((GrammaticaParserVisitor<? extends T>)visitor).visitInputExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2925,53 +2925,53 @@ public class GrammaticaParser extends Parser {
 				}
 				break;
 			case 3:
-				_localctx = new InputExprContext(_localctx);
+				_localctx = new ToStrExprContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(311);
-				match(INPUT);
+				match(STR_KW);
 				setState(312);
 				match(LPAREN);
 				setState(313);
+				arithExpr();
+				setState(314);
 				match(RPAREN);
 				}
 				break;
 			case 4:
-				_localctx = new ToStrExprContext(_localctx);
+				_localctx = new IdExprContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(314);
-				match(STR_KW);
-				setState(315);
-				match(LPAREN);
 				setState(316);
-				arithExpr();
-				setState(317);
-				match(RPAREN);
-				}
-				break;
-			case 5:
-				_localctx = new IdExprContext(_localctx);
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(319);
 				match(ID);
 				}
 				break;
-			case 6:
+			case 5:
 				_localctx = new FloatExprContext(_localctx);
-				enterOuterAlt(_localctx, 6);
+				enterOuterAlt(_localctx, 5);
 				{
-				setState(320);
+				setState(317);
 				match(FLOAT);
 				}
 				break;
-			case 7:
+			case 6:
 				_localctx = new IntExprContext(_localctx);
+				enterOuterAlt(_localctx, 6);
+				{
+				setState(318);
+				match(INT);
+				}
+				break;
+			case 7:
+				_localctx = new InputExprContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
+				setState(319);
+				match(INPUT);
+				setState(320);
+				match(LPAREN);
 				setState(321);
-				match(INT);
+				match(RPAREN);
 				}
 				break;
 			case 8:
@@ -3199,17 +3199,17 @@ public class GrammaticaParser extends Parser {
 		"\u0131\u0005\u0011\u0000\u0000\u0131\u0147\u0005\u0012\u0000\u0000\u0132"+
 		"\u0133\u0005(\u0000\u0000\u0133\u0134\u0005\u0013\u0000\u0000\u0134\u0135"+
 		"\u0003&\u0013\u0000\u0135\u0136\u0005\u0014\u0000\u0000\u0136\u0147\u0001"+
-		"\u0000\u0000\u0000\u0137\u0138\u0005\f\u0000\u0000\u0138\u0139\u0005\u0011"+
-		"\u0000\u0000\u0139\u0147\u0005\u0012\u0000\u0000\u013a\u013b\u0005\r\u0000"+
-		"\u0000\u013b\u013c\u0005\u0011\u0000\u0000\u013c\u013d\u0003,\u0016\u0000"+
-		"\u013d\u013e\u0005\u0012\u0000\u0000\u013e\u0147\u0001\u0000\u0000\u0000"+
-		"\u013f\u0147\u0005(\u0000\u0000\u0140\u0147\u0005)\u0000\u0000\u0141\u0147"+
-		"\u0005*\u0000\u0000\u0142\u0143\u0005\u0011\u0000\u0000\u0143\u0144\u0003"+
+		"\u0000\u0000\u0000\u0137\u0138\u0005\r\u0000\u0000\u0138\u0139\u0005\u0011"+
+		"\u0000\u0000\u0139\u013a\u0003,\u0016\u0000\u013a\u013b\u0005\u0012\u0000"+
+		"\u0000\u013b\u0147\u0001\u0000\u0000\u0000\u013c\u0147\u0005(\u0000\u0000"+
+		"\u013d\u0147\u0005)\u0000\u0000\u013e\u0147\u0005*\u0000\u0000\u013f\u0140"+
+		"\u0005\f\u0000\u0000\u0140\u0141\u0005\u0011\u0000\u0000\u0141\u0147\u0005"+
+		"\u0012\u0000\u0000\u0142\u0143\u0005\u0011\u0000\u0000\u0143\u0144\u0003"+
 		"&\u0013\u0000\u0144\u0145\u0005\u0012\u0000\u0000\u0145\u0147\u0001\u0000"+
 		"\u0000\u0000\u0146\u012f\u0001\u0000\u0000\u0000\u0146\u0132\u0001\u0000"+
-		"\u0000\u0000\u0146\u0137\u0001\u0000\u0000\u0000\u0146\u013a\u0001\u0000"+
-		"\u0000\u0000\u0146\u013f\u0001\u0000\u0000\u0000\u0146\u0140\u0001\u0000"+
-		"\u0000\u0000\u0146\u0141\u0001\u0000\u0000\u0000\u0146\u0142\u0001\u0000"+
+		"\u0000\u0000\u0146\u0137\u0001\u0000\u0000\u0000\u0146\u013c\u0001\u0000"+
+		"\u0000\u0000\u0146\u013d\u0001\u0000\u0000\u0000\u0146\u013e\u0001\u0000"+
+		"\u0000\u0000\u0146\u013f\u0001\u0000\u0000\u0000\u0146\u0142\u0001\u0000"+
 		"\u0000\u0000\u01479\u0001\u0000\u0000\u0000\u001e=DPX]clnuy\u0088\u008d"+
 		"\u0091\u0095\u00a1\u00ab\u00b6\u00c1\u00c8\u00cd\u00da\u00de\u00e5\u00f6"+
 		"\u0113\u011a\u0122\u0128\u012d\u0146";
