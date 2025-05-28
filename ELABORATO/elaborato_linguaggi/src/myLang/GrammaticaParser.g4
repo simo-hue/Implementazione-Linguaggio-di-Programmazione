@@ -65,16 +65,17 @@ expr
 
 /*────────────  STRING-side  ────────────*/
 strExpr
-    : exprStrPart (CONCAT exprStrPart)*   # concatExpr
+    : exprStrPart (CONCAT exprStrPart)*      # concatExpr
     ;
 
 exprStrPart
-    : STR_KW LPAREN arithExpr RPAREN      # toStrInStrExpr
-    | STRING                              # stringInStrExpr
-    | ID                                  # idInStrExpr
-    | INPUT LPAREN RPAREN                 # inputInStrExpr
-    | LPAREN strExpr RPAREN               # parensStrExpr
+    : STR_KW LPAREN arithExpr RPAREN         # toStrInStrExpr
+    | STRING                                 # stringInStrExpr
+    | ID                                     # idInStrExpr
+    | INPUT LPAREN RPAREN                    # inputInStrExpr
+    | LPAREN strExpr RPAREN                  # parensStrExpr
     ;
+
 
 /*────────────  ARITHMETIC-side  ────────────*/
 arithExpr : compExpr ;

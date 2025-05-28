@@ -411,19 +411,24 @@ public class EvalVisitor extends GrammaticaParserBaseVisitor<Object> {
      */
     @Override
     public Object visitPowExprOp(GrammaticaParser.PowExprOpContext ctx) {
-        Object left = visit(ctx.unaryExpr());
-
-        // se non c’è '^', restituisci il valore così com’è
-        if (ctx.powExpr() == null) {
-            return left;        // può essere int, float, stringa, lista…
+        Object leftObj = visit(ctx.unaryExpr());
+        if (leftObj == null) {
+            return 0f; // oppure lancia eccezione descrittiva
         }
 
-        // altrimenti calcola la potenza (entrambi devono essere numeri)
-        float base = toNumber(left);
-        float exp  = toNumber(visit(ctx.powExpr()));
-        return (float)Math.pow(base, exp);
-    }
+        float base = toNumber(leftObj);
 
+        if (ctx.powExpr() != null) {
+            Object rightObj = visit(ctx.powExpr());
+            if (rightObj == null) {
+                return 0f; // oppure lancia eccezione descrittiva
+            }
+            float exp = toNumber(rightObj);
+            return (float) Math.pow(base, exp);
+        }
+
+        return base;
+    }
     /**
      * UnaryMinus: '-' expr
      */
