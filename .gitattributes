@@ -1,1 +1,5 @@
 DOCUMENTI/APPUNTI[[:space:]]PROF/prima_parte.pdf.pdf filter=lfs diff=lfs merge=lfs -text
+/Users/simo/Downloads/Implementazione-Linguaggio-di-Programmazione/DOCUMENTI[[:space:]]+[[:space:]]FONDAMENTI/PRIMO[[:space:]]PARZIALE filter=lfs diff=lfs merge=lfs -text
+/Users/simo/Downloads/Implementazione-Linguaggio-di-Programmazione/DOCUMENTI[[:space:]]+[[:space:]]FONDAMENTI/PRIMO[[:space:]]PARZIALE/prima_parte.pdf.pdf.pdf filter=lfs diff=lfs merge=lfs -text
+DOCUMENTI[[:space:]]+[[:space:]]FONDAMENTI/APPUNTI[[:space:]]PROF/prima_parte.pdf.pdf filter=lfs diff=lfs merge=lfs -text
+DOCUMENTI[[:space:]]+[[:space:]]FONDAMENTI/PRIMO[[:space:]]PARZIALE/prima_parte.pdf.pdf.pdf filter=lfs diff=lfs merge=lfs -text
